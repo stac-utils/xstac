@@ -1,4 +1,4 @@
-from staczarr import xarray_to_stac
+from xstac import xarray_to_stac
 import xarray as xr
 import numpy as np
 import pandas as pd
