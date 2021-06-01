@@ -1,0 +1,125 @@
+{
+    "stac_version": "1.0.0",
+    "stac_extensions": [],
+    "type": "Collection",
+    "id": "daymet",
+    "title": "daymet",
+    "description": "Daymet is a data product derived from a collection of algorithms and computer software designed to interpolate and extrapolate from daily meteorological observations to produce gridded estimates of daily weather parameters. Weather parameters generated include daily surfaces of minimum and maximum temperature, precipitation, vapor pressure, radiation, snow water equivalent, and day length produced on a 1 km x 1 km gridded surface. The motivation for producing Daymet is to provide measurements of near-surface meteorological conditions where no instrumentation exists. Having estimates of these surfaces is critical to understanding many processes in the terrestrial biogeochemical system.",
+    "license": "proprietary",
+    "extent": {
+        "spatial": {
+            "bbox": [
+                [
+                    -178.1333,
+                    14.0749,
+                    -53.0567,
+                    82.9143
+                ],
+                [
+                    -178.1333,
+                    14.0749,
+                    -53.0567,
+                    82.9143
+                ],
+                [
+                    -67.9927,
+                    16.8444,
+                    -64.1196,
+                    19.9382
+                ],
+                [
+                    -160.3056,
+                    17.9539,
+                    -154.772,
+                    23.5186
+                ]
+            ]
+        },
+        "temporal": {
+            "interval": [
+                [
+                    "1980-01-01T12:00:00Z",
+                    null
+                ]
+            ]
+        }
+    },
+    "links": [
+        {
+            "href": "daily/hi.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "monthly/hi.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "annual/hi.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "daily/pr.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "monthly/pr.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "annual/pr.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "daily/na.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "monthly/na.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+            "href": "annual/hi.json",
+            "rel": "child",
+            "type": "application/json",
+            "roles": [
+                "collection"
+            ]
+        },
+        {
+        "rel": "license",
+        "href": "https://science.nasa.gov/earth-science/earth-science-data/data-information-policy"
+        }
+    ]
+}
