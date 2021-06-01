@@ -1,5 +1,19 @@
 """
 Generate STAC Collections for Daymet from the Zarr Groups.
+
+python generate.py hi daily examples/daymet/daily/hi.json
+python generate.py hi monthly examples/daymet/monthly/hi.json
+python generate.py hi annual examples/daymet/annual/hi.json
+
+python generate.py na daily examples/daymet/daily/na.json
+python generate.py na monthly examples/daymet/monthly/na.json
+python generate.py na annual examples/daymet/annual/na.json
+
+python generate.py pr daily examples/daymet/daily/pr.json
+python generate.py pr monthly examples/daymet/monthly/pr.json
+python generate.py pr annual examples/daymet/annual/pr.json
+
+
 """
 import sys
 import argparse
@@ -168,14 +182,3 @@ def main(args=None):
 if __name__ == "__main__":
     sys.exit(main())
 
-    # python generate.py hi daily ../daymet/daily/hi.json
-    # python generate.py hi monthly ../daymet/monthly/hi.json
-    # python generate.py hi annual ../daymet/annual/hi.json
-
-    # python generate.py na daily ../daymet/daily/na.json
-    # python generate.py na monthly ../daymet/monthly/na.json
-    # python generate.py na annual ../daymet/annual/na.json
-
-    # python generate.py pr daily ../daymet/daily/pr.json
-    # python generate.py pr monthly ../daymet/monthly/pr.json
-    # python generate.py pr annual ../daymet/annual/pr.json

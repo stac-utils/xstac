@@ -543,6 +543,7 @@
   "assets": {
     "zarr-https": {
       "href": "https://daymeteuwest.blob.core.windows.net/daymet-zarr/annual/hi.zarr",
+      "type": "application/vnd+zarr",
       "title": "Annual Hawaii Daymet HTTPS Zarr root",
       "description": "HTTPS URI of the annual Hawaii Daymet Zarr Group on Azure Blob Storage.",
       "roles": [
@@ -553,6 +554,7 @@
     },
     "zarr-abfs": {
       "href": "abfs://daymet-zarr/annual/hi.zarr",
+      "type": "application/vnd+zarr",
       "title": "Annual Hawaii Daymet Azure Blob File System Zarr root",
       "description": "Azure Blob File System of the annual Hawaii Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
       "roles": [
