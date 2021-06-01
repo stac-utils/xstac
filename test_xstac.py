@@ -1,7 +1,8 @@
-from xstac import xarray_to_stac
+from xstac import xarray_to_stac, fix_attrs
 import xarray as xr
 import numpy as np
 import pandas as pd
+import pytest
 
 
 data = np.empty((40, 584, 284), dtype="float32")
@@ -66,55 +67,66 @@ coords = dict(
     lon=lon,
 )
 
-ds = xr.Dataset(
-    {
-        "prcp": xr.DataArray(
-            data,
-            coords=coords,
-            dims=("time", "y", "x"),
-            attrs={
-                "grid_mapping": "lambert_conformal_conic",
-                "cell_methods": "area: mean time: sum within days time: sum over days",
-                "units": "mm",
-                "long_name": "annual total precipitation",
-            },
-        ),
-        "swe": xr.DataArray(data, coords=coords, dims=("time", "y", "x")),
-        "time_bnds": xr.DataArray(
-            np.empty((40, 2), dtype="datetime64[ns]"),
-            name="time_bnds",
-            coords={"time": time},
-            dims=("time", "nv"),
-            attrs={"time": "days since 1950-01-01 00:00:00"},
-        ),
-        "lambert_conformal_conic": xr.DataArray(
-            np.array(-32767, dtype="int16"),
-            name="lambert_conformal_conic",
-            attrs={
-                "grid_mapping_name": "lambert_conformal_conic",
-                "longitude_of_central_meridian": -100.0,
-                "latitude_of_projection_origin": 42.5,
-                "false_easting": 0.0,
-                "false_northing": 0.0,
-                "standard_parallel": np.array([25.0, 60.0]),
-                "semi_major_axis": 6378137.0,
-                "inverse_flattening": 298.257223563,
-            },
-        ),
-    },
-    attrs={
-        "Conventions": "CF-1.6",
-        "Version_data": "Daymet Data Version 4.0",
-        "Version_software": "Daymet Software Version 4.0",
-        "citation": "Please see http://daymet.ornl.gov/ for current Daymet data citation information",
-        "references": "Please see http://daymet.ornl.gov/ for current information on Daymet references",
-        "source": "Daymet Software Version 4.0",
-        "start_year": [1980],
-    },
-)
+@pytest.fixture
+def ds():
+    ds = xr.Dataset(
+        {
+            "prcp": xr.DataArray(
+                data,
+                coords=coords,
+                dims=("time", "y", "x"),
+                attrs={
+                    "grid_mapping": "lambert_conformal_conic",
+                    "cell_methods": "area: mean time: sum within days time: sum over days",
+                    "units": "mm",
+                    "long_name": "annual total precipitation",
+                },
+            ),
+            "swe": xr.DataArray(data, coords=coords, dims=("time", "y", "x")),
+            "time_bnds": xr.DataArray(
+                np.empty((40, 2), dtype="datetime64[ns]"),
+                name="time_bnds",
+                coords={"time": time},
+                dims=("time", "nv"),
+                attrs={"time": "days since 1950-01-01 00:00:00"},
+            ),
+            "lambert_conformal_conic": xr.DataArray(
+                np.array(-32767, dtype="int16"),
+                name="lambert_conformal_conic",
+                attrs={
+                    "grid_mapping_name": "lambert_conformal_conic",
+                    "longitude_of_central_meridian": -100.0,
+                    "latitude_of_projection_origin": 42.5,
+                    "false_easting": 0.0,
+                    "false_northing": 0.0,
+                    "standard_parallel": np.array([25.0, 60.0]),
+                    "semi_major_axis": 6378137.0,
+                    "inverse_flattening": 298.257223563,
+                },
+            ),
+        },
+        attrs={
+            "Conventions": "CF-1.6",
+            "Version_data": "Daymet Data Version 4.0",
+            "Version_software": "Daymet Software Version 4.0",
+            "citation": "Please see http://daymet.ornl.gov/ for current Daymet data citation information",
+            "references": "Please see http://daymet.ornl.gov/ for current information on Daymet references",
+            "source": "Daymet Software Version 4.0",
+            "start_year": [1980],
+        },
+    )
+    return ds
 
 
-def test_xarray_to_stac():
+def test_xarray_to_stac(ds):
+    ds = fix_attrs(ds)
     result = xarray_to_stac(
-        ds, temporal_dimension="time", x_dimension="x", y_dimension="y"
+        ds,
+        id="id",
+        description="description",
+        license="license",
+        stac_version="1.0.0",
+        temporal_dimension="time",
+        x_dimension="x",
+        y_dimension="y",
     )

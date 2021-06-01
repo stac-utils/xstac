@@ -13,6 +13,16 @@ from _types import TemporalDimension, HorizontalSpatialDimension, Datacube, Vari
 __version__ = "1.0.0"
 
 
+def fix_attrs(ds):
+    ds = type(ds)(ds)
+
+    for k, v in ds.items():
+        for attr_name, attr_value in v.attrs.items():
+            if isinstance(attr_value, np.ndarray):
+                ds[k].attrs[attr_name] = list(attr_value)
+    return ds
+
+
 def build_bbox(left, bottom, right, top, src_crs):
     """
     Build a latitude / longitude bounding box from the coordinates.
@@ -155,6 +165,7 @@ def build_variables(ds):
         else:
             chunks = None
 
+        # print("v", v.attrs)
         var = Variable(
             type=type_,
             description=v.attrs.get("long_name", None),

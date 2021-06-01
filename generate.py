@@ -29,21 +29,24 @@ TITLE = {
 CITATION_URLS = {
     "daily": "https://doi.org/10.3334/ORNLDAAC/1840",
     "monthly": "https://doi.org/10.3334/ORNLDAAC/1855",
-    "annual": "https://doi.org/10.3334/ORNLDAAC/1852"
+    "annual": "https://doi.org/10.3334/ORNLDAAC/1852",
 }
 
 FULL_REGIONS = {
-     "hi": "Hawaii",
-     "na": "North America",
-     "pr": "Puerto Rico",
+    "hi": "Hawaii",
+    "na": "North America",
+    "pr": "Puerto Rico",
 }
+ZARR_MEDIA_TYPE = "application/vnd+zarr"
 
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser(usage=__doc__)
     parser.add_argument("region", type=str, choices=["hi", "pr", "na"])
     parser.add_argument("frequency", type=str, choices=["daily", "monthly", "annual"])
-    parser.add_argument("outfile", nargs="?", type=argparse.FileType("w"), default=sys.stdout)
+    parser.add_argument(
+        "outfile", nargs="?", type=argparse.FileType("w"), default=sys.stdout
+    )
 
     return parser.parse_args(args)
 
@@ -96,24 +99,35 @@ def main(args=None):
             name="ORNL DAAC",
             roles=["producer"],
             url=CITATION_URLS[frequency],
-        )
+        ),
     ]
-    collection.assets["zarr-https"] = pystac.Asset(
-        href=f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
-        title=f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
-        description=f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
-        roles=["data", "zarr", "https"],
+    collection.add_asset(
+        key="zarr-https",
+        asset=pystac.Asset(
+            href=f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
+            title=f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
+            description=f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
+            roles=["data", "zarr", "https"],
+            media_type=ZARR_MEDIA_TYPE,
+        ),
     )
-    collection.assets["zarr-abfs"] = pystac.Asset(
-        href=f"abfs://daymet-zarr/{frequency}/{region}.zarr",
-        title=f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
-        description=f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
-        roles=["data", "zarr", "abfs"],
+    collection.add_asset(
+        key="zarr-abfs",
+        asset=pystac.Asset(
+            href=f"abfs://daymet-zarr/{frequency}/{region}.zarr",
+            title=f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
+            description=f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+            roles=["data", "zarr", "abfs"],
+            media_type=ZARR_MEDIA_TYPE,
+        ),
     )
-    collection.assets["thumbnail"] = pystac.Asset(
-        title="Daymet North America Temperature Map",
-        href="https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-na.jpg",
-        media_type="image/png",
+    collection.add_asset(
+        key="thumbnail",
+        asset=pystac.Asset(
+            title="Daymet North America Temperature Map",
+            href="https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-na.jpg",
+            media_type="image/png",
+        ),
     )
 
     # getting a failure I don't understand when actually validating with the extension.
@@ -142,6 +156,10 @@ def main(args=None):
             for k, v in list(result[obj][var].items()):
                 if v is None:
                     del result[obj][var][k]
+
+    for link in result["links"]:
+        if link["rel"] == "root":
+            link["href"] = "../collection.json"
 
     with outfile as f:
         json.dump(result, f, indent=2)
