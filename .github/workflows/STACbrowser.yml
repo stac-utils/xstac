@@ -4,7 +4,7 @@ name: STAC Browser
 on: workflow_dispatch
 
 env:
-  CATALOG_URL: "https://raw.githubusercontent.com/${{ github.repository }}/examples/daymet/catalog.json"
+  CATALOG_URL: "https://raw.githubusercontent.com/${{ github.repository }}/main/examples/daymet/catalog.json"
   TILE_SOURCE_TEMPLATE: "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url={ASSET_HREF}&expression=sqrt(b1)&rescale=0,1"
   PATH_PREFIX: "/${{ github.event.repository.name }}/"
 
