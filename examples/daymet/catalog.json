@@ -1,11 +1,10 @@
 {
     "stac_version": "1.0.0",
     "stac_extensions": [],
-    "type": "Collection",
+    "type": "Catalog",
     "id": "daymet",
     "title": "daymet",
     "description": "Daymet is a data product derived from a collection of algorithms and computer software designed to interpolate and extrapolate from daily meteorological observations to produce gridded estimates of daily weather parameters. Weather parameters generated include daily surfaces of minimum and maximum temperature, precipitation, vapor pressure, radiation, snow water equivalent, and day length produced on a 1 km x 1 km gridded surface. The motivation for producing Daymet is to provide measurements of near-surface meteorological conditions where no instrumentation exists. Having estimates of these surfaces is critical to understanding many processes in the terrestrial biogeochemical system.",
-    "license": "proprietary",
     "extent": {
         "spatial": {
             "bbox": [

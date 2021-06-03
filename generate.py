@@ -12,8 +12,6 @@ python generate.py na annual examples/daymet/annual/na.json
 python generate.py pr daily examples/daymet/daily/pr.json
 python generate.py pr monthly examples/daymet/monthly/pr.json
 python generate.py pr annual examples/daymet/annual/pr.json
-
-
 """
 import sys
 import argparse
@@ -173,7 +171,7 @@ def main(args=None):
 
     for link in result["links"]:
         if link["rel"] == "root":
-            link["href"] = "../collection.json"
+            link["href"] = "../catalog.json"
 
     with outfile as f:
         json.dump(result, f, indent=2)
