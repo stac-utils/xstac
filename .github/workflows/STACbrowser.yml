@@ -1,0 +1,37 @@
+# Deploy a STAC Browser website to github pages
+name: STAC Browser
+
+on: workflow_dispatch
+
+env:
+  CATALOG_URL: "https://raw.githubusercontent.com/${{ github.repository }}/examples/daymet/catalog.json"
+  TILE_SOURCE_TEMPLATE: "https://api.cogeo.xyz/cog/tiles/{z}/{x}/{y}?url={ASSET_HREF}&expression=sqrt(b1)&rescale=0,1"
+  PATH_PREFIX: "/${{ github.event.repository.name }}/"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+    steps:
+
+    - name: Checkout STAC Browser Source
+      uses: actions/checkout@v2
+      with:
+        repository: radiantearth/stac-browser
+
+    - name: Install STAC Browser
+      run: |
+        npm install .
+
+    - name: Build Website
+      run: |
+        npm run build -- --CATALOG_URL="${{ env.CATALOG_URL }}" \
+        --TILE_SOURCE_TEMPLATE="${{ env.TILE_SOURCE_TEMPLATE }}" \
+        --PATH_PREFIX="${{ env.PATH_PREFIX }}" \
+        --HISTORY_MODE=hash
+
+    - name: Publish to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        publish_branch: gh-pages
