@@ -1,7 +1,7 @@
 {
   "type": "Collection",
   "id": "daymet-monthly-pr",
-  "stac_version": "1.0.0-rc.4",
+  "stac_version": "1.0.0",
   "description": "Estimates of daily weather parameters in North America on a one-kilometer grid, with monthly and annual summaries.\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose of Daymet is provide data estimates where no instrumentation exists.\n\nThis dataset provides Daymet Version 4 data for North America, including the island areas of Hawaii and Puerto Rico (which are available as files separate from the continental land mass). Daymet output variables include minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length. The dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Daymet variables are continuous surfaces  at 1-kilometer spatial resolution and daily temporal resolution. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr format and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",
   "links": [
     {
@@ -22,8 +22,8 @@
       "type": "temporal",
       "description": "24-hour day based on local time",
       "extent": [
-        "1950-01-16T12:00:00Z",
-        "2019-12-16T12:00:00Z"
+        "1980-01-16T12:00:00Z",
+        "2020-12-16T00:00:00Z"
       ]
     },
     "x": {
@@ -321,7 +321,7 @@
         364
       ],
       "chunks": [
-        116,
+        231,
         364
       ],
       "attrs": {
@@ -343,7 +343,7 @@
         364
       ],
       "chunks": [
-        116,
+        231,
         364
       ],
       "attrs": {
@@ -362,7 +362,7 @@
       ],
       "unit": "mm",
       "shape": [
-        840,
+        492,
         231,
         364
       ],
@@ -388,7 +388,7 @@
       ],
       "unit": "mm",
       "shape": [
-        840,
+        492,
         231,
         364
       ],
@@ -411,11 +411,11 @@
         "nv"
       ],
       "shape": [
-        840,
+        492,
         2
       ],
       "chunks": [
-        840,
+        12,
         2
       ],
       "attrs": {}
@@ -430,7 +430,7 @@
       ],
       "unit": "degrees C",
       "shape": [
-        840,
+        492,
         231,
         364
       ],
@@ -456,7 +456,7 @@
       ],
       "unit": "degrees C",
       "shape": [
-        840,
+        492,
         231,
         364
       ],
@@ -482,7 +482,7 @@
       ],
       "unit": "Pa",
       "shape": [
-        840,
+        492,
         231,
         364
       ],
@@ -514,8 +514,8 @@
     "temporal": {
       "interval": [
         [
-          "1950-01-16T12:00:00Z",
-          "2019-12-16T12:00:00Z"
+          "1980-01-16T12:00:00Z",
+          "2020-12-16T00:00:00Z"
         ]
       ]
     }

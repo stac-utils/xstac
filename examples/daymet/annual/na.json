@@ -1,7 +1,7 @@
 {
   "type": "Collection",
   "id": "daymet-annual-na",
-  "stac_version": "1.0.0-rc.4",
+  "stac_version": "1.0.0",
   "description": "Estimates of daily weather parameters in North America on a one-kilometer grid, with monthly and annual summaries.\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose of Daymet is provide data estimates where no instrumentation exists.\n\nThis dataset provides Daymet Version 4 data for North America, including the island areas of Hawaii and Puerto Rico (which are available as files separate from the continental land mass). Daymet output variables include minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length. The dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Daymet variables are continuous surfaces  at 1-kilometer spatial resolution and daily temporal resolution. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr format and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",
   "links": [
     {
@@ -23,7 +23,7 @@
       "description": "24-hour day based on local time",
       "extent": [
         "1980-07-01T12:00:00Z",
-        "2019-07-02T12:00:00Z"
+        "2020-07-01T12:00:00Z"
       ]
     },
     "x": {
@@ -321,8 +321,8 @@
         7814
       ],
       "chunks": [
-        505,
-        977
+        8075,
+        7814
       ],
       "attrs": {
         "long_name": "latitude coordinate",
@@ -343,8 +343,8 @@
         7814
       ],
       "chunks": [
-        505,
-        977
+        8075,
+        7814
       ],
       "attrs": {
         "long_name": "longitude coordinate",
@@ -362,14 +362,14 @@
       ],
       "unit": "mm",
       "shape": [
-        40,
+        41,
         8075,
         7814
       ],
       "chunks": [
         1,
-        4000,
-        4000
+        8075,
+        7814
       ],
       "attrs": {
         "cell_methods": "area: mean time: sum within days time: sum over days",
@@ -388,14 +388,14 @@
       ],
       "unit": "kg/m2",
       "shape": [
-        40,
+        41,
         8075,
         7814
       ],
       "chunks": [
         1,
-        4000,
-        4000
+        8075,
+        7814
       ],
       "attrs": {
         "cell_methods": "area: mean time: sum within days time: mean over days",
@@ -411,11 +411,11 @@
         "nv"
       ],
       "shape": [
-        40,
+        41,
         2
       ],
       "chunks": [
-        40,
+        1,
         2
       ],
       "attrs": {
@@ -432,14 +432,14 @@
       ],
       "unit": "degrees C",
       "shape": [
-        40,
+        41,
         8075,
         7814
       ],
       "chunks": [
         1,
-        4000,
-        4000
+        8075,
+        7814
       ],
       "attrs": {
         "cell_methods": "area: mean time: maximum within days time: mean over days",
@@ -458,14 +458,14 @@
       ],
       "unit": "degrees C",
       "shape": [
-        40,
+        41,
         8075,
         7814
       ],
       "chunks": [
         1,
-        4000,
-        4000
+        8075,
+        7814
       ],
       "attrs": {
         "cell_methods": "area: mean time: minimum within days time: mean over days",
@@ -484,14 +484,14 @@
       ],
       "unit": "Pa",
       "shape": [
-        40,
+        41,
         8075,
         7814
       ],
       "chunks": [
         1,
-        4000,
-        4000
+        8075,
+        7814
       ],
       "attrs": {
         "cell_methods": "area: mean time: mean within days time: mean over days",
@@ -517,7 +517,7 @@
       "interval": [
         [
           "1980-07-01T12:00:00Z",
-          "2019-07-02T12:00:00Z"
+          "2020-07-01T12:00:00Z"
         ]
       ]
     }
