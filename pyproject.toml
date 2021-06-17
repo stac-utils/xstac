@@ -10,7 +10,7 @@ classifiers = [ "License :: OSI Approved :: MIT License",]
 requires = [
     "xarray",
     "numpy",
-    "pystac",
+    "pystac>=1.0.0b3",
     "pandas",
     "pyproj",
     "pydantic",
