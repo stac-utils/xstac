@@ -13,6 +13,8 @@ requires = [
     "pystac",
     "pandas",
     "pyproj",
+    "pydantic",
+    "zarr",
     # these are just for generate
     "fsspec",
     "adlfs",
