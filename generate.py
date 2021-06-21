@@ -27,16 +27,10 @@ BBOX = {
     "na": [-178.1333, 14.0749, -53.0567, 82.9143],
     "pr": [-67.9927, 16.8444, -64.1196, 19.9382],
 }
-TITLE = {
-    ("hi", "daily"): "Daymet daily Hawaii",
-    ("hi", "monthly"): "Daymet monthly Hawaii",
-    ("hi", "annual"): "Daymet annual Hawaii",
-    ("na", "daily"): "Daymet daily North America",
-    ("na", "monthly"): "Daymet monthly North America",
-    ("na", "annual"): "Daymet annual North America",
-    ("pr", "daily"): "Daymet daily Puerto Rico",
-    ("pr", "monthly"): "Daymet monthly Puerto Rico",
-    ("pr", "annual"): "Daymet annual Puerto Rico",
+DESC = {
+    "daily": "Gridded estimates of daily weather parameters. Daymet Version 4 variables include the following parameters: minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length.",
+    "monthly": "Monthly climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Monthly averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and monthly totals are provided for the precipitation variable.",
+    "annual": "Annual climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Annual averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and annual totals are provided for the precipitation variable.",
 }
 CITATION_URLS = {
     "daily": "https://doi.org/10.3334/ORNLDAAC/1840",
@@ -79,11 +73,32 @@ def main(args=None):
         if isinstance(v, list) and len(v) == 1:
             ds.lambert_conformal_conic.attrs[k] = v[0]
 
+    if "yearday" in ds:
+        ds.yearday.attrs["long_name"] = ds.yearday.attrs["long_name"].replace(
+            "Januaray", "January"
+        )
+
+    short_desc_snippet = (
+        "surface weather data" if frequency == "daily" else "climate summaries"
+    )
+    other_regions = " and ".join(
+        [FULL_REGIONS[key] for key in FULL_REGIONS.keys() if key != region]
+    )
+
     collection = xstac.xarray_to_stac(
         ds,
         f"daymet-{frequency}-{region}",
-        description="Estimates of daily weather parameters in North America on a one-kilometer grid, with monthly and annual summaries.\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose of Daymet is provide data estimates where no instrumentation exists.\n\nThis dataset provides Daymet Version 4 data for North America, including the island areas of Hawaii and Puerto Rico (which are available as files separate from the continental land mass). Daymet output variables include minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length. The dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Daymet variables are continuous surfaces  at 1-kilometer spatial resolution and daily temporal resolution. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr format and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",  # noqa
+        description=f"{DESC[frequency]} This dataset provides coverage for {FULL_REGIONS[region]} - {other_regions} are provided in [separate datasets](https://planetarycomputer.microsoft.com/dataset/group/daymet#{frequency}).\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose is to provide data estimates where no instrumentation exists.\n\nThe dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",  # noqa
         license="proprietary",
+        keywords=[
+            "daymet",
+            FULL_REGIONS[region],
+            "temperature",
+            "precipitation",
+            "pressure vapor",
+            "swe",
+            "weather" if frequency == "daily" else "climate",
+        ],
         stac_version="1.0.0",
         temporal_dimension="time",
         x_dimension="x",
@@ -136,8 +151,8 @@ def main(args=None):
     collection.add_asset(
         key="thumbnail",
         asset=pystac.Asset(
-            title="Daymet North America Temperature Map",
-            href="https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-na.jpg",
+            title=f"Daymet {frequency} {FULL_REGIONS[region]} map thumbnail",
+            href=f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
             media_type="image/png",
         ),
     )
@@ -149,11 +164,14 @@ def main(args=None):
     # collection.normalize_hrefs("/")
     # collection.validate_all()
     result = collection.to_dict(include_self_link=False)
+
     result[
         "msft:short_description"
-    ] = "Estimates of daily weather parameters in North America on a one-kilometer grid, with monthly and annual summaries."
+    ] = f"{frequency.title()} {short_desc_snippet} on a 1-km grid for {FULL_REGIONS[region]}."
     result["msft:storage_account"] = "daymeteuwest"
     result["msft:container"] = "daymet-zarr"
+    result["msft:group_id"] = "daymet"
+    result["msft:group_keys"] = [frequency, FULL_REGIONS[region].lower()]
 
     # additional dimensions not implemented in xstac
     result["cube:dimensions"]["nv"] = {
@@ -179,4 +197,3 @@ def main(args=None):
 
 if __name__ == "__main__":
     sys.exit(main())
-
