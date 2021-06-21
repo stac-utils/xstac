@@ -2,7 +2,7 @@
   "type": "Collection",
   "id": "daymet-annual-pr",
   "stac_version": "1.0.0",
-  "description": "Estimates of daily weather parameters in North America on a one-kilometer grid, with monthly and annual summaries.\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose of Daymet is provide data estimates where no instrumentation exists.\n\nThis dataset provides Daymet Version 4 data for North America, including the island areas of Hawaii and Puerto Rico (which are available as files separate from the continental land mass). Daymet output variables include minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length. The dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Daymet variables are continuous surfaces  at 1-kilometer spatial resolution and daily temporal resolution. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr format and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",
+  "description": "Annual climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Annual averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and annual totals are provided for the precipitation variable. This dataset provides coverage for Puerto Rico - Hawaii and North America are provided in [separate datasets](https://planetarycomputer.microsoft.com/dataset/group/daymet#annual).\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose is to provide data estimates where no instrumentation exists.\n\nThe dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",
   "links": [
     {
       "rel": "root",
@@ -501,6 +501,15 @@
       }
     }
   },
+  "keywords": [
+    "daymet",
+    "Puerto Rico",
+    "temperature",
+    "precipitation",
+    "pressure vapor",
+    "swe",
+    "climate"
+  ],
   "title": "Daymet Annual Puerto Rico",
   "extent": {
     "spatial": {
@@ -564,12 +573,17 @@
       ]
     },
     "thumbnail": {
-      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-na.jpg",
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-annual-pr.png",
       "type": "image/png",
-      "title": "Daymet North America Temperature Map"
+      "title": "Daymet annual Puerto Rico map thumbnail"
     }
   },
-  "msft:short_description": "Estimates of daily weather parameters in North America on a one-kilometer grid, with monthly and annual summaries.",
+  "msft:short_description": "Annual climate summaries on a 1-km grid for Puerto Rico.",
   "msft:storage_account": "daymeteuwest",
-  "msft:container": "daymet-zarr"
+  "msft:container": "daymet-zarr",
+  "msft:group_id": "daymet",
+  "msft:group_keys": [
+    "annual",
+    "puerto rico"
+  ]
 }

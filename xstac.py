@@ -7,6 +7,7 @@ import numpy as np
 import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
+from typing import List
 
 from _types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
@@ -187,6 +188,7 @@ def xarray_to_stac(
     license: str,
     stac_version: str,
     links=None,
+    keywords: List[str] = None,
     temporal_dimension=None,
     temporal_extent=None,
     temporal_values=False,
@@ -274,9 +276,10 @@ def xarray_to_stac(
     result["links"] = links or []
     result["license"] = license
     result["stac_version"] = stac_version
+    if keywords:
+        result["keywords"] = keywords
 
     extent = {}
-
 
     if x_dimension and y_dimension:
         src_crs = CRS.from_json_dict(result['cube:dimensions']['x']['reference_system'])
