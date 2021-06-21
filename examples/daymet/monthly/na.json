@@ -320,6 +320,10 @@
         8075,
         7814
       ],
+      "chunks": [
+        2000,
+        2000
+      ],
       "attrs": {
         "long_name": "latitude coordinate",
         "standard_name": "latitude",
@@ -337,6 +341,10 @@
       "shape": [
         8075,
         7814
+      ],
+      "chunks": [
+        2000,
+        2000
       ],
       "attrs": {
         "long_name": "longitude coordinate",
@@ -357,6 +365,11 @@
         492,
         8075,
         7814
+      ],
+      "chunks": [
+        12,
+        2000,
+        2000
       ],
       "attrs": {
         "cell_methods": "area: mean time: sum within days time: sum over days",
@@ -379,6 +392,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        12,
+        2000,
+        2000
+      ],
       "attrs": {
         "cell_methods": "area: mean time: sum within days time: sum over days",
         "grid_mapping": "lambert_conformal_conic",
@@ -396,6 +414,10 @@
         492,
         2
       ],
+      "chunks": [
+        12,
+        2
+      ],
       "attrs": {}
     },
     "tmax": {
@@ -411,6 +433,11 @@
         492,
         8075,
         7814
+      ],
+      "chunks": [
+        12,
+        2000,
+        2000
       ],
       "attrs": {
         "cell_methods": "area: mean time: maximum within days time: mean over days",
@@ -433,6 +460,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        12,
+        2000,
+        2000
+      ],
       "attrs": {
         "cell_methods": "area: mean time: minimum within days time: mean over days",
         "grid_mapping": "lambert_conformal_conic",
@@ -453,6 +485,11 @@
         492,
         8075,
         7814
+      ],
+      "chunks": [
+        12,
+        2000,
+        2000
       ],
       "attrs": {
         "cell_methods": "area: mean time: mean within days time: mean over days",

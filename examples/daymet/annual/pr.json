@@ -320,6 +320,10 @@
         231,
         364
       ],
+      "chunks": [
+        231,
+        364
+      ],
       "attrs": {
         "long_name": "latitude coordinate",
         "standard_name": "latitude",
@@ -335,6 +339,10 @@
       ],
       "unit": "degrees_east",
       "shape": [
+        231,
+        364
+      ],
+      "chunks": [
         231,
         364
       ],
@@ -355,6 +363,11 @@
       "unit": "mm",
       "shape": [
         41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
         231,
         364
       ],
@@ -379,6 +392,11 @@
         231,
         364
       ],
+      "chunks": [
+        1,
+        231,
+        364
+      ],
       "attrs": {
         "cell_methods": "area: mean time: sum within days time: mean over days",
         "grid_mapping": "lambert_conformal_conic",
@@ -396,6 +414,10 @@
         41,
         2
       ],
+      "chunks": [
+        1,
+        2
+      ],
       "attrs": {
         "time": "days since 1950-01-01 00:00:00"
       }
@@ -411,6 +433,11 @@
       "unit": "degrees C",
       "shape": [
         41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
         231,
         364
       ],
@@ -435,6 +462,11 @@
         231,
         364
       ],
+      "chunks": [
+        1,
+        231,
+        364
+      ],
       "attrs": {
         "cell_methods": "area: mean time: minimum within days time: mean over days",
         "grid_mapping": "lambert_conformal_conic",
@@ -453,6 +485,11 @@
       "unit": "Pa",
       "shape": [
         41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
         231,
         364
       ],

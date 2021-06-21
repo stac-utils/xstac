@@ -304,6 +304,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        365,
+        284,
+        584
+      ],
       "attrs": {
         "cell_methods": "area: mean",
         "grid_mapping": "lambert_conformal_conic",
@@ -341,6 +346,10 @@
         8075,
         7814
       ],
+      "chunks": [
+        284,
+        584
+      ],
       "attrs": {
         "long_name": "latitude coordinate",
         "standard_name": "latitude",
@@ -358,6 +367,10 @@
       "shape": [
         8075,
         7814
+      ],
+      "chunks": [
+        284,
+        584
       ],
       "attrs": {
         "long_name": "longitude coordinate",
@@ -378,6 +391,11 @@
         14965,
         8075,
         7814
+      ],
+      "chunks": [
+        365,
+        284,
+        584
       ],
       "attrs": {
         "cell_methods": "area: mean time: sum",
@@ -400,6 +418,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        365,
+        284,
+        584
+      ],
       "attrs": {
         "cell_methods": "area: mean time: mean",
         "grid_mapping": "lambert_conformal_conic",
@@ -421,6 +444,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        365,
+        284,
+        584
+      ],
       "attrs": {
         "cell_methods": "area: mean time: mean",
         "grid_mapping": "lambert_conformal_conic",
@@ -438,6 +466,10 @@
         14965,
         2
       ],
+      "chunks": [
+        365,
+        2
+      ],
       "attrs": {}
     },
     "tmax": {
@@ -453,6 +485,11 @@
         14965,
         8075,
         7814
+      ],
+      "chunks": [
+        365,
+        284,
+        584
       ],
       "attrs": {
         "cell_methods": "area: mean time: maximum",
@@ -475,6 +512,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        365,
+        284,
+        584
+      ],
       "attrs": {
         "cell_methods": "area: mean time: minimum",
         "grid_mapping": "lambert_conformal_conic",
@@ -496,6 +538,11 @@
         8075,
         7814
       ],
+      "chunks": [
+        365,
+        284,
+        584
+      ],
       "attrs": {
         "cell_methods": "area: mean time: mean",
         "grid_mapping": "lambert_conformal_conic",
@@ -511,6 +558,9 @@
       ],
       "shape": [
         14965
+      ],
+      "chunks": [
+        365
       ],
       "attrs": {
         "long_name": "day of year (DOY) starting with day 1 on January 1st"
