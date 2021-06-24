@@ -9,7 +9,7 @@ import pandas as pd
 from pyproj import CRS, Transformer
 from typing import List
 
-from _types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
+from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
 
 def fix_attrs(ds):
