@@ -11,8 +11,6 @@ from typing import List
 
 from _types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
-__version__ = "1.0.0"
-
 
 def fix_attrs(ds):
     ds = type(ds)(ds)
