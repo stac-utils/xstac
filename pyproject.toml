@@ -2,12 +2,12 @@
 requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
-[project]
-name = "xstac"
-authors = [
-    {name = "Tom Augspurger", email = "taugspurger@microsoft.com"},
-]
-dependencies = [
+[tool.flit.metadata]
+module = "xstac"
+author = "Tom Augspurger"
+author-email = "taugspurger@microsoft.com"
+classifiers = [ "License :: OSI Approved :: MIT License",]
+requires = [
     "xarray",
     "numpy",
     "pystac>=1.0.0b3",
@@ -20,5 +20,5 @@ dependencies = [
     "fsspec",
     "adlfs",
 ]
-classifiers = ["License :: OSI Approved :: MIT License",]
-dynamic = ['version', 'description']
+
+
