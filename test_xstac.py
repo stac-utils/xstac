@@ -1,4 +1,4 @@
-from xstac import xarray_to_stac, fix_attrs
+from xstac import xarray_to_stac
 import xarray as xr
 import numpy as np
 import pandas as pd
@@ -59,6 +59,16 @@ lon = xr.DataArray(
         "standard_name": "longitude",
     },
 )
+nv = xr.DataArray(
+    np.array([0, 1]),
+    dims=("nv",),
+    name="nv"
+)
+time_bnds = xr.DataArray(
+    np.empty((40, 2)),
+    coords={"time": time, "nv": nv},
+    dims=("time", "nv")
+)
 
 coords = dict(
     time=time,
@@ -105,6 +115,7 @@ def ds():
                     "inverse_flattening": 298.257223563,
                 },
             ),
+            "nv": nv
         },
         attrs={
             "Conventions": "CF-1.6",
@@ -120,7 +131,6 @@ def ds():
 
 
 def test_xarray_to_stac(ds):
-    ds = fix_attrs(ds)
     template = {
         "id": "id",
         "type": "Collection",
@@ -135,8 +145,15 @@ def test_xarray_to_stac(ds):
         temporal_dimension="time",
         x_dimension="x",
         y_dimension="y",
+        additional_dimensions=dict(
+            nv=dict(
+                type="count",
+                values=True
+            )
+        )
     )
     assert result.id == "id"
     assert isinstance(result, pystac.Collection)
     assert result.description == "description"
     assert result.license == "license"
+    ext = pystac.extensions.datacube.DatacubeExtension.ext(result)

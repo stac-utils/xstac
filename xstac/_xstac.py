@@ -1,7 +1,6 @@
 """
 xstac
 """
-import json
 import xarray as xr
 import numpy as np
 import pystac
@@ -9,17 +8,16 @@ import pandas as pd
 from pyproj import CRS, Transformer
 from typing import List, Dict
 
-from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
-
-
-def fix_attrs(ds):
-    ds = type(ds)(ds)
-
-    for k, v in ds.items():
-        for attr_name, attr_value in v.attrs.items():
-            if isinstance(attr_value, np.ndarray):
-                ds[k].attrs[attr_name] = list(attr_value)
-    return ds
+from pystac.extensions.datacube import (
+    AdditionalDimension,
+    TemporalDimension,
+    HorizontalSpatialDimension,
+    DatacubeExtension,
+    Variable,
+    VerticalSpatialDimension,
+    VariableType,
+    SCHEMA_URI,
+)
 
 
 def build_bbox(left, bottom, right, top, src_crs):
@@ -30,10 +28,7 @@ def build_bbox(left, bottom, right, top, src_crs):
     # left, bottom, right, top = (-5802250.0, -622000.0, -5519250.0, -39000.0)
     dst_crs = CRS.from_epsg(4326)
 
-    points = [
-        [left, right, right, left],
-        [bottom, bottom, top, top]
-    ]
+    points = [[left, right, right, left], [bottom, bottom, top, top]]
 
     transformer = Transformer.from_crs(src_crs, dst_crs, always_xy=True)
     lons, lats = transformer.transform(*points)
@@ -79,11 +74,13 @@ def build_temporal_dimension(ds, name, extent, values, step):
         step = None
 
     return TemporalDimension(
-        type="temporal",
-        extent=extent,
-        description=time.attrs.get("long_name"),
-        values=values,
-        step=step,
+        dict(
+            type="temporal",
+            extent=extent,
+            description=time.attrs.get("long_name"),
+            values=values,
+            step=step,
+        )
     )
 
 
@@ -108,18 +105,49 @@ def build_horizontal_dimension(ds, name, axis, extent, values, step, reference_s
     reference_system = maybe_infer_reference_system(ds, reference_system)
 
     return HorizontalSpatialDimension(
-        type="spatial",
-        axis=axis,
-        extent=extent,
-        step=step,
-        values=values,
-        description=da.attrs.get("long_name"),
-        reference_system=reference_system,
+        dict(
+            type="spatial",
+            axis=axis,
+            extent=extent,
+            step=step,
+            values=values,
+            description=da.attrs.get("long_name"),
+            reference_system=reference_system,
+        )
     )
 
 
 def build_vertical_dimension(ds, name, axis, extent, values, step, reference_system):
-    pass
+    da = ds[name]
+    if extent is None:
+        extent = np.asarray(
+            np.concatenate([da.min(keepdims=True), da.max(keepdims=True)])
+        ).tolist()
+    if step is None:
+        # infer the step
+        delta = da.diff(name)
+        if len(delta) > 1 and (delta[0] == delta[1:]).all():
+            step = delta[0].item()
+    step = maybe_infer_step(da, step)
+
+    if values is True:
+        values = np.asarray(da).tolist()
+    elif values is False:
+        values = None
+
+    reference_system = maybe_infer_reference_system(ds, reference_system)
+
+    return VerticalSpatialDimension(
+        dict(
+            type="spatial",
+            axis=axis,
+            extent=extent,
+            step=step,
+            values=values,
+            description=da.attrs.get("long_name"),
+            reference_system=reference_system,
+        )
+    )
 
 
 def maybe_infer_reference_system(ds, reference_system) -> dict:
@@ -148,6 +176,48 @@ def maybe_infer_reference_system(ds, reference_system) -> dict:
     return reference_system
 
 
+def build_additional_dimension(
+    ds,
+    name,
+    type,
+    extent=None,
+    values=None,
+    step=None,
+    unit=None,
+    description=None,
+    reference_system=None,
+):
+    da = ds[name]
+    if extent is None:
+        extent = np.asarray(
+            np.concatenate([da.min(keepdims=True), da.max(keepdims=True)])
+        ).tolist()
+    if step is None:
+        # infer the step
+        delta = da.diff(name)
+        if len(delta) > 1 and (delta[0] == delta[1:]).all():
+            step = delta[0].item()
+    step = maybe_infer_step(da, step)
+
+    if values is True:
+        values = np.asarray(da).tolist()
+    elif values is False:
+        values = None
+
+    reference_system = maybe_infer_reference_system(ds, reference_system)
+
+    return AdditionalDimension(
+        dict(
+            type=type,
+            extent=extent,
+            step=step,
+            values=values,
+            description=description or da.attrs.get("long_name"),
+            reference_system=reference_system,
+        )
+    )
+
+
 def build_variables(ds):
     keys = set(ds.variables) - set(ds.dims)
     variables = {}
@@ -155,24 +225,25 @@ def build_variables(ds):
         if k not in keys:
             continue
         if k in ds.coords:
-            type_ = "auxiliary"
+            type_ = VariableType.AUXILIARY
         else:
-            type_ = "data"
+            type_ = VariableType.DATA
 
         if v.chunks:
             chunks = v.data.chunksize
         else:
             chunks = None
 
-        # print("v", v.attrs)
         var = Variable(
-            type=type_,
-            description=v.attrs.get("long_name", None),
-            dimensions=list(v.dims),
-            unit=v.attrs.get("units", None),
-            attrs=v.attrs,
-            shape=v.shape,
-            chunks=chunks,
+            dict(
+                type=type_,
+                description=v.attrs.get("long_name", None),
+                dimensions=list(v.dims),
+                unit=v.attrs.get("units", None),
+                attrs=v.attrs,
+                shape=v.shape,
+                chunks=chunks,
+            )
         )
         variables[k] = var
     return variables
@@ -199,7 +270,7 @@ def xarray_to_stac(
     vertical_extent=None,
     vertical_values=None,
     vertical_step=None,
-    **additional_dimensions,
+    additional_dimensions=None,
 ) -> pystac.Collection:
     """
     Construct a STAC Collection from an xarray Dataset.
@@ -247,26 +318,28 @@ def xarray_to_stac(
         )
 
     if vertical_dimension:
-        raise NotImplementedError
-    #     dimensions[vertical_dimension] = build_vertical_dimension(
-    #         ds,
-    #         vertical_dimension,
-    #         "z",
-    #         vertical_extent,
-    #         vertical_values,
-    #         vertical_step,
-    #         reference_system=reference_system,
-    #     )
+        dimensions[vertical_dimension] = build_vertical_dimension(
+            ds,
+            vertical_dimension,
+            "z",
+            vertical_extent,
+            vertical_values,
+            vertical_step,
+            reference_system=reference_system,
+        )
     if additional_dimensions:
-        raise NotImplementedError
+        for k, v in additional_dimensions.items():
+            if k in dimensions:
+                raise ValueError(f"Duplicated dimension {k}")
+            dimensions[k] = build_additional_dimension(ds, k, **v)
 
     variables = build_variables(ds)
 
-    datacube = Datacube(**{"cube:dimensions": dimensions, "cube:variables": variables})
-    result = json.loads(datacube.json(by_alias=True))
-
-    result = {**result, **template}
-
+    result = {
+        "cube:dimensions": {k: v.to_dict() for k, v in dimensions.items()},
+        "cube:variables": {k: v.to_dict() for k, v in variables.items()},
+        **template
+    }
     extent = result.get("extent", {"spatial": {}, "temporal": {}})
 
     if x_dimension and y_dimension and not extent.get("spatial"):
@@ -275,14 +348,18 @@ def xarray_to_stac(
             src_crs = CRS.from_epsg(ref)
         else:
             src_crs = CRS.from_json_dict(ref)
-        left, right = result['cube:dimensions'][x_dimension]['extent']
-        bottom, top = result["cube:dimensions"][y_dimension]["extent"]
+        left, right = dimensions[x_dimension].extent
+        bottom, top = dimensions[y_dimension].extent
         bbox = [build_bbox(left, bottom, right, top, src_crs)]
         extent["spatial"] = {"bbox": bbox}
 
     if temporal_dimension and not extent.get("temporal"):
-        extent["temporal"] = [dimensions[temporal_dimension].extent[0],
-                              dimensions[temporal_dimension].extent[1]]
+        extent["temporal"] = [
+            dimensions[temporal_dimension].extent[0],
+            dimensions[temporal_dimension].extent[1],
+        ]
 
     result["extent"] = extent
-    return pystac.Collection.from_dict(result)
+    # result["stac_extensions"] = [SCHEMA_URI]
+    collection = pystac.Collection.from_dict(result)
+    return collection
