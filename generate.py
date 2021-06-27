@@ -95,7 +95,7 @@ def main(args=None):
             FULL_REGIONS[region],
             "temperature",
             "precipitation",
-            "pressure vapor",
+            "vapor pressure",
             "swe",
             "weather" if frequency == "daily" else "climate",
         ],
