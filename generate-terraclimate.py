@@ -145,9 +145,10 @@ def main(args=None):
                 if v is None:
                     del result[obj][var][k]
 
-    for link in result["links"]:
-        if link["rel"] == "root":
-            link["href"] = "../catalog.json"
+    result["links"] = [
+        x for x in result["links"]
+        if x["rel"] != "root"
+    ]
 
     with outfile as f:
         json.dump(result, f, indent=2)
