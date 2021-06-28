@@ -133,7 +133,7 @@ def maybe_infer_reference_system(ds, reference_system) -> dict:
     """
     if reference_system is None:
         # try to infer it
-        names = [k for k, v in ds.items() if "grid_mapping_name" in v.attrs]
+        names = [k for k, v in ds.variables.items() if "grid_mapping_name" in v.attrs]
         if not names:
             raise ValueError("Couldn't find a reference system")
         elif len(names) > 1:
@@ -280,9 +280,13 @@ def xarray_to_stac(
     extent = {}
 
     if x_dimension and y_dimension:
-        src_crs = CRS.from_json_dict(result['cube:dimensions']['x']['reference_system'])
-        left, right = result['cube:dimensions']['x']['extent']
-        bottom, top = result["cube:dimensions"]["y"]["extent"]
+        ref = result["cube:dimensions"][x_dimension]["reference_system"]
+        if isinstance(ref, int) or (isinstance(ref, str) and ref.isdigit()):
+            src_crs = CRS.from_epsg(ref)
+        else:
+            src_crs = CRS.from_json_dict(ref)
+        left, right = result['cube:dimensions'][x_dimension]['extent']
+        bottom, top = result["cube:dimensions"][y_dimension]["extent"]
         bbox = [build_bbox(left, bottom, right, top, src_crs)]
         extent["spatial"] = {"bbox": bbox}
 
