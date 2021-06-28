@@ -92,7 +92,7 @@ def main(args=None):
         license="proprietary",
         keywords=[
             "daymet",
-            FULL_REGIONS[region],
+            FULL_REGIONS[region].lower(),
             "temperature",
             "precipitation",
             "vapor pressure",
