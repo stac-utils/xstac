@@ -59,11 +59,10 @@ def main(args=None):
         x_dimension="lon",
         y_dimension="lat",
     )
-
-    # fixups
-    collection.extent.spatial.bboxes[0] = [[-180, -90, 180, 90]]
-
-    collection.title = f"Terraclimate"
+    collection.set_self_href(str(outfile))
+    # The coordinates are giving center of the pixel. A bit nicer to use these?
+    collection.extent.spatial.bboxes[0] = [-180, -90, 180, 90]
+    collection.title = "Terraclimate"
     # collection.links.append(
     #     pystac.Link(
     #         rel="license",
@@ -117,7 +116,15 @@ def main(args=None):
         ),
     )
 
+    collection.validate()
     # getting a failure I don't understand when actually validating with the extension.
+    # Seems to think that the extent for items should be string, but extent_closed in the schema is a number.
+    #     ValidationError: -179.97916666666666 is not of type 'string', 'null'
+    #     Failed validating 'type' in schema[3]['properties']['extent']['items']:
+    #         {'type': ['string', 'null']}
+
+    #     On instance['extent'][0]:
+    #         -179.97916666666666
     collection.stac_extensions.append(
         "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
     )
@@ -130,13 +137,6 @@ def main(args=None):
     ] = f"High-resolution global dataset of monthly climate and climatic water balance."
     result["msft:storage_account"] = "cpdataeuwest"
     result["msft:container"] = "cpdata"
-
-    # additional dimensions not implemented in xstac
-    # result["cube:dimensions"]["nv"] = {
-    #     "type": "count",
-    #     "description": "Size of the 'time_bnds' variable.",
-    #     "values": [0, 1],
-    # }
 
     # remove unset values
     for obj in ["cube:variables", "cube:dimensions"]:
