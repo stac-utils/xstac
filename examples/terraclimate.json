@@ -2,7 +2,7 @@
   "type": "Collection",
   "id": "terraclimate",
   "stac_version": "1.0.0",
-  "description": "TerraClimate is a dataset of monthly climate and climatic water balance for global terrestrial surfaces from 1958-2019. These data provide important inputs for ecological and hydrological studies at global scales that require high spatial resolution and time-varying data. All data have monthly temporal resolution and a ~4-km (1/24th degree) spatial resolution. The data cover the period from 1958-2020. We plan to update these data periodically (annually).",
+  "description": "{{ description.md }}",
   "links": [],
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
@@ -561,43 +561,7 @@
       }
     }
   },
-  "keywords": [
-    "terraclimate",
-    "actual evapotransporation",
-    "climatic water deficit",
-    "palmer drought severity index",
-    "reference evapotransporation",
-    "acculumated precipitation",
-    "runoff",
-    "soil moisture",
-    "downward shortwave radiance flux",
-    "snow water equivalent",
-    "temperature",
-    "vapor pressure",
-    "wind speed"
-  ],
   "title": "Terraclimate",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -180,
-          -90,
-          180,
-          90
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1958-01-01T00:00:00Z",
-          "2019-12-01T00:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -628,6 +592,9 @@
       "type": "application/vnd+zarr",
       "title": "Terraclimate HTTPS Zarr root",
       "description": "HTTPS URI of the Terraclimate Zarr Group on Azure Blob Storage.",
+      "xarray_kwargs": {
+        "consolidated": true
+      },
       "roles": [
         "data",
         "zarr",
@@ -639,6 +606,9 @@
       "type": "application/vnd+zarr",
       "title": "Terraclimate Azure Blob File System Zarr root",
       "description": "Azure Blob File System URI of the Terraclimate Zarr Group on Azure Blob Storage for use with adlfs.",
+      "storage_options": {
+        "account_name": "cpdataeuwest"
+      },
       "roles": [
         "data",
         "zarr",
@@ -647,11 +617,47 @@
     },
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/additional_datasets/RWz0Zk.jpg",
-      "type": "image/png",
-      "title": "Terraclimate thumbnail"
+      "title": "Terraclimate thumbnail",
+      "media_type": "image/png"
     }
   },
+  "keywords": [
+    "terraclimate",
+    "actual evapotransporation",
+    "climatic water deficit",
+    "palmer drought severity index",
+    "reference evapotransporation",
+    "acculumated precipitation",
+    "runoff",
+    "soil moisture",
+    "downward shortwave radiance flux",
+    "snow water equivalent",
+    "temperature",
+    "vapor pressure",
+    "wind speed"
+  ],
   "msft:short_description": "High-resolution global dataset of monthly climate and climatic water balance.",
-  "msft:storage_account": "cpdataeuwest",
-  "msft:container": "cpdata"
+  "msfs:msft:storage_account": "cpdataeuwest",
+  "msft:container": "cpdata",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1958-01-01T00:00:00Z",
+          "2019-12-01T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }

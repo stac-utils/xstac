@@ -7,7 +7,7 @@ import numpy as np
 import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
-from typing import List
+from typing import List, Dict
 
 from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
@@ -180,13 +180,8 @@ def build_variables(ds):
 
 def xarray_to_stac(
     ds: xr.Dataset,
-    id: str,
+    template: Dict,
     *,
-    description: str,
-    license: str,
-    stac_version: str,
-    links=None,
-    keywords: List[str] = None,
     temporal_dimension=None,
     temporal_extent=None,
     temporal_values=False,
@@ -269,17 +264,12 @@ def xarray_to_stac(
 
     datacube = Datacube(**{"cube:dimensions": dimensions, "cube:variables": variables})
     result = json.loads(datacube.json(by_alias=True))
-    result["id"] = id
-    result["description"] = description
-    result["links"] = links or []
-    result["license"] = license
-    result["stac_version"] = stac_version
-    if keywords:
-        result["keywords"] = keywords
 
-    extent = {}
+    result = {**result, **template}
 
-    if x_dimension and y_dimension:
+    extent = result.get("extent", {"spatial": {}, "temporal": {}})
+
+    if x_dimension and y_dimension and not extent.get("spatial"):
         ref = result["cube:dimensions"][x_dimension]["reference_system"]
         if isinstance(ref, int) or (isinstance(ref, str) and ref.isdigit()):
             src_crs = CRS.from_epsg(ref)
@@ -290,7 +280,7 @@ def xarray_to_stac(
         bbox = [build_bbox(left, bottom, right, top, src_crs)]
         extent["spatial"] = {"bbox": bbox}
 
-    if temporal_dimension:
+    if temporal_dimension and not extent.get("temporal"):
         extent["temporal"] = [dimensions[temporal_dimension].extent[0],
                               dimensions[temporal_dimension].extent[1]]
 

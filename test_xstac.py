@@ -120,13 +120,19 @@ def ds():
 
 def test_xarray_to_stac(ds):
     ds = fix_attrs(ds)
+    template = {
+        "id": "id",
+        "type": "Collection",
+        "links": [],
+        "description": "description",
+        "license": "license",
+        "stac_version": "1.0.0",
+    }
     result = xarray_to_stac(
         ds,
-        id="id",
-        description="description",
-        license="license",
-        stac_version="1.0.0",
+        template=template,
         temporal_dimension="time",
         x_dimension="x",
         y_dimension="y",
     )
+    assert result is not None
