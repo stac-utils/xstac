@@ -26,8 +26,9 @@ optional arguments:
   --y-dimension Y_DIMENSION
                         Coordinate name for the 'y' dimension
 
-$ xstac examples/terraclimate-template.json zarr-https examples/terraclimate.json
-$ xstac examples/terraclimate-template.json zarr-https examples/terraclimate.json \
-    --x-dimension=lon --y-dimension=lat --reference-system=4326
-$ less examples/terraclimate.json
+$ xstac examples/terraclimate/terraclimate-template.json \
+  zarr-https examples/terraclimate/terraclimate.json \
+  --x-dimension=lon --y-dimension=lat --reference-system=4326
 ```
+
+This generates the [Terraclimate STAC Collection](examples/terraclimate/terraclimate.json)
