@@ -567,6 +567,7 @@
       }
     }
   },
+  "title": "Daymet Daily Hawaii",
   "keywords": [
     "daymet",
     "hawaii",
@@ -576,28 +577,6 @@
     "swe",
     "weather"
   ],
-  "title": "Daymet Daily Hawaii",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -160.3056,
-          17.9539,
-          -154.772,
-          23.5186
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1980-01-01T12:00:00Z",
-          "2020-12-30T12:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -651,5 +630,26 @@
   "msft:group_keys": [
     "daily",
     "hawaii"
-  ]
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -160.3056,
+          17.9539,
+          -154.772,
+          23.5186
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1980-01-01T12:00:00Z",
+          "2020-12-30T12:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }

@@ -499,6 +499,7 @@
       }
     }
   },
+  "title": "Daymet Monthly Hawaii",
   "keywords": [
     "daymet",
     "hawaii",
@@ -508,7 +509,60 @@
     "swe",
     "climate"
   ],
-  "title": "Daymet Monthly Hawaii",
+  "providers": [
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host",
+        "processor"
+      ],
+      "url": "https://planetarycomputer.microsoft.com"
+    },
+    {
+      "name": "ORNL DAAC",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://doi.org/10.3334/ORNLDAAC/1840"
+    }
+  ],
+  "assets": {
+    "zarr-https": {
+      "href": "https://daymeteuwest.blob.core.windows.net/daymet-zarr/daily/hi.zarr",
+      "type": "application/vnd+zarr",
+      "title": "Daily Hawaii Daymet HTTPS Zarr root",
+      "description": "HTTPS URI of the daily Hawaii Daymet Zarr Group on Azure Blob Storage.",
+      "roles": [
+        "data",
+        "zarr",
+        "https"
+      ]
+    },
+    "zarr-abfs": {
+      "href": "abfs://daymet-zarr/daily/hi.zarr",
+      "type": "application/vnd+zarr",
+      "title": "Daily Hawaii Daymet Azure Blob File System Zarr root",
+      "description": "Azure Blob File System of the daily Hawaii Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+      "roles": [
+        "data",
+        "zarr",
+        "abfs"
+      ]
+    },
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-daily-hi.png",
+      "type": "image/png",
+      "title": "Daymet daily Hawaii map thumbnail"
+    }
+  },
+  "msft:short_description": "Daily surface weather data on a 1-km grid for Hawaii.",
+  "msft:storage_account": "daymeteuwest",
+  "msft:container": "daymet-zarr",
+  "msft:group_id": "daymet",
+  "msft:group_keys": [
+    "daily",
+    "hawaii"
+  ],
   "extent": {
     "spatial": {
       "bbox": [
@@ -529,59 +583,5 @@
       ]
     }
   },
-  "license": "proprietary",
-  "providers": [
-    {
-      "name": "Microsoft",
-      "roles": [
-        "host",
-        "processor"
-      ],
-      "url": "https://planetarycomputer.microsoft.com"
-    },
-    {
-      "name": "ORNL DAAC",
-      "roles": [
-        "producer"
-      ],
-      "url": "https://doi.org/10.3334/ORNLDAAC/1855"
-    }
-  ],
-  "assets": {
-    "zarr-https": {
-      "href": "https://daymeteuwest.blob.core.windows.net/daymet-zarr/monthly/hi.zarr",
-      "type": "application/vnd+zarr",
-      "title": "Monthly Hawaii Daymet HTTPS Zarr root",
-      "description": "HTTPS URI of the monthly Hawaii Daymet Zarr Group on Azure Blob Storage.",
-      "roles": [
-        "data",
-        "zarr",
-        "https"
-      ]
-    },
-    "zarr-abfs": {
-      "href": "abfs://daymet-zarr/monthly/hi.zarr",
-      "type": "application/vnd+zarr",
-      "title": "Monthly Hawaii Daymet Azure Blob File System Zarr root",
-      "description": "Azure Blob File System of the monthly Hawaii Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
-      "roles": [
-        "data",
-        "zarr",
-        "abfs"
-      ]
-    },
-    "thumbnail": {
-      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-monthly-hi.png",
-      "type": "image/png",
-      "title": "Daymet monthly Hawaii map thumbnail"
-    }
-  },
-  "msft:short_description": "Monthly climate summaries on a 1-km grid for Hawaii.",
-  "msft:storage_account": "daymeteuwest",
-  "msft:container": "daymet-zarr",
-  "msft:group_id": "daymet",
-  "msft:group_keys": [
-    "monthly",
-    "hawaii"
-  ]
+  "license": "proprietary"
 }
