@@ -1,6 +1,6 @@
 {
   "id": "terraclimate",
-  "description": "{{ description.md }}",
+  "description": "{{ collection.description }}",
   "license": "proprietary",
   "title": "Terraclimate",
   "links": [],

@@ -2,7 +2,7 @@
   "type": "Collection",
   "id": "terraclimate",
   "stac_version": "1.0.0",
-  "description": "{{ description.md }}",
+  "description": "{{ collection.description }}",
   "links": [],
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
