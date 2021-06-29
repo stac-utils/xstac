@@ -552,7 +552,7 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-monthly-pr.png",
       "type": "image/png",
-      "title": "Daymet Monthly Puerto Rico map thumbnail"
+      "title": "Daymet monthly Puerto Rico map thumbnail"
     }
   },
   "msft:short_description": "Monthly climate summaries on a 1-km grid for Puerto Rico.",

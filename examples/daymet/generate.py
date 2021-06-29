@@ -124,7 +124,7 @@ def generate(frequency, region):
             "thumbnail": {
                 "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
                 "type": "image/png",
-                "title": f"Daymet {frequency.title()} {FULL_REGIONS[region]} map thumbnail",
+                "title": f"Daymet {frequency} {FULL_REGIONS[region]} map thumbnail",
             },
         },
         "msft:short_description": f"{frequency.title()} {short_desc_snippet} on a 1-km grid for {FULL_REGIONS[region]}.",

@@ -620,7 +620,7 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-daily-pr.png",
       "type": "image/png",
-      "title": "Daymet Daily Puerto Rico map thumbnail"
+      "title": "Daymet daily Puerto Rico map thumbnail"
     }
   },
   "msft:short_description": "Daily surface weather data on a 1-km grid for Puerto Rico.",
