@@ -552,7 +552,7 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-monthly-hi.png",
       "type": "image/png",
-      "title": "Daymet daily Hawaii map thumbnail"
+      "title": "Daymet Monthly Hawaii map thumbnail"
     }
   },
   "msft:short_description": "Monthly climate summaries on a 1-km grid for Hawaii.",

@@ -554,7 +554,7 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-annual-pr.png",
       "type": "image/png",
-      "title": "Daymet daily Hawaii map thumbnail"
+      "title": "Daymet Annual Puerto Rico map thumbnail"
     }
   },
   "msft:short_description": "Annual climate summaries on a 1-km grid for Puerto Rico.",
