@@ -1,0 +1,77 @@
+{
+  "id": "terraclimate",
+  "description": "{{ description.md }}",
+  "license": "proprietary",
+  "title": "Terraclimate",
+  "links": [],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [-180, -90, 180, 90]
+      ]
+    }
+  },
+  "providers": [
+    {
+      "name": "Microsoft",
+      "roles": ["host", "processor"],
+      "url": "https://planetarycomputer.microsoft.com"
+    },
+    {
+      "name": "Climatology Lab",
+      "roles": ["producer"],
+      "url": "http://www.climatologylab.org/terraclimate.html"
+    },
+    {
+      "name": "Abatzoglou, J.T., S.Z. Dobrowski, S.A. Parks, K.C. Hegewisch",
+      "roles": ["producer"],
+      "url": "https://www.nature.com/articles/sdata2017191"
+    }
+  ],
+  "assets": {
+    "zarr-https": {
+      "href": "https://cpdataeuwest.blob.core.windows.net/cpdata/raw/terraclimate/4000m/raster.zarr",
+      "title": "Terraclimate HTTPS Zarr root",
+      "description": "HTTPS URI of the Terraclimate Zarr Group on Azure Blob Storage.",
+      "roles": ["data", "zarr", "https"],
+      "type": "application/vnd+zarr",
+      "xarray_kwargs": {
+        "consolidated": true
+      }
+    },
+    "zarr-abfs": {
+      "href": "az://cpdata/raw/terraclimate/4000m/raster.zarr",
+      "title": "Terraclimate Azure Blob File System Zarr root",
+      "description": "Azure Blob File System URI of the Terraclimate Zarr Group on Azure Blob Storage for use with adlfs.",
+      "roles": ["data", "zarr", "abfs"],
+      "type": "application/vnd+zarr",
+      "storage_options": {
+        "account_name": "cpdataeuwest"
+      }
+    },
+    "thumbnail": {
+      "title": "Terraclimate thumbnail",
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/additional_datasets/RWz0Zk.jpg",
+      "media_type": "image/png"
+    }
+  },
+  "keywords":  [
+      "terraclimate",
+      "actual evapotransporation",
+      "climatic water deficit",
+      "palmer drought severity index",
+      "reference evapotransporation",
+      "acculumated precipitation",
+      "runoff",
+      "soil moisture",
+      "downward shortwave radiance flux",
+      "snow water equivalent",
+      "temperature",
+      "vapor pressure",
+      "wind speed"
+  ],
+  "msft:short_description": "High-resolution global dataset of monthly climate and climatic water balance.",
+  "msfs:msft:storage_account": "cpdataeuwest",
+  "msft:container": "cpdata"
+
+}

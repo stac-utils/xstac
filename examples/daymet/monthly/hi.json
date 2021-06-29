@@ -499,6 +499,7 @@
       }
     }
   },
+  "title": "Daymet Monthly Hawaii",
   "keywords": [
     "daymet",
     "hawaii",
@@ -508,28 +509,6 @@
     "swe",
     "climate"
   ],
-  "title": "Daymet Monthly Hawaii",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -160.3056,
-          17.9539,
-          -154.772,
-          23.5186
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1980-01-16T12:00:00Z",
-          "2020-12-16T00:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -583,5 +562,26 @@
   "msft:group_keys": [
     "monthly",
     "hawaii"
-  ]
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -160.3056,
+          17.9539,
+          -154.772,
+          23.5186
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1980-01-16T12:00:00Z",
+          "2020-12-16T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }

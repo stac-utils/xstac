@@ -501,6 +501,7 @@
       }
     }
   },
+  "title": "Daymet Annual Puerto Rico",
   "keywords": [
     "daymet",
     "puerto rico",
@@ -510,28 +511,6 @@
     "swe",
     "climate"
   ],
-  "title": "Daymet Annual Puerto Rico",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -67.9927,
-          16.8444,
-          -64.1196,
-          19.9382
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1980-07-01T12:00:00Z",
-          "2020-07-01T12:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -585,5 +564,26 @@
   "msft:group_keys": [
     "annual",
     "puerto rico"
-  ]
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -67.9927,
+          16.8444,
+          -64.1196,
+          19.9382
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1980-07-01T12:00:00Z",
+          "2020-07-01T12:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }

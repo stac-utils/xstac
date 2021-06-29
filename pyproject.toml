@@ -21,4 +21,5 @@ requires = [
     "adlfs",
 ]
 
-
+[tool.flit.scripts]
+xstac = "xstac._generate:main"

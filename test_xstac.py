@@ -3,6 +3,7 @@ import xarray as xr
 import numpy as np
 import pandas as pd
 import pytest
+import pystac
 
 
 data = np.empty((40, 584, 284), dtype="float32")
@@ -120,13 +121,22 @@ def ds():
 
 def test_xarray_to_stac(ds):
     ds = fix_attrs(ds)
+    template = {
+        "id": "id",
+        "type": "Collection",
+        "links": [],
+        "description": "description",
+        "license": "license",
+        "stac_version": "1.0.0",
+    }
     result = xarray_to_stac(
         ds,
-        id="id",
-        description="description",
-        license="license",
-        stac_version="1.0.0",
+        template=template,
         temporal_dimension="time",
         x_dimension="x",
         y_dimension="y",
     )
+    assert result.id == "id"
+    assert isinstance(result, pystac.Collection)
+    assert result.description == "description"
+    assert result.license == "license"

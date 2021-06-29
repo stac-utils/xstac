@@ -499,6 +499,7 @@
       }
     }
   },
+  "title": "Daymet Monthly North America",
   "keywords": [
     "daymet",
     "north america",
@@ -508,28 +509,6 @@
     "swe",
     "climate"
   ],
-  "title": "Daymet Monthly North America",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -178.1333,
-          14.0749,
-          -53.0567,
-          82.9143
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1980-01-16T12:00:00Z",
-          "2020-12-16T00:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -583,5 +562,26 @@
   "msft:group_keys": [
     "monthly",
     "north america"
-  ]
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -178.1333,
+          14.0749,
+          -53.0567,
+          82.9143
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1980-01-16T12:00:00Z",
+          "2020-12-16T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }

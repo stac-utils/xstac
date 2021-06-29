@@ -501,6 +501,7 @@
       }
     }
   },
+  "title": "Daymet Annual Hawaii",
   "keywords": [
     "daymet",
     "hawaii",
@@ -510,28 +511,6 @@
     "swe",
     "climate"
   ],
-  "title": "Daymet Annual Hawaii",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -160.3056,
-          17.9539,
-          -154.772,
-          23.5186
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1980-07-01T12:00:00Z",
-          "2020-07-01T12:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -585,5 +564,26 @@
   "msft:group_keys": [
     "annual",
     "hawaii"
-  ]
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -160.3056,
+          17.9539,
+          -154.772,
+          23.5186
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1980-07-01T12:00:00Z",
+          "2020-07-01T12:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }
