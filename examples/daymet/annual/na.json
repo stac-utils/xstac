@@ -501,6 +501,7 @@
       }
     }
   },
+  "title": "Daymet Annual North America",
   "keywords": [
     "daymet",
     "north america",
@@ -510,28 +511,6 @@
     "swe",
     "climate"
   ],
-  "title": "Daymet Annual North America",
-  "extent": {
-    "spatial": {
-      "bbox": [
-        [
-          -178.1333,
-          14.0749,
-          -53.0567,
-          82.9143
-        ]
-      ]
-    },
-    "temporal": {
-      "interval": [
-        [
-          "1980-07-01T12:00:00Z",
-          "2020-07-01T12:00:00Z"
-        ]
-      ]
-    }
-  },
-  "license": "proprietary",
   "providers": [
     {
       "name": "Microsoft",
@@ -575,7 +554,7 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-annual-na.png",
       "type": "image/png",
-      "title": "Daymet annual North America map thumbnail"
+      "title": "Daymet daily Hawaii map thumbnail"
     }
   },
   "msft:short_description": "Annual climate summaries on a 1-km grid for North America.",
@@ -585,5 +564,26 @@
   "msft:group_keys": [
     "annual",
     "north america"
-  ]
+  ],
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -178.1333,
+          14.0749,
+          -53.0567,
+          82.9143
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1980-07-01T12:00:00Z",
+          "2020-07-01T12:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary"
 }

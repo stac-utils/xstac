@@ -523,15 +523,15 @@
       "roles": [
         "producer"
       ],
-      "url": "https://doi.org/10.3334/ORNLDAAC/1840"
+      "url": "https://doi.org/10.3334/ORNLDAAC/1855"
     }
   ],
   "assets": {
     "zarr-https": {
-      "href": "https://daymeteuwest.blob.core.windows.net/daymet-zarr/daily/hi.zarr",
+      "href": "https://daymeteuwest.blob.core.windows.net/daymet-zarr/monthly/hi.zarr",
       "type": "application/vnd+zarr",
-      "title": "Daily Hawaii Daymet HTTPS Zarr root",
-      "description": "HTTPS URI of the daily Hawaii Daymet Zarr Group on Azure Blob Storage.",
+      "title": "Monthly Hawaii Daymet HTTPS Zarr root",
+      "description": "HTTPS URI of the monthly Hawaii Daymet Zarr Group on Azure Blob Storage.",
       "roles": [
         "data",
         "zarr",
@@ -539,10 +539,10 @@
       ]
     },
     "zarr-abfs": {
-      "href": "abfs://daymet-zarr/daily/hi.zarr",
+      "href": "abfs://daymet-zarr/monthly/hi.zarr",
       "type": "application/vnd+zarr",
-      "title": "Daily Hawaii Daymet Azure Blob File System Zarr root",
-      "description": "Azure Blob File System of the daily Hawaii Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+      "title": "Monthly Hawaii Daymet Azure Blob File System Zarr root",
+      "description": "Azure Blob File System of the monthly Hawaii Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
       "roles": [
         "data",
         "zarr",
@@ -550,17 +550,17 @@
       ]
     },
     "thumbnail": {
-      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-daily-hi.png",
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-monthly-hi.png",
       "type": "image/png",
       "title": "Daymet daily Hawaii map thumbnail"
     }
   },
-  "msft:short_description": "Daily surface weather data on a 1-km grid for Hawaii.",
+  "msft:short_description": "Monthly climate summaries on a 1-km grid for Hawaii.",
   "msft:storage_account": "daymeteuwest",
   "msft:container": "daymet-zarr",
   "msft:group_id": "daymet",
   "msft:group_keys": [
-    "daily",
+    "monthly",
     "hawaii"
   ],
   "extent": {

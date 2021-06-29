@@ -66,6 +66,9 @@ def generate(frequency, region):
     other_regions = " and ".join(
         [FULL_REGIONS[key] for key in FULL_REGIONS.keys() if key != region]
     )
+    short_desc_snippet = (
+        "surface weather data" if frequency == "daily" else "climate summaries"
+    )
 
     template = {
         "id": f"daymet-{frequency}-{region}",
@@ -100,35 +103,35 @@ def generate(frequency, region):
             {
                 "name": "ORNL DAAC",
                 "roles": ["producer"],
-                "url": "https://doi.org/10.3334/ORNLDAAC/1840",
+                "url": CITATION_URLS[frequency],
             },
         ],
         "assets": {
             "zarr-https": {
-                "href": "https://daymeteuwest.blob.core.windows.net/daymet-zarr/daily/hi.zarr",
+                "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
-                "title": "Daily Hawaii Daymet HTTPS Zarr root",
-                "description": "HTTPS URI of the daily Hawaii Daymet Zarr Group on Azure Blob Storage.",
+                "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
+                "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
                 "roles": ["data", "zarr", "https"],
             },
             "zarr-abfs": {
-                "href": "abfs://daymet-zarr/daily/hi.zarr",
+                "href": f"abfs://daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
-                "title": "Daily Hawaii Daymet Azure Blob File System Zarr root",
-                "description": "Azure Blob File System of the daily Hawaii Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+                "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
+                "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
                 "roles": ["data", "zarr", "abfs"],
             },
             "thumbnail": {
-                "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-daily-hi.png",
+                "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
                 "type": "image/png",
-                "title": "Daymet daily Hawaii map thumbnail",
+                "title": f"Daymet {frequency.title()} {FULL_REGIONS[region]} map thumbnail",
             },
         },
-        "msft:short_description": "Daily surface weather data on a 1-km grid for Hawaii.",
+        "msft:short_description": f"{frequency.title()} {short_desc_snippet} on a 1-km grid for {FULL_REGIONS[region]}.",
         "msft:storage_account": "daymeteuwest",
         "msft:container": "daymet-zarr",
         "msft:group_id": "daymet",
-        "msft:group_keys": ["daily", "hawaii"],
+        "msft:group_keys": [frequency, FULL_REGIONS[region].lower()]
     }
 
     store = fsspec.get_mapper(
@@ -183,17 +186,17 @@ def main(args=None):
     frequency = args.frequency
 
     if region == "all":
-        region = list(FULL_REGIONS)
+        regions = list(FULL_REGIONS)
     else:
-        region = [region]
+        regions = [region]
 
     if frequency == "all":
-        frequency = FREQUENCIES
+        frequencies = FREQUENCIES
     else:
-        frequency = [frequency]
+        frequencies = [frequency]
 
-    for region in FULL_REGIONS:
-        for frequency in FREQUENCIES:
+    for region in regions:
+        for frequency in frequencies:
             outfile = Path(__file__).parent / f"{frequency}/{region}.json"
             result = generate(frequency, region)
 
