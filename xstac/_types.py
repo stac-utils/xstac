@@ -23,8 +23,8 @@ class TypeSpatial(BaseModel):
 
 
 class AxisXy(Enum):
-    x = 'x'
-    y = 'y'
+    x = "x"
+    y = "y"
 
 
 class AxisZ(BaseModel):
@@ -32,8 +32,8 @@ class AxisZ(BaseModel):
 
 
 class VariableType(Enum):
-    data = 'data'
-    auxiliary = 'auxiliary'
+    data = "data"
+    auxiliary = "auxiliary"
 
 
 class ExtentClosed(BaseModel):
@@ -134,8 +134,8 @@ class Datacube(BaseModel):
                 TemporalDimension,
             ],
         ]
-    ] = Field(None, alias='cube:dimensions')
-    cube_variables: Optional[Dict[str, Variable]] = Field(None, alias='cube:variables')
+    ] = Field(None, alias="cube:dimensions")
+    cube_variables: Optional[Dict[str, Variable]] = Field(None, alias="cube:variables")
 
 
 class DatacubeExtensionItem(StacExtensions):
@@ -153,6 +153,6 @@ class DatacubeExtensionItem1(StacExtensions, Datacube):
 class DatacubeExtension(BaseModel):
     __root__: Union[DatacubeExtensionItem, DatacubeExtensionItem1] = Field(
         ...,
-        description='Datacube Extension for STAC Items and STAC Collections.',
-        title='Datacube Extension',
+        description="Datacube Extension for STAC Items and STAC Collections.",
+        title="Datacube Extension",
     )

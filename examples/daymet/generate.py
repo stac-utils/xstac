@@ -39,11 +39,7 @@ CITATION_URLS = {
     "annual": "https://doi.org/10.3334/ORNLDAAC/1852",
 }
 
-FULL_REGIONS = {
-    "hi": "Hawaii",
-    "na": "North America",
-    "pr": "Puerto Rico",
-}
+FULL_REGIONS = {"hi": "Hawaii", "na": "North America", "pr": "Puerto Rico"}
 ZARR_MEDIA_TYPE = "application/vnd+zarr"
 FREQUENCIES = ["daily", "monthly", "annual"]
 
@@ -91,7 +87,7 @@ def generate(frequency, region):
             {
                 "rel": "license",
                 "href": "https://science.nasa.gov/earth-science/earth-science-data/data-information-policy",
-            },
+            }
         ],
         "extent": {"spatial": {"bbox": [BBOX[region]]}},
         "providers": [
@@ -131,7 +127,7 @@ def generate(frequency, region):
         "msft:storage_account": "daymeteuwest",
         "msft:container": "daymet-zarr",
         "msft:group_id": "daymet",
-        "msft:group_keys": [frequency, FULL_REGIONS[region].lower()]
+        "msft:group_keys": [frequency, FULL_REGIONS[region].lower()],
     }
 
     store = fsspec.get_mapper(
@@ -144,11 +140,7 @@ def generate(frequency, region):
         )
 
     collection = xstac.xarray_to_stac(
-        ds,
-        template,
-        temporal_dimension="time",
-        x_dimension="x",
-        y_dimension="y",
+        ds, template, temporal_dimension="time", x_dimension="x", y_dimension="y"
     )
 
     # getting a failure I don't understand when actually validating with the extension.

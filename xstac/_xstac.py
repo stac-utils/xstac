@@ -30,10 +30,7 @@ def build_bbox(left, bottom, right, top, src_crs):
     # left, bottom, right, top = (-5802250.0, -622000.0, -5519250.0, -39000.0)
     dst_crs = CRS.from_epsg(4326)
 
-    points = [
-        [left, right, right, left],
-        [bottom, bottom, top, top]
-    ]
+    points = [[left, right, right, left], [bottom, bottom, top, top]]
 
     transformer = Transformer.from_crs(src_crs, dst_crs, always_xy=True)
     lons, lats = transformer.transform(*points)
@@ -284,14 +281,16 @@ def xarray_to_stac(
             src_crs = CRS.from_epsg(ref)
         else:
             src_crs = CRS.from_json_dict(ref)
-        left, right = result['cube:dimensions'][x_dimension]['extent']
+        left, right = result["cube:dimensions"][x_dimension]["extent"]
         bottom, top = result["cube:dimensions"][y_dimension]["extent"]
         bbox = [build_bbox(left, bottom, right, top, src_crs)]
         extent["spatial"] = {"bbox": bbox}
 
     if temporal_dimension and not extent.get("temporal"):
-        extent["temporal"] = [dimensions[temporal_dimension].extent[0],
-                              dimensions[temporal_dimension].extent[1]]
+        extent["temporal"] = [
+            dimensions[temporal_dimension].extent[0],
+            dimensions[temporal_dimension].extent[1],
+        ]
 
     result["extent"] = extent
     return pystac.Collection.from_dict(result)

@@ -60,13 +60,8 @@ lon = xr.DataArray(
     },
 )
 
-coords = dict(
-    time=time,
-    y=y,
-    x=x,
-    lat=lat,
-    lon=lon,
-)
+coords = dict(time=time, y=y, x=x, lat=lat, lon=lon)
+
 
 @pytest.fixture
 def ds():
