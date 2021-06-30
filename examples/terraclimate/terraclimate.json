@@ -3,7 +3,14 @@
   "id": "terraclimate",
   "stac_version": "1.0.0",
   "description": "{{ collection.description }}",
-  "links": [],
+  "links": [
+    {
+      "rel": "license",
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "type": "text/html",
+      "title": "CC0-1.0 License"
+    }
+  ],
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
   ],
@@ -658,5 +665,5 @@
       ]
     }
   },
-  "license": "proprietary"
+  "license": "CC0-1.0"
 }

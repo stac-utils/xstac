@@ -1,9 +1,16 @@
 {
   "id": "terraclimate",
   "description": "{{ collection.description }}",
-  "license": "proprietary",
+  "license": "CC0-1.0",
   "title": "Terraclimate",
-  "links": [],
+  "links": [
+    {
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "rel": "license",
+      "type": "text/html",
+      "title": "CC0-1.0 License"
+    }
+  ],
   "extent": {
     "spatial": {
       "bbox": [
