@@ -40,7 +40,7 @@
   "cube:variables": {
     "aet": {
       "type": "data",
-      "description": "water_evaporation_amount",
+      "description": "Actual Evapotranspiration",
       "dimensions": [
         "time",
         "lat",
@@ -69,7 +69,7 @@
     },
     "def": {
       "type": "data",
-      "description": "water_potential_evaporation_amount_minus_water_evaporation_amount",
+      "description": "Climatic Water Deficit",
       "dimensions": [
         "time",
         "lat",
@@ -98,7 +98,7 @@
     },
     "pdsi": {
       "type": "data",
-      "description": "palmer_drought_severity_index",
+      "description": "Palmer Drought Severity Index",
       "dimensions": [
         "time",
         "lat",
@@ -127,7 +127,7 @@
     },
     "pet": {
       "type": "data",
-      "description": "water_potential_evaporation_amount",
+      "description": "Reference Evapotranspiration",
       "dimensions": [
         "time",
         "lat",
@@ -156,7 +156,7 @@
     },
     "ppt": {
       "type": "data",
-      "description": "precipitation_amount",
+      "description": "Accumulated Precipitation",
       "dimensions": [
         "time",
         "lat",
@@ -185,7 +185,7 @@
     },
     "ppt_station_influence": {
       "type": "data",
-      "description": "station_influence",
+      "description": "A number between 0 and 8, indicating the number of stations contributing to each grid value directly from CRU and interpolated to the TerraClimate grid. When this value is greater than 1, CRU data is used for the anomalies in the method. When this value is 0, JRA-55/ERA-20C/ERA-INTERIM is used for anomalies in the method.",
       "dimensions": [
         "time",
         "lat",
@@ -214,7 +214,7 @@
     },
     "q": {
       "type": "data",
-      "description": "runoff_amount",
+      "description": "Runoff",
       "dimensions": [
         "time",
         "lat",
@@ -243,7 +243,7 @@
     },
     "soil": {
       "type": "data",
-      "description": "soil_moisture_content",
+      "description": "Soil Moisture at End of Month",
       "dimensions": [
         "time",
         "lat",
@@ -272,7 +272,7 @@
     },
     "srad": {
       "type": "data",
-      "description": "downwelling_shortwave_flux_in_air",
+      "description": "Downward Shortwave Radiation Flux at the Surface",
       "dimensions": [
         "time",
         "lat",
@@ -301,7 +301,7 @@
     },
     "swe": {
       "type": "data",
-      "description": "liquid_water_content_of_surface_snow",
+      "description": "Snow Water Equivalent at End of Month",
       "dimensions": [
         "time",
         "lat",
@@ -330,7 +330,7 @@
     },
     "tmax": {
       "type": "data",
-      "description": "air_temperature",
+      "description": "Maximum 2-m Temperature",
       "dimensions": [
         "time",
         "lat",
@@ -359,7 +359,7 @@
     },
     "tmax_station_influence": {
       "type": "data",
-      "description": "station_influence",
+      "description": "A number between 0 and 8, indicating the number of stations contributing to each grid value directly from CRU and interpolated to the TerraClimate grid. When this value is greater than 1, CRU data is used for the anomalies in the method. When this value is 0, JRA-55/ERA-20C/ERA-INTERIM is used for anomalies in the method.",
       "dimensions": [
         "time",
         "lat",
@@ -388,7 +388,7 @@
     },
     "tmin": {
       "type": "data",
-      "description": "air_temperature",
+      "description": "Minimum 2-m Temperature",
       "dimensions": [
         "time",
         "lat",
@@ -417,7 +417,7 @@
     },
     "tmin_station_influence": {
       "type": "data",
-      "description": "station_influence",
+      "description": "A number between 0 and 8, indicating the number of stations contributing to each grid value directly from CRU and interpolated to the TerraClimate grid. When this value is greater than 1, CRU data is used for the anomalies in the method. When this value is 0, JRA-55/ERA-20C/ERA-INTERIM is used for anomalies in the method.",
       "dimensions": [
         "time",
         "lat",
@@ -446,7 +446,7 @@
     },
     "vap": {
       "type": "data",
-      "description": "water_vapor_partial_pressure_in_air",
+      "description": "2-m Vapor Pressure",
       "dimensions": [
         "time",
         "lat",
@@ -475,7 +475,7 @@
     },
     "vap_station_influence": {
       "type": "data",
-      "description": "station_influence",
+      "description": "A number between 0 and 8, indicating the number of stations contributing to each grid value directly from CRU and interpolated to the TerraClimate grid. When this value is greater than 1, CRU data is used for the anomalies in the method. When this value is 0, JRA-55/ERA-20C/ERA-INTERIM is used for anomalies in the method.",
       "dimensions": [
         "time",
         "lat",
@@ -504,7 +504,7 @@
     },
     "vpd": {
       "type": "data",
-      "description": "vapor_pressure_deficit",
+      "description": "Mean Vapor Pressure Deficit",
       "dimensions": [
         "time",
         "lat",
@@ -533,7 +533,7 @@
     },
     "ws": {
       "type": "data",
-      "description": "wind_speed",
+      "description": "10-m Wind Speed",
       "dimensions": [
         "time",
         "lat",

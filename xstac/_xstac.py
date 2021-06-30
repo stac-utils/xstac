@@ -165,9 +165,10 @@ def build_variables(ds):
             chunks = None
 
         # print("v", v.attrs)
+        description = v.attrs.get("description", None) or v.attrs.get("long_name", None)
         var = Variable(
             type=type_,
-            description=v.attrs.get("long_name", None),
+            description=description,
             dimensions=list(v.dims),
             unit=v.attrs.get("units", None),
             attrs=v.attrs,
