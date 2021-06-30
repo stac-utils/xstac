@@ -52,7 +52,7 @@
     "thumbnail": {
       "title": "Terraclimate thumbnail",
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/additional_datasets/RWz0Zk.jpg",
-      "media_type": "image/png"
+      "type": "image/png"
     }
   },
   "keywords":  [
