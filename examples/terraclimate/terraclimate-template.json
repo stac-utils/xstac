@@ -1,6 +1,9 @@
 {
   "id": "terraclimate",
   "description": "{{ collection.description }}",
+  "stac_extensions": [
+    "https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json"
+  ],
   "license": "CC0-1.0",
   "title": "Terraclimate",
   "links": [
@@ -42,7 +45,7 @@
       "description": "HTTPS URI of the Terraclimate Zarr Group on Azure Blob Storage.",
       "roles": ["data", "zarr", "https"],
       "type": "application/vnd+zarr",
-      "xarray_kwargs": {
+      "xarray:open_kwargs": {
         "consolidated": true
       }
     },
@@ -52,7 +55,7 @@
       "description": "Azure Blob File System URI of the Terraclimate Zarr Group on Azure Blob Storage for use with adlfs.",
       "roles": ["data", "zarr", "abfs"],
       "type": "application/vnd+zarr",
-      "storage_options": {
+      "xarray:storage_options": {
         "account_name": "cpdataeuwest"
       }
     },

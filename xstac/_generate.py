@@ -66,9 +66,9 @@ def main(args=None):
     asset = template["assets"][asset_key]
 
     store = fsspec.get_mapper(
-        asset["href"], **asset.get("storage_options", {})
+        asset["href"], **asset.get("xarray:storage_options", {})
     )
-    ds = xr.open_zarr(store, **asset.get("xarray_kwargs", {}))
+    ds = xr.open_zarr(store, **asset.get("xarray:open_kwargs", {}))
 
     collection = xstac.xarray_to_stac(
         ds,

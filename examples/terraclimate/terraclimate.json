@@ -12,6 +12,7 @@
     }
   ],
   "stac_extensions": [
+    "https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json",
     "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
   ],
   "cube:dimensions": {
@@ -599,7 +600,7 @@
       "type": "application/vnd+zarr",
       "title": "Terraclimate HTTPS Zarr root",
       "description": "HTTPS URI of the Terraclimate Zarr Group on Azure Blob Storage.",
-      "xarray_kwargs": {
+      "xarray:open_kwargs": {
         "consolidated": true
       },
       "roles": [
@@ -613,7 +614,7 @@
       "type": "application/vnd+zarr",
       "title": "Terraclimate Azure Blob File System Zarr root",
       "description": "Azure Blob File System URI of the Terraclimate Zarr Group on Azure Blob Storage for use with adlfs.",
-      "storage_options": {
+      "xarray:storage_options": {
         "account_name": "cpdataeuwest"
       },
       "roles": [
