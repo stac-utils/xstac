@@ -54,6 +54,9 @@ def main(args=None):
     x_dimension = args.x_dimension
     y_dimension = args.y_dimension
 
+    if reference_system and reference_system.isdigit():
+        reference_system = int(reference_system)
+
     with args.template as f:
         template = json.load(f)
 

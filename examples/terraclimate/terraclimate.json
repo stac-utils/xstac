@@ -24,7 +24,7 @@
         -179.97916666666666,
         179.97916666666666
       ],
-      "reference_system": "4326"
+      "reference_system": 4326
     },
     "lat": {
       "type": "spatial",
@@ -34,7 +34,7 @@
         -89.97916666666664,
         89.97916666666667
       ],
-      "reference_system": "4326"
+      "reference_system": 4326
     }
   },
   "cube:variables": {

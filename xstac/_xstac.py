@@ -266,6 +266,14 @@ def xarray_to_stac(
     datacube = Datacube(**{"cube:dimensions": dimensions, "cube:variables": variables})
     result = json.loads(datacube.json(by_alias=True))
 
+    # Fixup to ensure that epsg codes remain as digits, rather than strings.
+    # Currently they're being cast to string by the _types stuff.
+    # TODO(pystac): check if this is unnecessary
+    for dimension in result["cube:dimensions"].values():
+        ref = dimension.get("reference_system")
+        if isinstance(ref, str) and ref.isdigit():
+            dimension["reference_system"] = int(ref)
+
     result = {**result, **template}
 
     extent = result.get("extent", {"spatial": {}, "temporal": {}})
