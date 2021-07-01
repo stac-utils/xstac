@@ -23,3 +23,9 @@ requires = [
 
 [tool.flit.scripts]
 xstac = "xstac._generate:main"
+
+[tool.flit.metadata.requires-extra]
+dev = [
+  "pytest",
+  "pre-commit",
+]

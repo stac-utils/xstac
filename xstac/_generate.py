@@ -49,6 +49,11 @@ def parse_args(args=None):
     parser.add_argument(
         "--y-dimension", default="y", help="Coordinate name for the 'y' dimension"
     )
+    parser.add_argument(
+        "--no-validate",
+        action="store_false",
+        help="Whether to skip validation of the collection.",
+    )
 
     return parser.parse_args(args)
 
@@ -60,6 +65,7 @@ def generate(
     y_dimension="y",
     temporal_dimension="time",
     reference_system=None,
+    validate: bool = True,
 ):
     template = copy.deepcopy(template)
     template.setdefault("type", "Collection")
@@ -77,6 +83,7 @@ def generate(
         temporal_dimension=temporal_dimension,
         x_dimension=x_dimension,
         y_dimension=y_dimension,
+        validate=validate,
     )
     collection.set_self_href("collection.json")
     collection.validate()
@@ -115,6 +122,7 @@ def main(args=None):
     temporal_dimension = args.temporal_dimension
     x_dimension = args.x_dimension
     y_dimension = args.y_dimension
+    validate = not args.no_validate
 
     if reference_system and reference_system.isdigit():
         reference_system = int(reference_system)
@@ -129,6 +137,7 @@ def main(args=None):
         y_dimension=y_dimension,
         temporal_dimension=temporal_dimension,
         reference_system=reference_system,
+        validate=validate,
     )
 
     with outfile as f:

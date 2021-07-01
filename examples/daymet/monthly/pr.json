@@ -563,6 +563,9 @@
     "monthly",
     "puerto rico"
   ],
+  "stac_collections": [
+    "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+  ],
   "extent": {
     "spatial": {
       "bbox": [

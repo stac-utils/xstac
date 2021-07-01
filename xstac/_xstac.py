@@ -197,6 +197,7 @@ def xarray_to_stac(
     vertical_extent=None,
     vertical_values=None,
     vertical_step=None,
+    validate: bool = True,
     **additional_dimensions,
 ) -> pystac.Collection:
     """
@@ -273,7 +274,9 @@ def xarray_to_stac(
 
     result = {**result, **template}
 
-    extent = result.get("extent", {"spatial": {}, "temporal": {}})
+    extent = result.get("extent")
+    extent.setdefault("spatial", {})
+    extent.setdefault("temporal", {})
 
     if x_dimension and y_dimension and not extent.get("spatial"):
         ref = result["cube:dimensions"][x_dimension]["reference_system"]
@@ -287,10 +290,22 @@ def xarray_to_stac(
         extent["spatial"] = {"bbox": bbox}
 
     if temporal_dimension and not extent.get("temporal"):
-        extent["temporal"] = [
-            dimensions[temporal_dimension].extent[0],
-            dimensions[temporal_dimension].extent[1],
+        extent["temporal"]["interval"] = [
+            [
+                dimensions[temporal_dimension].extent[0],
+                dimensions[temporal_dimension].extent[1],
+            ]
         ]
 
     result["extent"] = extent
-    return pystac.Collection.from_dict(result)
+    result.setdefault("stac_collections", [])
+    # TODO: get from pystac
+    result["stac_collections"].append(
+        "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+    )
+    collection = pystac.Collection.from_dict(result)
+
+    if validate:
+        collection.normalize_hrefs("/")
+        collection.validate()
+    return collection
