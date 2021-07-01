@@ -274,7 +274,7 @@ def xarray_to_stac(
 
     result = {**result, **template}
 
-    extent = result.get("extent")
+    extent = result.get("extent", {})
     extent.setdefault("spatial", {})
     extent.setdefault("temporal", {})
 
