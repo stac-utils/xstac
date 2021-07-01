@@ -569,7 +569,7 @@
       }
     }
   },
-  "title": "Terraclimate",
+  "title": "TerraClimate",
   "providers": [
     {
       "name": "Microsoft",
@@ -598,8 +598,8 @@
     "zarr-https": {
       "href": "https://cpdataeuwest.blob.core.windows.net/cpdata/raw/terraclimate/4000m/raster.zarr",
       "type": "application/vnd+zarr",
-      "title": "Terraclimate HTTPS Zarr root",
-      "description": "HTTPS URI of the Terraclimate Zarr Group on Azure Blob Storage.",
+      "title": "TerraClimate HTTPS Zarr root",
+      "description": "HTTPS URI of the TerraClimate Zarr Group on Azure Blob Storage.",
       "xarray:open_kwargs": {
         "consolidated": true
       },
@@ -612,8 +612,8 @@
     "zarr-abfs": {
       "href": "az://cpdata/raw/terraclimate/4000m/raster.zarr",
       "type": "application/vnd+zarr",
-      "title": "Terraclimate Azure Blob File System Zarr root",
-      "description": "Azure Blob File System URI of the Terraclimate Zarr Group on Azure Blob Storage for use with adlfs.",
+      "title": "TerraClimate Azure Blob File System Zarr root",
+      "description": "Azure Blob File System URI of the TerraClimate Zarr Group on Azure Blob Storage for use with adlfs.",
       "xarray:storage_options": {
         "account_name": "cpdataeuwest"
       },
@@ -626,7 +626,7 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/terraclimate.png",
       "type": "image/png",
-      "title": "Terraclimate thumbnail"
+      "title": "TerraClimate thumbnail"
     }
   },
   "keywords": [
