@@ -15,6 +15,7 @@ requires = [
     "pyproj",
     "pydantic",
     "zarr",
+    "jsonschema",
     "dask[array]",  # for chunking
     # these are just for generate
     "fsspec",
