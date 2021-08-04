@@ -303,6 +303,14 @@ def xarray_to_stac(
     result["stac_collections"].append(
         "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
     )
+
+    if temporal_dimension:
+        values = result["cube:dimensions"][temporal_dimension]["values"]
+        if values is None:
+            # For some reason, including None here causes validation to fail...
+            # https://github.com/TomAugspurger/xstac/issues/9
+            del result["cube:dimensions"][temporal_dimension]["values"]
+
     collection = pystac.Collection.from_dict(result)
 
     if validate:

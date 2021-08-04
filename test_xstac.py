@@ -455,3 +455,38 @@ def test_xarray_to_stac(ds):
         },
     }
     assert result.extra_fields["cube:variables"] == expected
+
+
+def test_validation_with_none():
+    # https://github.com/TomAugspurger/xstac/issues/9
+    template = {
+        "type": "Collection",
+        "id": "cesm2-lens",
+        "stac_version": "1.0.0",
+        "description": "desc",
+        "stac_extensions": [
+            "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+        ],
+        "extent": {
+            "spatial": {"bbox": [[-180, -90, 180, 90]]},
+            "temporal": {
+                "interval": [["1851-01-01T00:00:00Z", "1851-01-01T00:00:00Z"]]
+            },
+        },
+        "providers": [],
+        "license": "CC0-1.0",
+        "links": [],
+    }
+    ds = xr.Dataset(
+        {
+            "data": xr.DataArray(
+                [1, 2],
+                dims=("time",),
+                coords={"time": pd.to_datetime(["2021-01-01", "2021-01-02"])},
+            )
+        }
+    )
+    ds.time.attrs["long_name"] = "time"
+    c = xarray_to_stac(ds, template, temporal_dimension="time")
+    c.normalize_hrefs("/")
+    c.validate()
