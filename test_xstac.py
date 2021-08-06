@@ -141,7 +141,7 @@ def test_xarray_to_stac(ds):
         "time": {
             "type": "temporal",
             "description": "24-hour day based on local time",
-            "values": None,
+            # "values": None,
             "extent": ["1980-07-31T00:00:00Z", "2019-07-31T00:00:00Z"],
             "step": None,
         },
