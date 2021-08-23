@@ -111,11 +111,10 @@ def ds():
             "start_year": [1980],
         },
     )
-    return ds
+    return fix_attrs(ds)
 
 
 def test_xarray_to_stac(ds):
-    ds = fix_attrs(ds)
     template = {
         "id": "id",
         "type": "Collection",
@@ -355,9 +354,6 @@ def test_xarray_to_stac(ds):
         },
     }
     assert dimensions == expected
-
-    variables = result.extra_fields["cube:variables"]
-
     expected = {
         "lat": {
             "type": "auxiliary",
@@ -490,3 +486,345 @@ def test_validation_with_none():
     c = xarray_to_stac(ds, template, temporal_dimension="time")
     c.normalize_hrefs("/")
     c.validate()
+
+
+def test_xarray_to_stac_item(ds):
+    template = {
+        "id": "id",
+        "type": "Feature",
+        "links": [],
+        "geometry": None,
+        "stac_version": "1.0.0",
+        "properties": {"datetime": "2021-01-01T00:00:00Z"},
+        "assets": {},
+    }
+    result = xarray_to_stac(
+        ds,
+        template=template,
+        temporal_dimension="time",
+        x_dimension="x",
+        y_dimension="y",
+        validate=False,
+    )
+    assert result.id == "id"
+    assert isinstance(result, pystac.Item)
+
+    dimensions = result.properties["cube:dimensions"]
+    expected = {
+        "time": {
+            "type": "temporal",
+            "description": "24-hour day based on local time",
+            # "values": None,
+            "extent": ["1980-07-31T00:00:00Z", "2019-07-31T00:00:00Z"],
+            "step": None,
+        },
+        "x": {
+            "type": "spatial",
+            "axis": "x",
+            "description": "x coordinate of projection",
+            "extent": [-5802250.0, -5519250.0],
+            "values": None,
+            "step": 1000.0,
+            "reference_system": {
+                "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "undefined",
+                "base_crs": {
+                    "name": "undefined",
+                    "datum": {
+                        "type": "GeodeticReferenceFrame",
+                        "name": "undefined",
+                        "ellipsoid": {
+                            "name": "undefined",
+                            "semi_major_axis": 6378137,
+                            "inverse_flattening": 298.257223563,
+                        },
+                    },
+                    "coordinate_system": {
+                        "subtype": "ellipsoidal",
+                        "axis": [
+                            {
+                                "name": "Longitude",
+                                "abbreviation": "lon",
+                                "direction": "east",
+                                "unit": "degree",
+                            },
+                            {
+                                "name": "Latitude",
+                                "abbreviation": "lat",
+                                "direction": "north",
+                                "unit": "degree",
+                            },
+                        ],
+                    },
+                },
+                "conversion": {
+                    "name": "unknown",
+                    "method": {
+                        "name": "Lambert Conic Conformal (2SP)",
+                        "id": {"authority": "EPSG", "code": 9802},
+                    },
+                    "parameters": [
+                        {
+                            "name": "Latitude of 1st standard parallel",
+                            "value": 25,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8823},
+                        },
+                        {
+                            "name": "Latitude of 2nd standard parallel",
+                            "value": 60,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8824},
+                        },
+                        {
+                            "name": "Latitude of false origin",
+                            "value": 42.5,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8821},
+                        },
+                        {
+                            "name": "Longitude of false origin",
+                            "value": -100,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8822},
+                        },
+                        {
+                            "name": "Easting at false origin",
+                            "value": 0,
+                            "unit": "metre",
+                            "id": {"authority": "EPSG", "code": 8826},
+                        },
+                        {
+                            "name": "Northing at false origin",
+                            "value": 0,
+                            "unit": "metre",
+                            "id": {"authority": "EPSG", "code": 8827},
+                        },
+                    ],
+                },
+                "coordinate_system": {
+                    "subtype": "Cartesian",
+                    "axis": [
+                        {
+                            "name": "Easting",
+                            "abbreviation": "E",
+                            "direction": "east",
+                            "unit": "metre",
+                        },
+                        {
+                            "name": "Northing",
+                            "abbreviation": "N",
+                            "direction": "north",
+                            "unit": "metre",
+                        },
+                    ],
+                },
+            },
+        },
+        "y": {
+            "type": "spatial",
+            "axis": "y",
+            "description": "y coordinate of projection",
+            "extent": [-622000.0, -39000.0],
+            "values": None,
+            "step": -1000.0,
+            "reference_system": {
+                "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+                "type": "ProjectedCRS",
+                "name": "undefined",
+                "base_crs": {
+                    "name": "undefined",
+                    "datum": {
+                        "type": "GeodeticReferenceFrame",
+                        "name": "undefined",
+                        "ellipsoid": {
+                            "name": "undefined",
+                            "semi_major_axis": 6378137,
+                            "inverse_flattening": 298.257223563,
+                        },
+                    },
+                    "coordinate_system": {
+                        "subtype": "ellipsoidal",
+                        "axis": [
+                            {
+                                "name": "Longitude",
+                                "abbreviation": "lon",
+                                "direction": "east",
+                                "unit": "degree",
+                            },
+                            {
+                                "name": "Latitude",
+                                "abbreviation": "lat",
+                                "direction": "north",
+                                "unit": "degree",
+                            },
+                        ],
+                    },
+                },
+                "conversion": {
+                    "name": "unknown",
+                    "method": {
+                        "name": "Lambert Conic Conformal (2SP)",
+                        "id": {"authority": "EPSG", "code": 9802},
+                    },
+                    "parameters": [
+                        {
+                            "name": "Latitude of 1st standard parallel",
+                            "value": 25,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8823},
+                        },
+                        {
+                            "name": "Latitude of 2nd standard parallel",
+                            "value": 60,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8824},
+                        },
+                        {
+                            "name": "Latitude of false origin",
+                            "value": 42.5,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8821},
+                        },
+                        {
+                            "name": "Longitude of false origin",
+                            "value": -100,
+                            "unit": "degree",
+                            "id": {"authority": "EPSG", "code": 8822},
+                        },
+                        {
+                            "name": "Easting at false origin",
+                            "value": 0,
+                            "unit": "metre",
+                            "id": {"authority": "EPSG", "code": 8826},
+                        },
+                        {
+                            "name": "Northing at false origin",
+                            "value": 0,
+                            "unit": "metre",
+                            "id": {"authority": "EPSG", "code": 8827},
+                        },
+                    ],
+                },
+                "coordinate_system": {
+                    "subtype": "Cartesian",
+                    "axis": [
+                        {
+                            "name": "Easting",
+                            "abbreviation": "E",
+                            "direction": "east",
+                            "unit": "metre",
+                        },
+                        {
+                            "name": "Northing",
+                            "abbreviation": "N",
+                            "direction": "north",
+                            "unit": "metre",
+                        },
+                    ],
+                },
+            },
+        },
+    }
+    assert dimensions == expected
+    expected = {
+        "lat": {
+            "type": "auxiliary",
+            "description": "latitude coordinate",
+            "dimensions": ["y", "x"],
+            "values": None,
+            "extent": None,
+            "step": None,
+            "unit": "degrees_north",
+            "shape": [584, 284],
+            "chunks": None,
+            "attrs": {
+                "units": "degrees_north",
+                "long_name": "latitude coordinate",
+                "standard_name": "latitude",
+            },
+        },
+        "lon": {
+            "type": "auxiliary",
+            "description": "longitude coordinate",
+            "dimensions": ["y", "x"],
+            "values": None,
+            "extent": None,
+            "step": None,
+            "unit": "degrees_east",
+            "shape": [584, 284],
+            "chunks": None,
+            "attrs": {
+                "units": "degrees_east",
+                "long_name": "longitude coordinate",
+                "standard_name": "longitude",
+            },
+        },
+        "prcp": {
+            "type": "data",
+            "description": "annual total precipitation",
+            "dimensions": ["time", "y", "x"],
+            "values": None,
+            "extent": None,
+            "step": None,
+            "unit": "mm",
+            "shape": [40, 584, 284],
+            "chunks": None,
+            "attrs": {
+                "grid_mapping": "lambert_conformal_conic",
+                "cell_methods": "area: mean time: sum within days time: sum over days",
+                "units": "mm",
+                "long_name": "annual total precipitation",
+            },
+        },
+        "swe": {
+            "type": "data",
+            "description": None,
+            "dimensions": ["time", "y", "x"],
+            "values": None,
+            "extent": None,
+            "step": None,
+            "unit": None,
+            "shape": [40, 584, 284],
+            "chunks": None,
+            "attrs": {},
+        },
+        "time_bnds": {
+            "type": "data",
+            "description": None,
+            "dimensions": ["time", "nv"],
+            "values": None,
+            "extent": None,
+            "step": None,
+            "unit": None,
+            "shape": [40, 2],
+            "chunks": None,
+            "attrs": {"time": "days since 1950-01-01 00:00:00"},
+        },
+        "lambert_conformal_conic": {
+            "type": "data",
+            "description": None,
+            "dimensions": [],
+            "values": None,
+            "extent": None,
+            "step": None,
+            "unit": None,
+            "shape": [],
+            "chunks": None,
+            "attrs": {
+                "grid_mapping_name": "lambert_conformal_conic",
+                "longitude_of_central_meridian": -100.0,
+                "latitude_of_projection_origin": 42.5,
+                "false_easting": 0.0,
+                "false_northing": 0.0,
+                "standard_parallel": [25.0, 60.0],
+                "semi_major_axis": 6378137.0,
+                "inverse_flattening": 298.257223563,
+            },
+        },
+    }
+    assert result.properties["cube:variables"] == expected
+
+    assert result.properties["start_datetime"] == "1980-07-31T00:00:00Z"
+    assert result.properties["end_datetime"] == "2019-07-31T00:00:00Z"

@@ -1,7 +1,9 @@
 """
 xstac
 """
+import copy
 import json
+from pystac import stac_object
 import xarray as xr
 import numpy as np
 import pystac
@@ -176,9 +178,8 @@ def build_variables(ds):
     return variables
 
 
-def xarray_to_stac(
-    ds: xr.Dataset,
-    template: Dict,
+def build_datacube(
+    ds,
     *,
     temporal_dimension=None,
     temporal_extent=None,
@@ -197,26 +198,8 @@ def xarray_to_stac(
     vertical_extent=None,
     vertical_values=None,
     vertical_step=None,
-    validate: bool = True,
     **additional_dimensions,
-) -> pystac.Collection:
-    """
-    Construct a STAC Collection from an xarray Dataset.
-
-    Parameters
-    ----------
-    temporal_dimension, x_dimension, y_dimension, vertical_dimension:
-        The name of the (temporal, x, y, vertical) dimension
-    temporal_extent, x_extent, y_extent:
-        The lower and upper bounds of the (temporal, x, y vertical) dimension (inclusive).
-    temporal_values, x_values, y_values, vertical_values:
-        The actual values / coordinates of the (temporal, x, y, vertical) dimension. Keep in mind the impact on the size of the STAC collection.
-        Should not be specified when `temporal_step` is specified. Prefer `temporal_step` when the temporal coordinates are regularly spaced.
-    temporal_step, x_step, y_step, vertical_step:
-        The difference between subsequent values in the (temporal, x, y vertical) dimension. Only specify when the values are regularly spaced.
-    **additional_dimensions:
-        A dictionary with keys ``extent``, ``values``, ``step``.
-    """
+):
     dimensions = {}
 
     if temporal_dimension is not None:
@@ -263,41 +246,122 @@ def xarray_to_stac(
 
     datacube = Datacube(**{"cube:dimensions": dimensions, "cube:variables": variables})
     result = json.loads(datacube.json(by_alias=True))
+    return result
+
+
+def xarray_to_stac(
+    ds: xr.Dataset,
+    template: Dict,
+    *,
+    temporal_dimension=None,
+    temporal_extent=None,
+    temporal_values=False,
+    temporal_step=None,
+    x_dimension=None,
+    x_extent=None,
+    x_values=False,
+    x_step=None,
+    y_dimension=None,
+    y_extent=None,
+    y_values=False,
+    y_step=None,
+    reference_system=None,
+    vertical_dimension=None,
+    vertical_extent=None,
+    vertical_values=None,
+    vertical_step=None,
+    validate: bool = True,
+    **additional_dimensions,
+) -> pystac.Collection:
+    """
+    Construct a STAC Collection from an xarray Dataset.
+
+    Parameters
+    ----------
+    template : dict
+        A template to use for creating the pystac Collection / Item.
+    temporal_dimension, x_dimension, y_dimension, vertical_dimension:
+        The name of the (temporal, x, y, vertical) dimension
+    temporal_extent, x_extent, y_extent:
+        The lower and upper bounds of the (temporal, x, y vertical) dimension (inclusive).
+    temporal_values, x_values, y_values, vertical_values:
+        The actual values / coordinates of the (temporal, x, y, vertical) dimension. Keep in mind the impact on the size of the STAC collection.
+        Should not be specified when `temporal_step` is specified. Prefer `temporal_step` when the temporal coordinates are regularly spaced.
+    temporal_step, x_step, y_step, vertical_step:
+        The difference between subsequent values in the (temporal, x, y vertical) dimension. Only specify when the values are regularly spaced.
+    **additional_dimensions:
+        A dictionary with keys ``extent``, ``values``, ``step``.
+    """
+    datacube = build_datacube(
+        ds,
+        temporal_dimension=temporal_dimension,
+        temporal_extent=temporal_extent,
+        temporal_values=temporal_values,
+        temporal_step=temporal_step,
+        x_dimension=x_dimension,
+        x_extent=x_extent,
+        x_values=x_values,
+        x_step=x_step,
+        y_dimension=y_dimension,
+        y_extent=y_extent,
+        y_values=y_values,
+        y_step=y_step,
+        reference_system=reference_system,
+        vertical_dimension=vertical_dimension,
+        vertical_extent=vertical_extent,
+        vertical_values=vertical_values,
+        vertical_step=vertical_step,
+        **additional_dimensions,
+    )
 
     # Fixup to ensure that epsg codes remain as digits, rather than strings.
     # Currently they're being cast to string by the _types stuff.
     # TODO(pystac): check if this is unnecessary
-    for dimension in result["cube:dimensions"].values():
+    for dimension in datacube["cube:dimensions"].values():
         ref = dimension.get("reference_system")
         if isinstance(ref, str) and ref.isdigit():
             dimension["reference_system"] = int(ref)
 
-    result = {**result, **template}
+    is_item = template.get("type") == "Feature"
+    result = copy.deepcopy(template)
+    if is_item:
+        result["properties"] = {**datacube, **template["properties"]}
+    else:
+        result = {**datacube, **template}
 
     extent = result.get("extent", {})
     extent.setdefault("spatial", {})
     extent.setdefault("temporal", {})
 
     if x_dimension and y_dimension and not extent.get("spatial"):
-        ref = result["cube:dimensions"][x_dimension]["reference_system"]
+        ref = datacube["cube:dimensions"][x_dimension]["reference_system"]
         if isinstance(ref, int) or (isinstance(ref, str) and ref.isdigit()):
             src_crs = CRS.from_epsg(ref)
         else:
             src_crs = CRS.from_json_dict(ref)
-        left, right = result["cube:dimensions"][x_dimension]["extent"]
-        bottom, top = result["cube:dimensions"][y_dimension]["extent"]
-        bbox = [build_bbox(left, bottom, right, top, src_crs)]
-        extent["spatial"] = {"bbox": bbox}
+        left, right = datacube["cube:dimensions"][x_dimension]["extent"]
+        bottom, top = datacube["cube:dimensions"][y_dimension]["extent"]
+        bbox = build_bbox(left, bottom, right, top, src_crs)
+
+        if is_item:
+            result["bbox"] = bbox
+        else:
+            extent["spatial"] = {"bbox": [bbox]}
 
     if temporal_dimension and not extent.get("temporal"):
-        extent["temporal"]["interval"] = [
-            [
-                dimensions[temporal_dimension].extent[0],
-                dimensions[temporal_dimension].extent[1],
-            ]
-        ]
+        start_datetime, end_datetime = (
+            datacube["cube:dimensions"][temporal_dimension]["extent"][0],
+            datacube["cube:dimensions"][temporal_dimension]["extent"][1],
+        )
+        if is_item:
+            result["properties"]["start_datetime"] = start_datetime
+            result["properties"]["end_datetime"] = end_datetime
+        else:
+            extent["temporal"]["interval"] = [[start_datetime, end_datetime]]
 
-    result["extent"] = extent
+    if not is_item:
+        result["extent"] = extent
+
     result.setdefault("stac_collections", [])
     # TODO: get from pystac
     result["stac_collections"].append(
@@ -305,15 +369,25 @@ def xarray_to_stac(
     )
 
     if temporal_dimension:
-        values = result["cube:dimensions"][temporal_dimension]["values"]
+        values = datacube["cube:dimensions"][temporal_dimension]["values"]
         if values is None:
             # For some reason, including None here causes validation to fail...
             # https://github.com/TomAugspurger/xstac/issues/9
-            del result["cube:dimensions"][temporal_dimension]["values"]
+            if is_item:
+                del result["properties"]["cube:dimensions"][temporal_dimension][
+                    "values"
+                ]
+            else:
+                del result["cube:dimensions"][temporal_dimension]["values"]
 
-    collection = pystac.Collection.from_dict(result)
+    stac_obj = pystac.read_dict(result)
 
     if validate:
-        collection.normalize_hrefs("/")
-        collection.validate()
-    return collection
+        if isinstance(stac_obj, pystac.Collection):
+            stac_obj.normalize_hrefs("/")
+        if is_item and stac_obj.get("geometry") is None:
+            # https://github.com/sparkgeo/stac-validator/issues/176
+            raise ValueError("Upstream bug validating when geometry is null.")
+        else:
+            stac_obj.validate()
+    return stac_obj
