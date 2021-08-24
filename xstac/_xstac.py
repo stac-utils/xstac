@@ -14,6 +14,21 @@ from typing import List, Dict
 from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
 
+def _bbox_to_geometry(bbox):
+    return {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [bbox[2], bbox[1]],
+                [bbox[2], bbox[3]],
+                [bbox[0], bbox[3]],
+                [bbox[0], bbox[1]],
+                [bbox[2], bbox[1]],
+            ]
+        ],
+    }
+
+
 def fix_attrs(ds):
     ds = type(ds)(ds)
 
@@ -345,6 +360,8 @@ def xarray_to_stac(
 
         if is_item:
             result["bbox"] = bbox
+            # TODO: probably broken...
+            result["geometry"] = _bbox_to_geometry(bbox)
         else:
             extent["spatial"] = {"bbox": [bbox]}
 
@@ -385,9 +402,6 @@ def xarray_to_stac(
     if validate:
         if isinstance(stac_obj, pystac.Collection):
             stac_obj.normalize_hrefs("/")
-        if is_item and stac_obj.get("geometry") is None:
-            # https://github.com/sparkgeo/stac-validator/issues/176
-            raise ValueError("Upstream bug validating when geometry is null.")
         else:
             stac_obj.validate()
     return stac_obj

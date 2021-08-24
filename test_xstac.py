@@ -1,9 +1,12 @@
 from xstac import xarray_to_stac, fix_attrs
+from xstac._xstac import _bbox_to_geometry
 import xarray as xr
 import numpy as np
 import pandas as pd
 import pytest
 import pystac
+
+import xstac
 
 
 data = np.empty((40, 584, 284), dtype="float32")
@@ -504,7 +507,6 @@ def test_xarray_to_stac_item(ds):
         temporal_dimension="time",
         x_dimension="x",
         y_dimension="y",
-        validate=False,
     )
     assert result.id == "id"
     assert isinstance(result, pystac.Item)
@@ -828,3 +830,17 @@ def test_xarray_to_stac_item(ds):
 
     assert result.properties["start_datetime"] == "1980-07-31T00:00:00Z"
     assert result.properties["end_datetime"] == "2019-07-31T00:00:00Z"
+
+
+def test_bbox_to_geometry():
+    import shapely.geometry
+
+    bbox = [
+        -160.2988400944475,
+        17.960033949329812,
+        -154.7780670634169,
+        23.51232608231902,
+    ]
+    result = shapely.geometry.mapping(shapely.geometry.shape(_bbox_to_geometry(bbox)))
+    expected = shapely.geometry.mapping(shapely.geometry.box(*bbox))
+    assert result == expected
