@@ -29,4 +29,5 @@ xstac = "xstac._generate:main"
 dev = [
   "pytest",
   "pre-commit",
+  "shapely",
 ]
