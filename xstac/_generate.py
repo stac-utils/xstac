@@ -14,6 +14,7 @@ import xstac
 import pystac
 
 ZARR_MEDIA_TYPE = "application/vnd+zarr"
+SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
 
 def parse_args(args=None):
@@ -86,30 +87,11 @@ def generate(
         validate=validate,
     )
     collection.set_self_href("collection.json")
-    collection.validate()
-    # getting a failure I don't understand when actually validating with the extension.
-    # Seems to think that the extent for items should be string, but extent_closed in the schema is a number.
-    #     ValidationError: -179.97916666666666 is not of type 'string', 'null'
-    #     Failed validating 'type' in schema[3]['properties']['extent']['items']:
-    #         {'type': ['string', 'null']}
-
-    #     On instance['extent'][0]:
-    #         -179.97916666666666
-    collection.stac_extensions.append(
-        "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
-    )
-    # collection.normalize_hrefs("/")
+    collection.stac_extensions.append(SCHEMA_URI)
     result = collection.to_dict(include_self_link=False)
-
-    # remove unset values
-    for obj in ["cube:variables", "cube:dimensions"]:
-        for var in list(result[obj]):
-            for k, v in list(result[obj][var].items()):
-                if v is None:
-                    del result[obj][var][k]
-
     # Remove the root link. Do we want to do this?
     result["links"] = [x for x in result["links"] if x["rel"] != "root"]
+    collection.validate()
 
     return result
 

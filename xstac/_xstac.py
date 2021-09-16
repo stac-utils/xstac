@@ -397,6 +397,18 @@ def xarray_to_stac(
             else:
                 del result["cube:dimensions"][temporal_dimension]["values"]
 
+    # remove unset values, otherwise we might hit bizare jsonschema issues
+    # when validating
+    for obj in ["cube:variables", "cube:dimensions"]:
+        if is_item:
+            container = result["properties"]
+        else:
+            container = result
+        for var in list(container[obj]):
+            for k, v in list(container[obj][var].items()):
+                if v is None:
+                    del container[obj][var][k]
+
     stac_obj = pystac.read_dict(result)
 
     if validate:
