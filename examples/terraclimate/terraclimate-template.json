@@ -62,24 +62,21 @@
     "thumbnail": {
       "title": "TerraClimate thumbnail",
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/terraclimate.png",
-      "type": "image/png"
+      "type": "image/png",
+      "role": [
+        "thumbnail"
+      ]
     }
   },
-  "keywords":  [
-      "terraclimate",
-      "evapotransporation",
-      "water",
-      "drought",
-      "precipitation",
-      "runoff",
-      "soil moisture",
-      "shortwave radiation",
-      "snow water equivalent",
-      "temperature",
-      "vapor pressure",
-      "wind"
+  "keywords": [
+    "TerraClimate",
+    "Water",
+    "Precipitation",
+    "Temperature",
+    "Vapor Pressure",
+    "Climate"
   ],
-  "msft:short_description": "High-resolution global dataset of monthly climate and climatic water balance.",
+  "msft:short_description": "High-resolution global dataset of monthly climate and climatic water balance",
   "msfs:msft:storage_account": "cpdataeuwest",
   "msft:container": "cpdata"
 }
