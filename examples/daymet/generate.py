@@ -145,7 +145,7 @@ def generate(frequency, region):
 
     # getting a failure I don't understand when actually validating with the extension.
     collection.stac_extensions.append(
-        "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+        "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
     )
     result = collection.to_dict(include_self_link=False)
 
@@ -156,18 +156,11 @@ def generate(frequency, region):
         "values": [0, 1],
     }
 
-    # remove unset values
-    for obj in ["cube:variables", "cube:dimensions"]:
-        for var in list(result[obj]):
-            for k, v in list(result[obj][var].items()):
-                if v is None:
-                    del result[obj][var][k]
-
     for link in result["links"]:
         if link["rel"] == "root":
             link["href"] = "../catalog.json"
-            link["rel"] = str(link["rel"])
-            link["type"] = str(link["type"])
+            link["rel"] = str(link["rel"].value)
+            link["type"] = str(link["type"].value)
 
     return result
 

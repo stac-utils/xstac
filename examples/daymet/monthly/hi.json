@@ -15,7 +15,7 @@
     }
   ],
   "stac_extensions": [
-    "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
   ],
   "cube:dimensions": {
     "time": {
@@ -564,7 +564,7 @@
     "hawaii"
   ],
   "stac_collections": [
-    "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
   ],
   "extent": {
     "spatial": {

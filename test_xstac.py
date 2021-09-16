@@ -430,7 +430,7 @@ def test_validation_with_none():
         "stac_version": "1.0.0",
         "description": "desc",
         "stac_extensions": [
-            "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
+            "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
         ],
         "extent": {
             "spatial": {"bbox": [[-180, -90, 180, 90]]},
