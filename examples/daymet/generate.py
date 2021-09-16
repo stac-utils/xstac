@@ -17,11 +17,14 @@ import sys
 import argparse
 import json
 import fsspec
+from shapely.geometry.geo import shape
 import xarray as xr
 from pathlib import Path
 
 import xstac
 import pystac
+import shapely.geometry
+
 
 BBOX = {
     "hi": [-160.3056, 17.9539, -154.772, 23.5186],
@@ -66,7 +69,7 @@ def generate(frequency, region):
         "surface weather data" if frequency == "daily" else "climate summaries"
     )
 
-    template = {
+    collection_template = {
         "id": f"daymet-{frequency}-{region}",
         "description": f"{DESC[frequency]} This dataset provides coverage for {FULL_REGIONS[region]} - {other_regions} are provided in [separate datasets](https://planetarycomputer.microsoft.com/dataset/group/daymet#{frequency}).\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose is to provide data estimates where no instrumentation exists.\n\nThe dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",  # noqa
         "type": "Collection",
@@ -140,25 +143,81 @@ def generate(frequency, region):
         )
 
     collection = xstac.xarray_to_stac(
-        ds, template, temporal_dimension="time", x_dimension="x", y_dimension="y"
+        ds,
+        collection_template,
+        temporal_dimension="time",
+        x_dimension="x",
+        y_dimension="y",
     )
 
-    result = collection.to_dict(include_self_link=False)
+    collection_result = collection.to_dict(include_self_link=False)
 
     # additional dimensions not implemented in xstac
-    result["cube:dimensions"]["nv"] = {
+    collection_result["cube:dimensions"]["nv"] = {
         "type": "count",
         "description": "Size of the 'time_bnds' variable.",
         "values": [0, 1],
     }
 
-    for link in result["links"]:
+    for link in collection_result["links"]:
         if link["rel"] == "root":
             link["href"] = "../catalog.json"
             link["rel"] = str(link["rel"].value)
             link["type"] = str(link["type"].value)
 
-    return result
+    item_template = {
+        "id": f"daymet-{frequency}-{region}",
+        "type": "Feature",
+        "links": [],
+        "bbox": BBOX[region],
+        "geometry": shapely.geometry.mapping(shapely.geometry.box(*BBOX[region])),
+        "stac_version": "1.0.0",
+        "properties": {
+            # "datetime": "2021-01-01T00:00:00Z"
+        },
+        "assets": {
+            "zarr-https": {
+                "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
+                "type": "application/vnd+zarr",
+                "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
+                "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
+                "roles": ["data", "zarr", "https"],
+            },
+            "zarr-abfs": {
+                "href": f"abfs://daymet-zarr/{frequency}/{region}.zarr",
+                "type": "application/vnd+zarr",
+                "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
+                "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+                "roles": ["data", "zarr", "abfs"],
+            },
+            "thumbnail": {
+                "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
+                "type": "image/png",
+                "title": f"Daymet {frequency} {FULL_REGIONS[region]} map thumbnail",
+            },
+        },
+    }
+
+    item = xstac.xarray_to_stac(
+        ds, item_template, temporal_dimension="time", x_dimension="x", y_dimension="y"
+    )
+
+    item_result = item.to_dict(include_self_link=False)
+
+    # additional dimensions not implemented in xstac
+    item_result["properties"]["cube:dimensions"]["nv"] = {
+        "type": "count",
+        "description": "Size of the 'time_bnds' variable.",
+        "values": [0, 1],
+    }
+
+    for link in item_result["links"]:
+        if link["rel"] == "root":
+            link["href"] = "../catalog.json"
+            link["rel"] = str(link["rel"].value)
+            link["type"] = str(link["type"].value)
+
+    return collection_result, item_result
 
 
 def main(args=None):
@@ -178,11 +237,18 @@ def main(args=None):
 
     for region in regions:
         for frequency in frequencies:
-            outfile = Path(__file__).parent / f"{frequency}/{region}.json"
-            result = generate(frequency, region)
+            collection, item = generate(frequency, region)
+
+            outfile = Path(__file__).parent / f"{frequency}/{region}/collection.json"
+            outfile.parent.mkdir(exist_ok=True, parents=True)
 
             with open(outfile, "w") as f:
-                json.dump(result, f, indent=2)
+                json.dump(collection, f, indent=2)
+
+            outfile = Path(__file__).parent / f"{frequency}/{region}/item.json"
+
+            with open(outfile, "w") as f:
+                json.dump(item, f, indent=2)
 
 
 if __name__ == "__main__":

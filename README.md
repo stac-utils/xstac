@@ -33,7 +33,17 @@ $ xstac examples/terraclimate/terraclimate-template.json \
   --x-dimension=lon --y-dimension=lat --reference-system=4326
 ```
 
-This generates the [Terraclimate STAC Collection](examples/terraclimate/terraclimate.json)
+This generates the [TerraClimate STAC Collection](examples/terraclimate/terraclimate.json)
+
+Alternatively, you can generate STAC items:
+
+```
+$ xstac examples/terraclimate/item-template.json \
+    zarr-https examples/terraclimate/item.json \
+    --x-dimension=lon --y-dimension=lat --reference-system=4326
+```
+
+This generates the [TerraClimate STAC item](examples/terraclimate/item.json).
 
 ## Example - Python API
 
