@@ -1,0 +1,72 @@
+{
+  "id": "terraclimate",
+  "type": "Feature",
+  "links": [],
+  "bbox": [
+    -180,
+    -90,
+    180,
+    90
+  ],
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          -180,
+          -90
+        ],
+        [
+          180,
+          -90
+        ],
+        [
+          180,
+          90
+        ],
+        [
+          -180,
+          90
+        ],
+        [
+          -180,
+          -90
+        ]
+      ]
+    ]
+  },
+  "stac_version": "1.0.0",
+  "properties": {
+    "datetime": "2021-01-01T00:00:00Z"
+  },
+  "assets": {
+    "zarr-https": {
+      "href": "https://cpdataeuwest.blob.core.windows.net/cpdata/raw/terraclimate/4000m/raster.zarr",
+      "title": "TerraClimate HTTPS Zarr root",
+      "description": "HTTPS URI of the TerraClimate Zarr Group on Azure Blob Storage.",
+      "roles": [
+        "data",
+        "zarr",
+        "https"
+      ],
+      "type": "application/vnd+zarr",
+      "xarray:open_kwargs": {
+        "consolidated": true
+      }
+    },
+    "zarr-abfs": {
+      "href": "az://cpdata/raw/terraclimate/4000m/raster.zarr",
+      "title": "TerraClimate Azure Blob File System Zarr root",
+      "description": "Azure Blob File System URI of the TerraClimate Zarr Group on Azure Blob Storage for use with adlfs.",
+      "roles": [
+        "data",
+        "zarr",
+        "abfs"
+      ],
+      "type": "application/vnd+zarr",
+      "xarray:storage_options": {
+        "account_name": "cpdataeuwest"
+      }
+    }
+  }
+}
