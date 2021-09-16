@@ -87,7 +87,6 @@ def generate(
         validate=validate,
     )
     collection.set_self_href("collection.json")
-    collection.stac_extensions.append(SCHEMA_URI)
     result = collection.to_dict(include_self_link=False)
     # Remove the root link. Do we want to do this?
     result["links"] = [x for x in result["links"] if x["rel"] != "root"]

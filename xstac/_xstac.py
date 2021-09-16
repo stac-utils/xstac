@@ -381,9 +381,10 @@ def xarray_to_stac(
     if not is_item:
         result["extent"] = extent
 
-    result.setdefault("stac_collections", [])
+    result.setdefault("stac_extensions", [])
     # TODO: get from pystac
-    result["stac_collections"].append(SCHEMA_URI)
+    if SCHEMA_URI not in result["stac_extensions"]:
+        result["stac_extensions"].append(SCHEMA_URI)
 
     if temporal_dimension:
         values = datacube["cube:dimensions"][temporal_dimension]["values"]
