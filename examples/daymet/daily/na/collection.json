@@ -2,13 +2,8 @@
   "type": "Collection",
   "id": "daymet-daily-na",
   "stac_version": "1.0.0",
-  "description": "Gridded estimates of daily weather parameters. Daymet Version 4 variables include the following parameters: minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length. This dataset provides coverage for North America - Hawaii and Puerto Rico are provided in [separate datasets](https://planetarycomputer.microsoft.com/dataset/group/daymet#daily).\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose is to provide data estimates where no instrumentation exists.\n\nThe dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",
+  "description": "{{ collection.description }}",
   "links": [
-    {
-      "rel": "root",
-      "href": "../catalog.json",
-      "type": "application/json"
-    },
     {
       "rel": "license",
       "href": "https://science.nasa.gov/earth-science/earth-science-data/data-information-policy"
@@ -569,13 +564,12 @@
   },
   "title": "Daymet Daily North America",
   "keywords": [
-    "daymet",
-    "north america",
-    "temperature",
-    "precipitation",
-    "vapor pressure",
-    "swe",
-    "weather"
+    "Daymet",
+    "North America",
+    "Temperature",
+    "Precipitation",
+    "Vapor Pressure",
+    "Weather"
   ],
   "providers": [
     {
@@ -600,6 +594,9 @@
       "type": "application/vnd+zarr",
       "title": "Daily North America Daymet HTTPS Zarr root",
       "description": "HTTPS URI of the daily North America Daymet Zarr Group on Azure Blob Storage.",
+      "xarray:open_kwargs": {
+        "consolidated": true
+      },
       "roles": [
         "data",
         "zarr",
@@ -611,6 +608,9 @@
       "type": "application/vnd+zarr",
       "title": "Daily North America Daymet Azure Blob File System Zarr root",
       "description": "Azure Blob File System of the daily North America Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+      "xarray:storage_options": {
+        "account_name": "daymeteuwest"
+      },
       "roles": [
         "data",
         "zarr",
@@ -620,10 +620,13 @@
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-daily-na.png",
       "type": "image/png",
-      "title": "Daymet daily North America map thumbnail"
+      "title": "Daymet daily North America map thumbnail",
+      "roles": [
+        "thumbnail"
+      ]
     }
   },
-  "msft:short_description": "Daily surface weather data on a 1-km grid for North America.",
+  "msft:short_description": "Daily surface weather data on a 1-km grid for North America",
   "msft:storage_account": "daymeteuwest",
   "msft:container": "daymet-zarr",
   "msft:group_id": "daymet",

@@ -71,18 +71,17 @@ def generate(frequency, region):
 
     collection_template = {
         "id": f"daymet-{frequency}-{region}",
-        "description": f"{DESC[frequency]} This dataset provides coverage for {FULL_REGIONS[region]} - {other_regions} are provided in [separate datasets](https://planetarycomputer.microsoft.com/dataset/group/daymet#{frequency}).\n\n[Daymet](https://daymet.ornl.gov/) provides measurements of near-surface meteorological conditions; the main purpose is to provide data estimates where no instrumentation exists.\n\nThe dataset covers the period from January 1, 1980 to the present. Each year is processed individually at the close of a calendar year. Data are in a Lambert Conformal Conic projection for North America and are distributed in Zarr and netCDF format compliant with [Climate and Forecast (CF) metadata conventions (version 1.6)](http://cfconventions.org/).",  # noqa
+        "description": "{{ collection.description }}",
         "type": "Collection",
         "title": f"Daymet {frequency.title()} {FULL_REGIONS[region]}",
         "license": "proprietary",
         "keywords": [
-            "daymet",
-            FULL_REGIONS[region].lower(),
-            "temperature",
-            "precipitation",
-            "vapor pressure",
-            "swe",
-            "weather" if frequency == "daily" else "climate",
+            "Daymet",
+            FULL_REGIONS[region],
+            "Temperature",
+            "Precipitation",
+            "Vapor Pressure",
+            "Weather" if frequency == "daily" else "Climate",
         ],
         "stac_version": "1.0.0",
         "links": [
@@ -112,6 +111,7 @@ def generate(frequency, region):
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
                 "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
                 "roles": ["data", "zarr", "https"],
+                "xarray:open_kwargs": {"consolidated": True},
             },
             "zarr-abfs": {
                 "href": f"abfs://daymet-zarr/{frequency}/{region}.zarr",
@@ -119,14 +119,16 @@ def generate(frequency, region):
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
                 "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
                 "roles": ["data", "zarr", "abfs"],
+                "xarray:storage_options": {"account_name": "daymeteuwest"},
             },
             "thumbnail": {
                 "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
                 "type": "image/png",
                 "title": f"Daymet {frequency} {FULL_REGIONS[region]} map thumbnail",
+                "roles": ["thumbnail"],
             },
         },
-        "msft:short_description": f"{frequency.title()} {short_desc_snippet} on a 1-km grid for {FULL_REGIONS[region]}.",
+        "msft:short_description": f"{frequency.title()} {short_desc_snippet} on a 1-km grid for {FULL_REGIONS[region]}",
         "msft:storage_account": "daymeteuwest",
         "msft:container": "daymet-zarr",
         "msft:group_id": "daymet",
@@ -149,6 +151,8 @@ def generate(frequency, region):
         x_dimension="x",
         y_dimension="y",
     )
+    collection.remove_links(pystac.RelType.SELF)
+    collection.remove_links(pystac.RelType.ROOT)
 
     collection_result = collection.to_dict(include_self_link=False)
 
@@ -158,12 +162,6 @@ def generate(frequency, region):
         "description": "Size of the 'time_bnds' variable.",
         "values": [0, 1],
     }
-
-    for link in collection_result["links"]:
-        if link["rel"] == "root":
-            link["href"] = "../catalog.json"
-            link["rel"] = str(link["rel"].value)
-            link["type"] = str(link["type"].value)
 
     item_template = {
         "id": f"daymet-{frequency}-{region}",
