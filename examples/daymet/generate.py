@@ -17,11 +17,14 @@ import sys
 import argparse
 import json
 import fsspec
+from shapely.geometry.geo import shape
 import xarray as xr
 from pathlib import Path
 
 import xstac
 import pystac
+import shapely.geometry
+
 
 BBOX = {
     "hi": [-160.3056, 17.9539, -154.772, 23.5186],
@@ -167,7 +170,7 @@ def generate(frequency, region):
         "type": "Feature",
         "links": [],
         "bbox": BBOX[region],
-        "geometry": {"type": "Polygon", "coordinates": ...},
+        "geometry": shapely.geometry.mapping(shapely.geometry.box(*BBOX[region])),
         "stac_version": "1.0.0",
         "properties": {
             # "datetime": "2021-01-01T00:00:00Z"
