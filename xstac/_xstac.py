@@ -13,6 +13,8 @@ from typing import List, Dict
 
 from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
+SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+
 
 def _bbox_to_geometry(bbox):
     return {
@@ -381,9 +383,7 @@ def xarray_to_stac(
 
     result.setdefault("stac_collections", [])
     # TODO: get from pystac
-    result["stac_collections"].append(
-        "https://stac-extensions.github.io/datacube/v1.0.0/schema.json"
-    )
+    result["stac_collections"].append(SCHEMA_URI)
 
     if temporal_dimension:
         values = datacube["cube:dimensions"][temporal_dimension]["values"]
