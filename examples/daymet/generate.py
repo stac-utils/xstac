@@ -143,10 +143,6 @@ def generate(frequency, region):
         ds, template, temporal_dimension="time", x_dimension="x", y_dimension="y"
     )
 
-    # getting a failure I don't understand when actually validating with the extension.
-    collection.stac_extensions.append(
-        "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
-    )
     result = collection.to_dict(include_self_link=False)
 
     # additional dimensions not implemented in xstac
