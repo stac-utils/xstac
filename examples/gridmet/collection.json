@@ -1,0 +1,487 @@
+{
+  "type": "Collection",
+  "id": "gridmet",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "links": [
+    {
+      "rel": "license",
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "type": "text/html",
+      "title": "CC0-1.0 License"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+  ],
+  "cube:dimensions": {
+    "time": {
+      "type": "temporal",
+      "description": "time",
+      "extent": [
+        "1979-01-01T00:00:00Z",
+        "2020-12-31T00:00:00Z"
+      ],
+      "step": "P1DT0H0M0S"
+    },
+    "lon": {
+      "type": "spatial",
+      "axis": "x",
+      "description": "longitude",
+      "extent": [
+        -124.76666663333334,
+        -67.05833330000002
+      ],
+      "reference_system": 4326
+    },
+    "lat": {
+      "type": "spatial",
+      "axis": "y",
+      "description": "latitude",
+      "extent": [
+        25.066666666666666,
+        49.400000000000006
+      ],
+      "reference_system": 4326
+    }
+  },
+  "cube:variables": {
+    "air_temperature": {
+      "type": "data",
+      "description": "Daily Minimum Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily Minimum Temperature",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "tmmn",
+        "standard_name": "tmmn",
+        "units": "K"
+      }
+    },
+    "burning_index_g": {
+      "type": "data",
+      "description": "BI-G",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "Unitless",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "BI-G",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "bi",
+        "standard_name": "bi",
+        "units": "Unitless"
+      }
+    },
+    "dead_fuel_moisture_1000hr": {
+      "type": "data",
+      "description": "1000 hour fuel moisture",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "Percent",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "1000 hour fuel moisture",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "fm1000",
+        "standard_name": "fm1000",
+        "units": "Percent"
+      }
+    },
+    "dead_fuel_moisture_100hr": {
+      "type": "data",
+      "description": "100 hour fuel moisture",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "Percent",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "100 hour fuel moisture",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "fm100",
+        "standard_name": "fm100",
+        "units": "Percent"
+      }
+    },
+    "mean_vapor_pressure_deficit": {
+      "type": "data",
+      "description": "mean vapor presure deficit",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "kPa",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "mean vapor presure deficit",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "vpd",
+        "standard_name": "vpd",
+        "units": "kPa"
+      }
+    },
+    "potential_evapotranspiration": {
+      "type": "data",
+      "description": "Daily reference evapotranspiration (short grass)",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "mm",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily reference evapotranspiration (short grass)",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "pet",
+        "standard_name": "pet",
+        "units": "mm"
+      }
+    },
+    "precipitation_amount": {
+      "type": "data",
+      "description": "Daily Accumulated Precipitation",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "mm",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily Accumulated Precipitation",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "pr",
+        "standard_name": "pr",
+        "units": "mm"
+      }
+    },
+    "relative_humidity": {
+      "type": "data",
+      "description": "Daily Minimum Relative Humidity",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "%",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily Minimum Relative Humidity",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "rmin",
+        "standard_name": "rmin",
+        "units": "%"
+      }
+    },
+    "specific_humidity": {
+      "type": "data",
+      "description": "Daily mean specific humidity",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "kg/kg",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily mean specific humidity",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "sph",
+        "standard_name": "sph",
+        "units": "kg/kg"
+      }
+    },
+    "surface_downwelling_shortwave_flux_in_air": {
+      "type": "data",
+      "description": "Daily Mean downward shortwave radiation at surface",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "W m-2",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily Mean downward shortwave radiation at surface",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "srad",
+        "standard_name": "srad",
+        "units": "W m-2"
+      }
+    },
+    "wind_from_direction": {
+      "type": "data",
+      "description": "Daily mean wind direction",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "Degrees Clockwise from north",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily mean wind direction",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "th",
+        "standard_name": "th",
+        "units": "Degrees Clockwise from north"
+      }
+    },
+    "wind_speed": {
+      "type": "data",
+      "description": "Daily Mean Wind Speed",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "m/s",
+      "shape": [
+        15341,
+        585,
+        1386
+      ],
+      "chunks": [
+        30,
+        585,
+        1386
+      ],
+      "attrs": {
+        "coordinate_system": "WGS84,EPSG:4326",
+        "description": "Daily Mean Wind Speed",
+        "dimensions": "lon lat time",
+        "grid_mapping": "crs",
+        "long_name": "vs",
+        "standard_name": "vs",
+        "units": "m/s"
+      }
+    }
+  },
+  "title": "gridMET",
+  "providers": [
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host",
+        "processor"
+      ],
+      "url": "https://planetarycomputer.microsoft.com"
+    },
+    {
+      "name": "Climatology Lab",
+      "roles": [
+        "producer"
+      ],
+      "url": "http://www.climatologylab.org/gridmet.html"
+    },
+    {
+      "name": "Abatzoglou, J.T.",
+      "roles": [
+        "producer"
+      ],
+      "url": "http://onlinelibrary.wiley.com/doi/10.1002/joc.3413/full"
+    }
+  ],
+  "assets": {
+    "zarr-https": {
+      "href": "https://ai4edataeuwest.blob.core.windows.net/gridmet.zarr",
+      "type": "application/vnd+zarr",
+      "title": "gridMET HTTPS Zarr root",
+      "description": "HTTPS URI of the gridMET Zarr Group on Azure Blob Storage.",
+      "xarray:open_kwargs": {
+        "consolidated": true
+      },
+      "roles": [
+        "data",
+        "zarr",
+        "https"
+      ]
+    },
+    "zarr-abfs": {
+      "href": "abfs://gridmet/gridmet.zarr",
+      "type": "application/vnd+zarr",
+      "description": "Azure Blob File System URI of the gridMET Zarr Group on Azure Blob Storage for use with adlfs.",
+      "xarray:storage_options": {
+        "account_name": "ai4edataeuwest"
+      },
+      "xarray:open_kwargs": {
+        "consolidated": true
+      },
+      "roles": [
+        "data",
+        "zarr"
+      ]
+    }
+  },
+  "keywords": [
+    "gridMET",
+    "Water",
+    "Precipitation",
+    "Temperature",
+    "Vapor Pressure",
+    "Climate"
+  ],
+  "msft:short_description": "Daily high-spatial resolution surface meteorological data covering the contiguous US from 1979.",
+  "msft:storage_account": "ai4edataeuwest",
+  "msft:container": "gridmet",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -124.76666663333334,
+          25.066666666666666,
+          -67.05833330000002,
+          49.400000000000006
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1979-01-01T00:00:00Z",
+          "2020-12-31T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "CC0-1.0"
+}

@@ -1,0 +1,85 @@
+{
+  "type": "Collection",
+  "id": "gridmet",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "links": [
+    {
+      "rel": "license",
+      "href": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+      "type": "text/html",
+      "title": "CC0-1.0 License"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json"
+  ],
+  "title": "gridMET",
+  "providers": [
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host",
+        "processor"
+      ],
+      "url": "https://planetarycomputer.microsoft.com"
+    },
+    {
+      "name": "Climatology Lab",
+      "roles": [
+        "producer"
+      ],
+      "url": "http://www.climatologylab.org/gridmet.html"
+    },
+    {
+      "name": "Abatzoglou, J.T.",
+      "roles": [
+        "producer"
+      ],
+      "url": "http://onlinelibrary.wiley.com/doi/10.1002/joc.3413/full"
+    }
+  ],
+  "assets": {
+    "zarr-https": {
+      "href": "https://ai4edataeuwest.blob.core.windows.net/gridmet.zarr",
+      "title": "gridMET HTTPS Zarr root",
+      "description": "HTTPS URI of the gridMET Zarr Group on Azure Blob Storage.",
+      "roles": [
+        "data",
+        "zarr",
+        "https"
+      ],
+      "type": "application/vnd+zarr",
+      "xarray:open_kwargs": {
+        "consolidated": true
+      }
+    },
+    "zarr-abfs": {
+      "href": "abfs://gridmet/gridmet.zarr",
+      "type": "application/vnd+zarr",
+      "description": "Azure Blob File System URI of the gridMET Zarr Group on Azure Blob Storage for use with adlfs.",
+      "roles": [
+        "data",
+        "zarr"
+      ],
+      "xarray:storage_options": {
+        "account_name": "ai4edataeuwest"
+      },
+      "xarray:open_kwargs": {
+        "consolidated": true
+      }
+    }
+  },
+  "keywords": [
+    "gridMET",
+    "Water",
+    "Precipitation",
+    "Temperature",
+    "Vapor Pressure",
+    "Climate"
+  ],
+  "msft:short_description": "Daily high-spatial resolution surface meteorological data covering the contiguous US from 1979.",
+  "msft:storage_account": "ai4edataeuwest",
+  "msft:container": "gridmet",
+  "license": "CC0-1.0"
+}
