@@ -57,6 +57,9 @@
       "type": "application/vnd+zarr",
       "xarray:storage_options": {
         "account_name": "cpdataeuwest"
+      },
+      "xarray:open_kwargs": {
+        "consolidated": true
       }
     },
     "thumbnail": {
