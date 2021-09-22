@@ -399,6 +399,13 @@
   "title": "gridMET",
   "providers": [
     {
+      "name": "Development Seed",
+      "roles": [
+        "processor"
+      ],
+      "url": "https://developmentseed.org/"
+    },
+    {
       "name": "Microsoft",
       "roles": [
         "host",
@@ -423,7 +430,7 @@
   ],
   "assets": {
     "zarr-https": {
-      "href": "https://ai4edataeuwest.blob.core.windows.net/gridmet.zarr",
+      "href": "https://ai4edataeuwest.blob.core.windows.net/gridmet/gridmet.zarr",
       "type": "application/vnd+zarr",
       "title": "gridMET HTTPS Zarr root",
       "description": "HTTPS URI of the gridMET Zarr Group on Azure Blob Storage.",
