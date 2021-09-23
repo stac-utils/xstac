@@ -75,6 +75,14 @@
       "xarray:open_kwargs": {
         "consolidated": true
       }
+    },
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gridmet.png",
+      "type": "image/png",
+      "title": "gridMET thumbnail",
+      "role": [
+        "thumbnail"
+      ]
     }
   },
   "keywords": [

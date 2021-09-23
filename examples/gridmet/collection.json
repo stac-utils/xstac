@@ -457,6 +457,14 @@
         "data",
         "zarr"
       ]
+    },
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gridmet.png",
+      "type": "image/png",
+      "title": "gridMET thumbnail",
+      "role": [
+        "thumbnail"
+      ]
     }
   },
   "keywords": [
