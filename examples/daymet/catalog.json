@@ -12,7 +12,7 @@
             "type": "application/json"
         },
         {
-            "href": "daily/hi.json",
+            "href": "daily/hi/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -20,7 +20,7 @@
             ]
         },
         {
-            "href": "monthly/hi.json",
+            "href": "monthly/hi/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "href": "annual/hi.json",
+            "href": "annual/hi/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -36,7 +36,7 @@
             ]
         },
         {
-            "href": "daily/pr.json",
+            "href": "daily/pr/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -44,7 +44,7 @@
             ]
         },
         {
-            "href": "monthly/pr.json",
+            "href": "monthly/pr/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -52,7 +52,7 @@
             ]
         },
         {
-            "href": "annual/pr.json",
+            "href": "annual/pr/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -60,7 +60,7 @@
             ]
         },
         {
-            "href": "daily/na.json",
+            "href": "daily/na/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -68,7 +68,7 @@
             ]
         },
         {
-            "href": "monthly/na.json",
+            "href": "monthly/na/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
@@ -76,7 +76,7 @@
             ]
         },
         {
-            "href": "annual/hi.json",
+            "href": "annual/hi/collection.json",
             "rel": "child",
             "type": "application/json",
             "roles": [
