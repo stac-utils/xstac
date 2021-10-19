@@ -120,6 +120,7 @@ def generate(frequency, region):
                 "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
                 "roles": ["data", "zarr", "abfs"],
                 "xarray:storage_options": {"account_name": "daymeteuwest"},
+                "xarray:open_kwargs": {"consolidated": True},
             },
             "thumbnail": {
                 "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
@@ -180,6 +181,7 @@ def generate(frequency, region):
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
                 "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
                 "roles": ["data", "zarr", "https"],
+                "xarray:open_kwargs": {"consolidated": True},
             },
             "zarr-abfs": {
                 "href": f"abfs://daymet-zarr/{frequency}/{region}.zarr",
@@ -187,6 +189,8 @@ def generate(frequency, region):
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
                 "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
                 "roles": ["data", "zarr", "abfs"],
+                "xarray:storage_options": {"account_name": "daymeteuwest"},
+                "xarray:open_kwargs": {"consolidated": True},
             },
             "thumbnail": {
                 "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",

@@ -543,6 +543,9 @@
       "xarray:storage_options": {
         "account_name": "daymeteuwest"
       },
+      "xarray:open_kwargs": {
+        "consolidated": true
+      },
       "roles": [
         "data",
         "zarr",

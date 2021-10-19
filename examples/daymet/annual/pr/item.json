@@ -525,6 +525,9 @@
       "type": "application/vnd+zarr",
       "title": "Annual Puerto Rico Daymet HTTPS Zarr root",
       "description": "HTTPS URI of the annual Puerto Rico Daymet Zarr Group on Azure Blob Storage.",
+      "xarray:open_kwargs": {
+        "consolidated": true
+      },
       "roles": [
         "data",
         "zarr",
@@ -536,6 +539,12 @@
       "type": "application/vnd+zarr",
       "title": "Annual Puerto Rico Daymet Azure Blob File System Zarr root",
       "description": "Azure Blob File System of the annual Puerto Rico Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+      "xarray:storage_options": {
+        "account_name": "daymeteuwest"
+      },
+      "xarray:open_kwargs": {
+        "consolidated": true
+      },
       "roles": [
         "data",
         "zarr",
