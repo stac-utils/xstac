@@ -3,17 +3,39 @@ xstac
 """
 import copy
 import json
+import logging
 from pystac import stac_object
 import xarray as xr
 import numpy as np
 import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
-from typing import List, Dict
+from typing import Dict
 
 from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
+logger = logging.getLogger(__name__)
+
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+
+CF_STANDARD_DIMS = dict(
+    temporal_dimension="time", x_dimension="longitude", y_dimension="latitude"
+)
+
+
+def maybe_use_cf_standard_name(kw, kw_name, ds):
+    if kw is None:
+        try:
+            kw = ds.cf[CF_STANDARD_DIMS[kw_name]].name
+        except KeyError:
+            logger.warning(
+                f"Kwarg `{kw_name}` is None and `{CF_STANDARD_DIMS[kw_name]}` is not a valid key "
+                "of the provided dataset's `cf` namespace. Therefore, STAC object is generating "
+                f"without a `{kw_name}` in its Datacube Extension. To correct this, either pass a "
+                f"string value to `{kw_name}`, or make this attribute accessible via the cf "
+                "namespace using, e.g., `cf_xarray`'s `guess_coord_axis` method."
+            )
+    return kw
 
 
 def _bbox_to_geometry(bbox):
@@ -309,6 +331,12 @@ def xarray_to_stac(
     **additional_dimensions:
         A dictionary with keys ``extent``, ``values``, ``step``.
     """
+    temporal_dimension = maybe_use_cf_standard_name(
+        temporal_dimension, "temporal_dimension", ds
+    )
+    x_dimension = maybe_use_cf_standard_name(x_dimension, "x_dimension", ds)
+    y_dimension = maybe_use_cf_standard_name(y_dimension, "y_dimension", ds)
+
     datacube = build_datacube(
         ds,
         temporal_dimension=temporal_dimension,
