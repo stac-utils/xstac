@@ -1,5 +1,6 @@
 from xstac import xarray_to_stac, fix_attrs
 from xstac._xstac import _bbox_to_geometry
+import cf_xarray
 import xarray as xr
 import numpy as np
 import pandas as pd
