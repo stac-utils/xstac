@@ -127,13 +127,7 @@ def test_xarray_to_stac(ds):
         "license": "license",
         "stac_version": "1.0.0",
     }
-    result = xarray_to_stac(
-        ds,
-        template=template,
-        temporal_dimension="time",
-        x_dimension="x",
-        y_dimension="y",
-    )
+    result = xarray_to_stac(ds, template=template)
     assert result.id == "id"
     assert isinstance(result, pystac.Collection)
     assert result.description == "description"
@@ -453,7 +447,7 @@ def test_validation_with_none():
         }
     )
     ds.time.attrs["long_name"] = "time"
-    c = xarray_to_stac(ds, template, temporal_dimension="time")
+    c = xarray_to_stac(ds, template)
     c.normalize_hrefs("/")
     c.validate()
 
@@ -468,13 +462,7 @@ def test_xarray_to_stac_item(ds):
         "properties": {"datetime": "2021-01-01T00:00:00Z"},
         "assets": {},
     }
-    result = xarray_to_stac(
-        ds,
-        template=template,
-        temporal_dimension="time",
-        x_dimension="x",
-        y_dimension="y",
-    )
+    result = xarray_to_stac(ds, template=template)
     assert result.id == "id"
     assert isinstance(result, pystac.Item)
 
