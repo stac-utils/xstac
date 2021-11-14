@@ -20,8 +20,9 @@ CF_STANDARD_AXES = dict(temporal_dimension="T", x_dimension="X", y_dimension="Y"
 
 def maybe_use_cf_standard_axis(kw, kw_name, ds):
     GENERIC_SUGGESTION = (
-        f"Alternatively, pass `{kw_name}` as a string cooresponding to a the name of the "
-        f"dataset's {kw_name}. If the dataset does not have a {kw_name}, pass `{kw_name}=False`."
+        f"Alternatively, pass `{kw_name}` as a string cooresponding to the name of the "
+        f"dataset's {kw_name}."
+        # "If the dataset does not have a {kw_name}, pass `{kw_name}=False`."
     )
     if not hasattr(ds, "cf"):
         raise AttributeError(
