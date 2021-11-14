@@ -1,16 +1,30 @@
 from xstac import xarray_to_stac
 from xstac._xstac import _bbox_to_geometry
-import cf_xarray
+import xarray as xr
 import pytest
 import pystac
 
 import xstac
 
 
+# def test_no_time_dimension(ds, collection_template):
+#    _ = xarray_to_stac(ds, template=collection_template, temporal_dimension=False)
+
+
+@pytest.mark.parametrize("explicit_dims", [False, True])
 def test_xarray_to_stac(
-    ds, collection_template, collection_expected_dims, collection_expected_vars
+    ds,
+    collection_template,
+    collection_expected_dims,
+    collection_expected_vars,
+    explicit_dims,
 ):
-    result = xarray_to_stac(ds, template=collection_template)
+    kw = (
+        dict()
+        if not explicit_dims
+        else dict(temporal_dimension="time", x_dimension="x", y_dimension="y")
+    )
+    result = xarray_to_stac(ds, template=collection_template, **kw)
     assert result.id == "id"
     assert isinstance(result, pystac.Collection)
     assert result.description == "description"
@@ -74,3 +88,15 @@ def test_bbox_to_geometry():
     result = shapely.geometry.mapping(shapely.geometry.shape(_bbox_to_geometry(bbox)))
     expected = shapely.geometry.mapping(shapely.geometry.box(*bbox))
     assert result == expected
+
+
+def test_missing_dims_error(ds_without_spatial_dims, collection_template):
+    with pytest.raises(KeyError):
+        _ = xarray_to_stac(ds_without_spatial_dims, collection_template)
+
+
+def test_cf_namespace_error(collection_template):
+    delattr(xr.Dataset, "cf")
+    ds_ = xr.Dataset({"data": xr.DataArray([1, 2])})
+    with pytest.raises(AttributeError):
+        _ = xarray_to_stac(ds_, collection_template)
