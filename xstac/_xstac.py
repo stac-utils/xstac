@@ -3,7 +3,6 @@ xstac
 """
 import copy
 import json
-import logging
 from pystac import stac_object
 import xarray as xr
 import numpy as np
@@ -14,25 +13,32 @@ from typing import Dict
 
 from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
-logger = logging.getLogger(__name__)
-
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
 CF_STANDARD_AXES = dict(temporal_dimension="T", x_dimension="X", y_dimension="Y")
 
 
 def maybe_use_cf_standard_axis(kw, kw_name, ds):
+    GENERIC_SUGGESTION = (
+        f"Alternatively, pass `{kw_name}` as a string cooresponding to a the name of the "
+        f"dataset's {kw_name}. If the dataset does not have a {kw_name}, pass `{kw_name}=False`."
+    )
+    if not hasattr(ds, "cf"):
+        raise AttributeError(
+            f"Kwarg `{kw_name}` is None and the dataset does not have a `cf` namespace. Please "
+            f"ensure that `cf_xarray` (https://cf-xarray.readthedocs.io/) is imported in the "
+            f"module where you've opened the dataset. {GENERIC_SUGGESTION}"
+        )
     if kw is None:
         try:
             kw = ds.cf[CF_STANDARD_AXES[kw_name]].name
-        except KeyError:
-            logger.warning(
-                f"Kwarg `{kw_name}` is None and `{CF_STANDARD_AXES[kw_name]}` is not a valid key "
-                "of the provided dataset's `cf` namespace. Therefore, STAC object is generating "
-                f"without a `{kw_name}` in its Datacube Extension. To correct this, either pass a "
-                f"string value to `{kw_name}`, or make `ds.cf['{CF_STANDARD_AXES[kw_name]}']` "
-                "accessible using, e.g., `cf_xarray`'s `guess_coord_axis` method."
-            )
+        except KeyError as e:
+            raise KeyError(
+                f"Kwarg `{kw_name}` is None and `{CF_STANDARD_AXES[kw_name]}` is not a key of "
+                f"the dataset's `cf` namespace. Make `ds.cf['{CF_STANDARD_AXES[kw_name]}']` "
+                "accessible via `cf_xarray`'s `guess_coord_axis` method or by manually editing the "
+                f"dataset's attributes according to http://cfconventions.org. {GENERIC_SUGGESTION}"
+            ) from e
     return kw
 
 
@@ -239,7 +245,7 @@ def build_datacube(
 ):
     dimensions = {}
 
-    if temporal_dimension is not None:
+    if temporal_dimension is not False:
         dimensions[temporal_dimension] = build_temporal_dimension(
             ds, temporal_dimension, temporal_extent, temporal_values, temporal_step
         )
