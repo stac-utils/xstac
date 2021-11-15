@@ -93,10 +93,3 @@ def test_bbox_to_geometry():
 def test_missing_dims_error(ds_without_spatial_dims, collection_template):
     with pytest.raises(KeyError):
         _ = xarray_to_stac(ds_without_spatial_dims, collection_template)
-
-
-def test_cf_namespace_error(collection_template):
-    delattr(xr.Dataset, "cf")
-    ds_ = xr.Dataset({"data": xr.DataArray([1, 2])})
-    with pytest.raises(AttributeError):
-        _ = xarray_to_stac(ds_, collection_template)

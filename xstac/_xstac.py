@@ -4,6 +4,7 @@ xstac
 import copy
 import json
 from pystac import stac_object
+import cf_xarray
 import xarray as xr
 import numpy as np
 import pystac
@@ -19,17 +20,6 @@ CF_STANDARD_AXES = dict(temporal_dimension="T", x_dimension="X", y_dimension="Y"
 
 
 def maybe_use_cf_standard_axis(kw, kw_name, ds):
-    GENERIC_SUGGESTION = (
-        f"Alternatively, pass `{kw_name}` as a string cooresponding to the name of the "
-        f"dataset's {kw_name}."
-        # "If the dataset does not have a {kw_name}, pass `{kw_name}=False`."
-    )
-    if not hasattr(ds, "cf"):
-        raise AttributeError(
-            f"Kwarg `{kw_name}` is None and the dataset does not have a `cf` namespace. Please "
-            f"ensure that `cf_xarray` (https://cf-xarray.readthedocs.io/) is imported in the "
-            f"module where you've opened the dataset. {GENERIC_SUGGESTION}"
-        )
     if kw is None:
         try:
             kw = ds.cf[CF_STANDARD_AXES[kw_name]].name
@@ -38,7 +28,9 @@ def maybe_use_cf_standard_axis(kw, kw_name, ds):
                 f"Kwarg `{kw_name}` is None and `{CF_STANDARD_AXES[kw_name]}` is not a key of "
                 f"the dataset's `cf` namespace. Make `ds.cf['{CF_STANDARD_AXES[kw_name]}']` "
                 "accessible via `cf_xarray`'s `guess_coord_axis` method or by manually editing the "
-                f"dataset's attributes according to http://cfconventions.org. {GENERIC_SUGGESTION}"
+                "dataset's attributes according to http://cfconventions.org. Alternatively, pass "
+                f"`{kw_name}` as a string cooresponding to the name of the dataset's {kw_name}."
+                # "If the dataset does not have a {kw_name}, pass `{kw_name}=False`."
             ) from e
     return kw
 
