@@ -8,6 +8,7 @@ import sys
 import argparse
 import json
 import fsspec
+import cf_xarray
 import xarray as xr
 
 import xstac
@@ -40,16 +41,10 @@ def parse_args(args=None):
 
     parser.add_argument("--reference-system", default=None)
     parser.add_argument(
-        "--temporal_dimension",
-        default="time",
-        help="Coordinate name for the 'time' dimension",
+        "--temporal_dimension", help="Coordinate name for the 'time' dimension"
     )
-    parser.add_argument(
-        "--x-dimension", default="x", help="Coordinate name for the 'x' dimension"
-    )
-    parser.add_argument(
-        "--y-dimension", default="y", help="Coordinate name for the 'y' dimension"
-    )
+    parser.add_argument("--x-dimension", help="Coordinate name for the 'x' dimension")
+    parser.add_argument("--y-dimension", help="Coordinate name for the 'y' dimension")
     parser.add_argument(
         "--no-validate",
         action="store_false",
@@ -62,9 +57,9 @@ def parse_args(args=None):
 def generate(
     template,
     asset_key,
-    x_dimension="x",
-    y_dimension="y",
-    temporal_dimension="time",
+    x_dimension=None,
+    y_dimension=None,
+    temporal_dimension=None,
     reference_system=None,
     validate: bool = True,
 ):

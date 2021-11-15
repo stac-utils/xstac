@@ -4,16 +4,35 @@ xstac
 import copy
 import json
 from pystac import stac_object
+import cf_xarray
 import xarray as xr
 import numpy as np
 import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
-from typing import List, Dict
+from typing import Dict
 
 from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+
+CF_STANDARD_AXES = dict(temporal_dimension="T", x_dimension="X", y_dimension="Y")
+
+
+def maybe_use_cf_standard_axis(kw, kw_name, ds):
+    if kw is None:
+        try:
+            kw = ds.cf[CF_STANDARD_AXES[kw_name]].name
+        except KeyError as e:
+            raise KeyError(
+                f"Kwarg `{kw_name}` is None and `{CF_STANDARD_AXES[kw_name]}` is not a key of "
+                f"the dataset's `cf` namespace. Make `ds.cf['{CF_STANDARD_AXES[kw_name]}']` "
+                "accessible via `cf_xarray`'s `guess_coord_axis` method or by manually editing the "
+                "dataset's attributes according to http://cfconventions.org. Alternatively, pass "
+                f"`{kw_name}` as a string cooresponding to the name of the dataset's {kw_name}."
+                # "If the dataset does not have a {kw_name}, pass `{kw_name}=False`."
+            ) from e
+    return kw
 
 
 def _bbox_to_geometry(bbox):
@@ -219,7 +238,7 @@ def build_datacube(
 ):
     dimensions = {}
 
-    if temporal_dimension is not None:
+    if temporal_dimension is not False:
         dimensions[temporal_dimension] = build_temporal_dimension(
             ds, temporal_dimension, temporal_extent, temporal_values, temporal_step
         )
@@ -309,6 +328,12 @@ def xarray_to_stac(
     **additional_dimensions:
         A dictionary with keys ``extent``, ``values``, ``step``.
     """
+    temporal_dimension = maybe_use_cf_standard_axis(
+        temporal_dimension, "temporal_dimension", ds
+    )
+    x_dimension = maybe_use_cf_standard_axis(x_dimension, "x_dimension", ds)
+    y_dimension = maybe_use_cf_standard_axis(y_dimension, "y_dimension", ds)
+
     datacube = build_datacube(
         ds,
         temporal_dimension=temporal_dimension,
