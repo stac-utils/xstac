@@ -1,0 +1,21 @@
+{
+  "id": "monthly",
+  "type": "Feature",
+  "links": [],
+  "stac_version": "1.0.0",
+  "properties": {
+    "datetime": "2021-01-01T00:00:00Z"
+  },
+  "assets": {
+    "data": {
+      "href": "Complete_TMAX_EqualArea.nc",
+      "title": "Complete TMAX",
+      "description": "...",
+      "roles": [
+        "data",
+        "netcdf"
+      ],
+      "type": "application/netcdf"
+    }
+  }
+}
