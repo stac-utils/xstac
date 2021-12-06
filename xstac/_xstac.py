@@ -11,8 +11,15 @@ import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
 from typing import Dict
+from pystac.extensions.datacube import (
+    TemporalDimension,
+    HorizontalSpatialDimension,
+    DatacubeExtension,
+    Variable,
+    VerticalSpatialDimension,
+)
 
-from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
+# from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
@@ -114,11 +121,12 @@ def build_temporal_dimension(ds, name, extent, values, step):
         step = None
 
     return TemporalDimension(
-        type="temporal",
-        extent=extent,
-        description=time.attrs.get("long_name"),
-        values=values,
-        step=step,
+        properties=dict(
+            extent=extent,
+            description=time.attrs.get("long_name"),
+            values=values,
+            step=step,
+        )
     )
 
 
@@ -143,13 +151,14 @@ def build_horizontal_dimension(ds, name, axis, extent, values, step, reference_s
     reference_system = maybe_infer_reference_system(ds, reference_system)
 
     return HorizontalSpatialDimension(
-        type="spatial",
-        axis=axis,
-        extent=extent,
-        step=step,
-        values=values,
-        description=da.attrs.get("long_name"),
-        reference_system=reference_system,
+        properties=dict(
+            axis=axis,
+            extent=extent,
+            step=step,
+            values=values,
+            description=da.attrs.get("long_name"),
+            reference_system=reference_system,
+        )
     )
 
 
@@ -202,13 +211,15 @@ def build_variables(ds):
         # print("v", v.attrs)
         description = v.attrs.get("description", None) or v.attrs.get("long_name", None)
         var = Variable(
-            type=type_,
-            description=description,
-            dimensions=list(v.dims),
-            unit=v.attrs.get("units", None),
-            attrs=v.attrs,
-            shape=v.shape,
-            chunks=chunks,
+            dict(
+                type=type_,
+                description=description,
+                dimensions=list(v.dims),
+                unit=v.attrs.get("units", None),
+                attrs=v.attrs,
+                shape=v.shape,
+                chunks=chunks,
+            )
         )
         variables[k] = var
     return variables
@@ -238,51 +249,8 @@ def build_datacube(
 ):
     dimensions = {}
 
-    if temporal_dimension is not False:
-        dimensions[temporal_dimension] = build_temporal_dimension(
-            ds, temporal_dimension, temporal_extent, temporal_values, temporal_step
-        )
-
-    if x_dimension:
-        dimensions[x_dimension] = build_horizontal_dimension(
-            ds,
-            x_dimension,
-            "x",
-            x_extent,
-            x_values,
-            x_step,
-            reference_system=reference_system,
-        )
-    if y_dimension:
-        dimensions[y_dimension] = build_horizontal_dimension(
-            ds,
-            y_dimension,
-            "y",
-            y_extent,
-            y_values,
-            y_step,
-            reference_system=reference_system,
-        )
-
-    if vertical_dimension:
-        raise NotImplementedError
-    #     dimensions[vertical_dimension] = build_vertical_dimension(
-    #         ds,
-    #         vertical_dimension,
-    #         "z",
-    #         vertical_extent,
-    #         vertical_values,
-    #         vertical_step,
-    #         reference_system=reference_system,
-    #     )
-    if additional_dimensions:
-        raise NotImplementedError
-
     variables = build_variables(ds)
-
-    datacube = Datacube(**{"cube:dimensions": dimensions, "cube:variables": variables})
-    result = json.loads(datacube.json(by_alias=True))
-    return result
+    return dimensions, variables
 
 
 def xarray_to_stac(
@@ -334,46 +302,83 @@ def xarray_to_stac(
     x_dimension = maybe_use_cf_standard_axis(x_dimension, "x_dimension", ds)
     y_dimension = maybe_use_cf_standard_axis(y_dimension, "y_dimension", ds)
 
-    datacube = build_datacube(
-        ds,
-        temporal_dimension=temporal_dimension,
-        temporal_extent=temporal_extent,
-        temporal_values=temporal_values,
-        temporal_step=temporal_step,
-        x_dimension=x_dimension,
-        x_extent=x_extent,
-        x_values=x_values,
-        x_step=x_step,
-        y_dimension=y_dimension,
-        y_extent=y_extent,
-        y_values=y_values,
-        y_step=y_step,
-        reference_system=reference_system,
-        vertical_dimension=vertical_dimension,
-        vertical_extent=vertical_extent,
-        vertical_values=vertical_values,
-        vertical_step=vertical_step,
-        **additional_dimensions,
-    )
+    dimensions = {}
+
+    if temporal_dimension is not False:
+        dimensions[temporal_dimension] = build_temporal_dimension(
+            ds, temporal_dimension, temporal_extent, temporal_values, temporal_step
+        )
+
+    if x_dimension:
+        dimensions[x_dimension] = build_horizontal_dimension(
+            ds,
+            x_dimension,
+            "x",
+            x_extent,
+            x_values,
+            x_step,
+            reference_system=reference_system,
+        )
+    if y_dimension:
+        dimensions[y_dimension] = build_horizontal_dimension(
+            ds,
+            y_dimension,
+            "y",
+            y_extent,
+            y_values,
+            y_step,
+            reference_system=reference_system,
+        )
+
+    if vertical_dimension:
+        raise NotImplementedError
+    #     dimensions[vertical_dimension] = build_vertical_dimension(
+    #         ds,
+    #         vertical_dimension,
+    #         "z",
+    #         vertical_extent,
+    #         vertical_values,
+    #         vertical_step,
+    #         reference_system=reference_system,
+    #     )
+    if additional_dimensions:
+        raise NotImplementedError
+
+    variables = build_variables(ds)
 
     # Fixup to ensure that epsg codes remain as digits, rather than strings.
     # Currently they're being cast to string by the _types stuff.
     # TODO(pystac): check if this is unnecessary
-    for dimension in datacube["cube:dimensions"].values():
-        ref = dimension.get("reference_system")
-        if isinstance(ref, str) and ref.isdigit():
-            dimension["reference_system"] = int(ref)
+    for dimension in dimensions.values():
+        if isinstance(
+            dimension, (HorizontalSpatialDimension, VerticalSpatialDimension)
+        ):
+            ref = dimension.reference_system
+            if isinstance(ref, str) and ref.isdigit():
+                dimension.reference_system = int(ref)
 
-    is_item = template.get("type") == "Feature"
-    result = copy.deepcopy(template)
-    if is_item:
-        result["properties"] = {**datacube, **template["properties"]}
-    else:
-        result = {**datacube, **template}
+    template = pystac.read_dict(template)
+    is_item = isinstance(template, pystac.Item)
+    # is_item = template.get("type") == "Feature"
+    # # result = copy.deepcopy(template)
+    # if is_item:
+    #     result["properties"] = {**datacube, **template["properties"]}
+    # else:
+    #     result = {**datacube, **template}
 
-    extent = result.get("extent", {})
+    result = template.clone()
+    ext = DatacubeExtension.ext(result, add_if_missing=True)
+
+    ext.dimensions = dimensions
+    # doesn't have a setter
+    # ext.variables = variables
+    ext.properties["cube:variables"] = variables
+
+    # extent = result.get("extent", {})
+    extent = result.extent.to_dict()
     extent.setdefault("spatial", {})
     extent.setdefault("temporal", {})
+    result.extent = extent
 
     if x_dimension and y_dimension and not extent.get("spatial"):
         ref = datacube["cube:dimensions"][x_dimension]["reference_system"]
@@ -404,12 +409,12 @@ def xarray_to_stac(
             extent["temporal"]["interval"] = [[start_datetime, end_datetime]]
 
     if not is_item:
-        result["extent"] = extent
+        result.extent = extent
 
-    result.setdefault("stac_extensions", [])
-    # TODO: get from pystac
-    if SCHEMA_URI not in result["stac_extensions"]:
-        result["stac_extensions"].append(SCHEMA_URI)
+    # result.setdefault("stac_extensions", [])
+    # # TODO: get from pystac
+    # if SCHEMA_URI not in result["stac_extensions"]:
+    #     result["stac_extensions"].append(SCHEMA_URI)
 
     if temporal_dimension:
         values = datacube["cube:dimensions"][temporal_dimension]["values"]
