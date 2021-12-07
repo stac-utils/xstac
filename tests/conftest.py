@@ -169,7 +169,7 @@ def collection_expected_dims():
             "extent": [-5802250.0, -5519250.0],
             "step": 1000.0,
             "reference_system": {
-                "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+                "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
                 "type": "ProjectedCRS",
                 "name": "undefined",
                 "base_crs": {
@@ -272,7 +272,7 @@ def collection_expected_dims():
             "extent": [-622000.0, -39000.0],
             "step": -1000.0,
             "reference_system": {
-                "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+                "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
                 "type": "ProjectedCRS",
                 "name": "undefined",
                 "base_crs": {
@@ -458,7 +458,7 @@ def item_expected_dims():
             "extent": [-5802250.0, -5519250.0],
             "step": 1000.0,
             "reference_system": {
-                "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+                "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
                 "type": "ProjectedCRS",
                 "name": "undefined",
                 "base_crs": {
@@ -561,7 +561,7 @@ def item_expected_dims():
             "extent": [-622000.0, -39000.0],
             "step": -1000.0,
             "reference_system": {
-                "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+                "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
                 "type": "ProjectedCRS",
                 "name": "undefined",
                 "base_crs": {
