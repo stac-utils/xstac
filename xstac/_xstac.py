@@ -3,6 +3,8 @@ xstac
 """
 import copy
 import json
+import dateutil
+
 from pystac import stac_object
 import cf_xarray
 import xarray as xr
@@ -17,9 +19,8 @@ from pystac.extensions.datacube import (
     DatacubeExtension,
     Variable,
     VerticalSpatialDimension,
+    DimensionType,
 )
-
-# from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
 
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
@@ -126,6 +127,7 @@ def build_temporal_dimension(ds, name, extent, values, step):
             description=time.attrs.get("long_name"),
             values=values,
             step=step,
+            type=DimensionType.TEMPORAL.value,
         )
     )
 
@@ -158,6 +160,7 @@ def build_horizontal_dimension(ds, name, axis, extent, values, step, reference_s
             values=values,
             description=da.attrs.get("long_name"),
             reference_system=reference_system,
+            type=DimensionType.SPATIAL.value,
         )
     )
 
@@ -217,7 +220,7 @@ def build_variables(ds):
                 dimensions=list(v.dims),
                 unit=v.attrs.get("units", None),
                 attrs=v.attrs,
-                shape=v.shape,
+                shape=list(v.shape),
                 chunks=chunks,
             )
         )
@@ -359,35 +362,29 @@ def xarray_to_stac(
 
     template = pystac.read_dict(template)
     is_item = isinstance(template, pystac.Item)
-    # is_item = template.get("type") == "Feature"
-    # # result = copy.deepcopy(template)
-    # if is_item:
-    #     result["properties"] = {**datacube, **template["properties"]}
-    # else:
-    #     result = {**datacube, **template}
+    is_collection = not is_item
 
     result = template.clone()
     ext = DatacubeExtension.ext(result, add_if_missing=True)
 
     ext.dimensions = dimensions
-    # doesn't have a setter
+    # doesn't have a setter: https://github.com/stac-utils/pystac/issues/681
     # ext.variables = variables
-    ext.properties["cube:variables"] = variables
+    ext.properties["cube:variables"] = {k: v.to_dict() for k, v in variables.items()}
 
-    # extent = result.get("extent", {})
-    extent = result.extent.to_dict()
-    extent.setdefault("spatial", {})
-    extent.setdefault("temporal", {})
-    result.extent = extent
-
-    if x_dimension and y_dimension and not extent.get("spatial"):
-        ref = datacube["cube:dimensions"][x_dimension]["reference_system"]
+    if (
+        is_collection
+        and x_dimension
+        and y_dimension
+        and not any(x for x in result.extent.spatial.bboxes)
+    ):
+        ref = ext.dimensions[x_dimension]["reference_system"]
         if isinstance(ref, int) or (isinstance(ref, str) and ref.isdigit()):
             src_crs = CRS.from_epsg(ref)
         else:
             src_crs = CRS.from_json_dict(ref)
-        left, right = datacube["cube:dimensions"][x_dimension]["extent"]
-        bottom, top = datacube["cube:dimensions"][y_dimension]["extent"]
+        left, right = ext.dimensions[x_dimension]["extent"]
+        bottom, top = ext.dimensions[y_dimension]["extent"]
         bbox = build_bbox(left, bottom, right, top, src_crs)
 
         if is_item:
@@ -395,56 +392,43 @@ def xarray_to_stac(
             # TODO: probably broken...
             result["geometry"] = _bbox_to_geometry(bbox)
         else:
-            extent["spatial"] = {"bbox": [bbox]}
+            result.extent.spatial.bboxes[0] = bbox
 
-    if temporal_dimension and not extent.get("temporal"):
-        start_datetime, end_datetime = (
-            datacube["cube:dimensions"][temporal_dimension]["extent"][0],
-            datacube["cube:dimensions"][temporal_dimension]["extent"][1],
+    infer_temporal_extent = (
+        temporal_dimension is not None
+        and (is_collection and not any(x for x in result.extent.temporal.intervals[0]))
+        or (
+            is_item
+            and not (
+                result.properties.get("start_datetime")
+                or result.properties.get("end_datetime")
+            )
         )
+    )
+
+    if infer_temporal_extent:
+        start_datetime, end_datetime = ext.dimensions[temporal_dimension].extent
         if is_item:
-            result["properties"]["start_datetime"] = start_datetime
-            result["properties"]["end_datetime"] = end_datetime
+            result.properties["start_datetime"] = start_datetime
+            result.properties["end_datetime"] = end_datetime
         else:
-            extent["temporal"]["interval"] = [[start_datetime, end_datetime]]
-
-    if not is_item:
-        result.extent = extent
-
-    # result.setdefault("stac_extensions", [])
-    # # TODO: get from pystac
-    # if SCHEMA_URI not in result["stac_extensions"]:
-    #     result["stac_extensions"].append(SCHEMA_URI)
-
-    if temporal_dimension:
-        values = datacube["cube:dimensions"][temporal_dimension]["values"]
-        if values is None:
-            # For some reason, including None here causes validation to fail...
-            # https://github.com/TomAugspurger/xstac/issues/9
-            if is_item:
-                del result["properties"]["cube:dimensions"][temporal_dimension][
-                    "values"
-                ]
-            else:
-                del result["cube:dimensions"][temporal_dimension]["values"]
+            start_datetime, end_datetime = (
+                dateutil.parser.parse(start_datetime),
+                dateutil.parser.parse(end_datetime),
+            )
+            result.extent.temporal.intervals[0] = [start_datetime, end_datetime]
 
     # remove unset values, otherwise we might hit bizare jsonschema issues
     # when validating
     for obj in ["cube:variables", "cube:dimensions"]:
-        if is_item:
-            container = result["properties"]
-        else:
-            container = result
-        for var in list(container[obj]):
-            for k, v in list(container[obj][var].items()):
+        for var in ext.properties[obj]:
+            for k, v in list(ext.properties[obj][var].items()):
                 if v is None:
-                    del container[obj][var][k]
-
-    stac_obj = pystac.read_dict(result)
+                    del ext.properties[obj][var][k]
+    stac_obj = result
 
     if validate:
         if isinstance(stac_obj, pystac.Collection):
             stac_obj.normalize_hrefs("/")
-        else:
-            stac_obj.validate()
+        stac_obj.validate()
     return stac_obj
