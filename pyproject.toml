@@ -19,7 +19,7 @@ requires = [
     "jsonschema",
     "dask[array]",  # for chunking
     # these are just for generate
-    "fsspec",
+    "fsspec[http]",
 ]
 
 [tool.flit.scripts]
