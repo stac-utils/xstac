@@ -3,26 +3,27 @@
   "stac_version": "1.0.0",
   "id": "daymet-daily-na",
   "properties": {
+    "start_datetime": "1980-01-01T12:00:00Z",
+    "end_datetime": "2020-12-30T12:00:00Z",
     "cube:dimensions": {
       "time": {
-        "type": "temporal",
-        "description": "24-hour day based on local time",
         "extent": [
           "1980-01-01T12:00:00Z",
           "2020-12-30T12:00:00Z"
-        ]
+        ],
+        "description": "24-hour day based on local time",
+        "type": "temporal"
       },
       "x": {
-        "type": "spatial",
         "axis": "x",
-        "description": "x coordinate of projection",
         "extent": [
           -4560250.0,
           3252750.0
         ],
         "step": 1000.0,
+        "description": "x coordinate of projection",
         "reference_system": {
-          "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+          "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
           "type": "ProjectedCRS",
           "name": "undefined",
           "base_crs": {
@@ -137,19 +138,19 @@
               }
             ]
           }
-        }
+        },
+        "type": "spatial"
       },
       "y": {
-        "type": "spatial",
         "axis": "y",
-        "description": "y coordinate of projection",
         "extent": [
           -3090000.0,
           4984000.0
         ],
         "step": -1000.0,
+        "description": "y coordinate of projection",
         "reference_system": {
-          "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+          "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
           "type": "ProjectedCRS",
           "name": "undefined",
           "base_crs": {
@@ -264,7 +265,8 @@
               }
             ]
           }
-        }
+        },
+        "type": "spatial"
       },
       "nv": {
         "type": "count",
@@ -285,6 +287,12 @@
           "x"
         ],
         "unit": "s",
+        "attrs": {
+          "cell_methods": "area: mean",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "daylength",
+          "units": "s"
+        },
         "shape": [
           14965,
           8075,
@@ -294,18 +302,11 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "daylength",
-          "units": "s"
-        }
+        ]
       },
       "lambert_conformal_conic": {
         "type": "data",
         "dimensions": [],
-        "shape": [],
         "attrs": {
           "false_easting": 0.0,
           "false_northing": 0.0,
@@ -318,7 +319,8 @@
             25.0,
             60.0
           ]
-        }
+        },
+        "shape": []
       },
       "lat": {
         "type": "auxiliary",
@@ -328,6 +330,11 @@
           "x"
         ],
         "unit": "degrees_north",
+        "attrs": {
+          "long_name": "latitude coordinate",
+          "standard_name": "latitude",
+          "units": "degrees_north"
+        },
         "shape": [
           8075,
           7814
@@ -335,12 +342,7 @@
         "chunks": [
           284,
           584
-        ],
-        "attrs": {
-          "long_name": "latitude coordinate",
-          "standard_name": "latitude",
-          "units": "degrees_north"
-        }
+        ]
       },
       "lon": {
         "type": "auxiliary",
@@ -350,6 +352,11 @@
           "x"
         ],
         "unit": "degrees_east",
+        "attrs": {
+          "long_name": "longitude coordinate",
+          "standard_name": "longitude",
+          "units": "degrees_east"
+        },
         "shape": [
           8075,
           7814
@@ -357,12 +364,7 @@
         "chunks": [
           284,
           584
-        ],
-        "attrs": {
-          "long_name": "longitude coordinate",
-          "standard_name": "longitude",
-          "units": "degrees_east"
-        }
+        ]
       },
       "prcp": {
         "type": "data",
@@ -373,6 +375,12 @@
           "x"
         ],
         "unit": "mm/day",
+        "attrs": {
+          "cell_methods": "area: mean time: sum",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "daily total precipitation",
+          "units": "mm/day"
+        },
         "shape": [
           14965,
           8075,
@@ -382,13 +390,7 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: sum",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "daily total precipitation",
-          "units": "mm/day"
-        }
+        ]
       },
       "srad": {
         "type": "data",
@@ -399,6 +401,12 @@
           "x"
         ],
         "unit": "W/m2",
+        "attrs": {
+          "cell_methods": "area: mean time: mean",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "daylight average incident shortwave radiation",
+          "units": "W/m2"
+        },
         "shape": [
           14965,
           8075,
@@ -408,13 +416,7 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: mean",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "daylight average incident shortwave radiation",
-          "units": "W/m2"
-        }
+        ]
       },
       "swe": {
         "type": "data",
@@ -425,6 +427,12 @@
           "x"
         ],
         "unit": "kg/m2",
+        "attrs": {
+          "cell_methods": "area: mean time: mean",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "snow water equivalent",
+          "units": "kg/m2"
+        },
         "shape": [
           14965,
           8075,
@@ -434,13 +442,7 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: mean",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "snow water equivalent",
-          "units": "kg/m2"
-        }
+        ]
       },
       "time_bnds": {
         "type": "data",
@@ -448,6 +450,7 @@
           "time",
           "nv"
         ],
+        "attrs": {},
         "shape": [
           14965,
           2
@@ -455,8 +458,7 @@
         "chunks": [
           365,
           2
-        ],
-        "attrs": {}
+        ]
       },
       "tmax": {
         "type": "data",
@@ -467,6 +469,12 @@
           "x"
         ],
         "unit": "degrees C",
+        "attrs": {
+          "cell_methods": "area: mean time: maximum",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "daily maximum temperature",
+          "units": "degrees C"
+        },
         "shape": [
           14965,
           8075,
@@ -476,13 +484,7 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: maximum",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "daily maximum temperature",
-          "units": "degrees C"
-        }
+        ]
       },
       "tmin": {
         "type": "data",
@@ -493,6 +495,12 @@
           "x"
         ],
         "unit": "degrees C",
+        "attrs": {
+          "cell_methods": "area: mean time: minimum",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "daily minimum temperature",
+          "units": "degrees C"
+        },
         "shape": [
           14965,
           8075,
@@ -502,13 +510,7 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: minimum",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "daily minimum temperature",
-          "units": "degrees C"
-        }
+        ]
       },
       "vp": {
         "type": "data",
@@ -519,6 +521,12 @@
           "x"
         ],
         "unit": "Pa",
+        "attrs": {
+          "cell_methods": "area: mean time: mean",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "daily average vapor pressure",
+          "units": "Pa"
+        },
         "shape": [
           14965,
           8075,
@@ -528,13 +536,7 @@
           365,
           284,
           584
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: mean",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "daily average vapor pressure",
-          "units": "Pa"
-        }
+        ]
       },
       "yearday": {
         "type": "data",
@@ -542,19 +544,17 @@
         "dimensions": [
           "time"
         ],
+        "attrs": {
+          "long_name": "day of year (DOY) starting with day 1 on January 1st"
+        },
         "shape": [
           14965
         ],
         "chunks": [
           365
-        ],
-        "attrs": {
-          "long_name": "day of year (DOY) starting with day 1 on January 1st"
-        }
+        ]
       }
     },
-    "start_datetime": "1980-01-01T12:00:00Z",
-    "end_datetime": "2020-12-30T12:00:00Z",
     "datetime": null
   },
   "geometry": {
@@ -562,24 +562,24 @@
     "coordinates": [
       [
         [
-          156.37123798357752,
-          6.081382167175069
+          -53.0567,
+          14.0749
         ],
         [
-          156.37123798357752,
-          69.07904541474605
+          -53.0567,
+          82.9143
         ],
         [
-          -136.8971248471223,
-          69.07904541474605
+          -178.1333,
+          82.9143
         ],
         [
-          -136.8971248471223,
-          6.081382167175069
+          -178.1333,
+          14.0749
         ],
         [
-          156.37123798357752,
-          6.081382167175069
+          -53.0567,
+          14.0749
         ]
       ]
     ]
@@ -624,10 +624,10 @@
     }
   },
   "bbox": [
-    -136.8971248471223,
-    6.081382167175069,
-    156.37123798357752,
-    69.07904541474605
+    -178.1333,
+    14.0749,
+    -53.0567,
+    82.9143
   ],
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"

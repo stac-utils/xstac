@@ -3,26 +3,27 @@
   "stac_version": "1.0.0",
   "id": "daymet-annual-hi",
   "properties": {
+    "start_datetime": "1980-07-01T12:00:00Z",
+    "end_datetime": "2020-07-01T12:00:00Z",
     "cube:dimensions": {
       "time": {
-        "type": "temporal",
-        "description": "24-hour day based on local time",
         "extent": [
           "1980-07-01T12:00:00Z",
           "2020-07-01T12:00:00Z"
-        ]
+        ],
+        "description": "24-hour day based on local time",
+        "type": "temporal"
       },
       "x": {
-        "type": "spatial",
         "axis": "x",
-        "description": "x coordinate of projection",
         "extent": [
           -5802250.0,
           -5519250.0
         ],
         "step": 1000.0,
+        "description": "x coordinate of projection",
         "reference_system": {
-          "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+          "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
           "type": "ProjectedCRS",
           "name": "undefined",
           "base_crs": {
@@ -137,19 +138,19 @@
               }
             ]
           }
-        }
+        },
+        "type": "spatial"
       },
       "y": {
-        "type": "spatial",
         "axis": "y",
-        "description": "y coordinate of projection",
         "extent": [
           -622000.0,
           -39000.0
         ],
         "step": -1000.0,
+        "description": "y coordinate of projection",
         "reference_system": {
-          "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
+          "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
           "type": "ProjectedCRS",
           "name": "undefined",
           "base_crs": {
@@ -264,7 +265,8 @@
               }
             ]
           }
-        }
+        },
+        "type": "spatial"
       },
       "nv": {
         "type": "count",
@@ -279,7 +281,6 @@
       "lambert_conformal_conic": {
         "type": "data",
         "dimensions": [],
-        "shape": [],
         "attrs": {
           "false_easting": 0.0,
           "false_northing": 0.0,
@@ -292,7 +293,8 @@
             25.0,
             60.0
           ]
-        }
+        },
+        "shape": []
       },
       "lat": {
         "type": "auxiliary",
@@ -302,6 +304,11 @@
           "x"
         ],
         "unit": "degrees_north",
+        "attrs": {
+          "long_name": "latitude coordinate",
+          "standard_name": "latitude",
+          "units": "degrees_north"
+        },
         "shape": [
           584,
           284
@@ -309,12 +316,7 @@
         "chunks": [
           584,
           284
-        ],
-        "attrs": {
-          "long_name": "latitude coordinate",
-          "standard_name": "latitude",
-          "units": "degrees_north"
-        }
+        ]
       },
       "lon": {
         "type": "auxiliary",
@@ -324,6 +326,11 @@
           "x"
         ],
         "unit": "degrees_east",
+        "attrs": {
+          "long_name": "longitude coordinate",
+          "standard_name": "longitude",
+          "units": "degrees_east"
+        },
         "shape": [
           584,
           284
@@ -331,12 +338,7 @@
         "chunks": [
           584,
           284
-        ],
-        "attrs": {
-          "long_name": "longitude coordinate",
-          "standard_name": "longitude",
-          "units": "degrees_east"
-        }
+        ]
       },
       "prcp": {
         "type": "data",
@@ -347,6 +349,12 @@
           "x"
         ],
         "unit": "mm",
+        "attrs": {
+          "cell_methods": "area: mean time: sum within days time: sum over days",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "annual total precipitation",
+          "units": "mm"
+        },
         "shape": [
           41,
           584,
@@ -356,13 +364,7 @@
           1,
           584,
           284
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: sum within days time: sum over days",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "annual total precipitation",
-          "units": "mm"
-        }
+        ]
       },
       "swe": {
         "type": "data",
@@ -373,6 +375,12 @@
           "x"
         ],
         "unit": "kg/m2",
+        "attrs": {
+          "cell_methods": "area: mean time: sum within days time: mean over days",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "annual average snow water equivalent",
+          "units": "kg/m2"
+        },
         "shape": [
           41,
           584,
@@ -382,13 +390,7 @@
           1,
           584,
           284
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: sum within days time: mean over days",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "annual average snow water equivalent",
-          "units": "kg/m2"
-        }
+        ]
       },
       "time_bnds": {
         "type": "data",
@@ -396,6 +398,9 @@
           "time",
           "nv"
         ],
+        "attrs": {
+          "time": "days since 1950-01-01 00:00:00"
+        },
         "shape": [
           41,
           2
@@ -403,10 +408,7 @@
         "chunks": [
           1,
           2
-        ],
-        "attrs": {
-          "time": "days since 1950-01-01 00:00:00"
-        }
+        ]
       },
       "tmax": {
         "type": "data",
@@ -417,6 +419,12 @@
           "x"
         ],
         "unit": "degrees C",
+        "attrs": {
+          "cell_methods": "area: mean time: maximum within days time: mean over days",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "annual average of daily maximum temperature",
+          "units": "degrees C"
+        },
         "shape": [
           41,
           584,
@@ -426,13 +434,7 @@
           1,
           584,
           284
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: maximum within days time: mean over days",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "annual average of daily maximum temperature",
-          "units": "degrees C"
-        }
+        ]
       },
       "tmin": {
         "type": "data",
@@ -443,6 +445,12 @@
           "x"
         ],
         "unit": "degrees C",
+        "attrs": {
+          "cell_methods": "area: mean time: minimum within days time: mean over days",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "annual average of daily minimum temperature",
+          "units": "degrees C"
+        },
         "shape": [
           41,
           584,
@@ -452,13 +460,7 @@
           1,
           584,
           284
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: minimum within days time: mean over days",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "annual average of daily minimum temperature",
-          "units": "degrees C"
-        }
+        ]
       },
       "vp": {
         "type": "data",
@@ -469,6 +471,12 @@
           "x"
         ],
         "unit": "Pa",
+        "attrs": {
+          "cell_methods": "area: mean time: mean within days time: mean over days",
+          "grid_mapping": "lambert_conformal_conic",
+          "long_name": "annual average of daily average vapor pressure",
+          "units": "Pa"
+        },
         "shape": [
           41,
           584,
@@ -478,17 +486,9 @@
           1,
           584,
           284
-        ],
-        "attrs": {
-          "cell_methods": "area: mean time: mean within days time: mean over days",
-          "grid_mapping": "lambert_conformal_conic",
-          "long_name": "annual average of daily average vapor pressure",
-          "units": "Pa"
-        }
+        ]
       }
     },
-    "start_datetime": "1980-07-01T12:00:00Z",
-    "end_datetime": "2020-07-01T12:00:00Z",
     "datetime": null
   },
   "geometry": {
@@ -496,24 +496,24 @@
     "coordinates": [
       [
         [
-          -154.7780670634169,
-          17.960033949329812
+          -154.772,
+          17.9539
         ],
         [
-          -154.7780670634169,
-          23.51232608231902
+          -154.772,
+          23.5186
         ],
         [
-          -160.2988400944475,
-          23.51232608231902
+          -160.3056,
+          23.5186
         ],
         [
-          -160.2988400944475,
-          17.960033949329812
+          -160.3056,
+          17.9539
         ],
         [
-          -154.7780670634169,
-          17.960033949329812
+          -154.772,
+          17.9539
         ]
       ]
     ]
@@ -558,10 +558,10 @@
     }
   },
   "bbox": [
-    -160.2988400944475,
-    17.960033949329812,
-    -154.7780670634169,
-    23.51232608231902
+    -160.3056,
+    17.9539,
+    -154.772,
+    23.5186
   ],
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"

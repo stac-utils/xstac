@@ -87,7 +87,10 @@ def generate(frequency, region):
                 "href": "https://science.nasa.gov/earth-science/earth-science-data/data-information-policy",
             }
         ],
-        "extent": {"spatial": {"bbox": [BBOX[region]]}},
+        "extent": {
+            "spatial": {"bbox": [BBOX[region]]},
+            "temporal": {"interval": [[None, None]]},
+        },
         "providers": [
             {
                 "name": "Microsoft",
@@ -167,9 +170,7 @@ def generate(frequency, region):
         "bbox": BBOX[region],
         "geometry": shapely.geometry.mapping(shapely.geometry.box(*BBOX[region])),
         "stac_version": "1.0.0",
-        "properties": {
-            # "datetime": "2021-01-01T00:00:00Z"
-        },
+        "properties": {"start_datetime": None, "end_datetime": None},
         "assets": {
             "zarr-https": {
                 "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",

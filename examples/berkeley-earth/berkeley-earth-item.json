@@ -3,33 +3,35 @@
   "stac_version": "1.0.0",
   "id": "id",
   "properties": {
+    "start_datetime": "1850-01-01T00:00:00Z",
+    "end_datetime": "2021-04-01T00:00:00Z",
     "cube:dimensions": {
       "time": {
-        "type": "temporal",
         "extent": [
           "1850-01-01T00:00:00Z",
           "2021-04-01T00:00:00Z"
-        ]
+        ],
+        "type": "temporal"
       },
       "longitude": {
-        "type": "spatial",
         "axis": "x",
-        "description": "Longitude",
         "extent": [
           -178.08511352539062,
           179.1627960205078
         ],
-        "reference_system": 4326
+        "description": "Longitude",
+        "reference_system": 4326,
+        "type": "spatial"
       },
       "latitude": {
-        "type": "spatial",
         "axis": "y",
-        "description": "Latitude",
         "extent": [
           -89.21502685546875,
           82.78807067871094
         ],
-        "reference_system": 4326
+        "description": "Latitude",
+        "reference_system": 4326,
+        "type": "spatial"
       }
     },
     "cube:variables": {
@@ -40,14 +42,14 @@
           "map_points"
         ],
         "unit": "degrees_east",
-        "shape": [
-          5498
-        ],
         "attrs": {
           "units": "degrees_east",
           "standard_name": "longitude",
           "long_name": "Longitude"
-        }
+        },
+        "shape": [
+          5498
+        ]
       },
       "latitude": {
         "type": "auxiliary",
@@ -56,14 +58,14 @@
           "map_points"
         ],
         "unit": "degrees_north",
-        "shape": [
-          5498
-        ],
         "attrs": {
           "units": "degrees_north",
           "standard_name": "latitude",
           "long_name": "Latitude"
-        }
+        },
+        "shape": [
+          5498
+        ]
       },
       "land_mask": {
         "type": "data",
@@ -72,16 +74,16 @@
           "map_points"
         ],
         "unit": "none",
-        "shape": [
-          5498
-        ],
         "attrs": {
           "units": "none",
           "standard_name": "land_mask",
           "long_name": "Land Mask",
           "valid_min": 0.0,
           "valid_max": 1.0
-        }
+        },
+        "shape": [
+          5498
+        ]
       },
       "temperature": {
         "type": "data",
@@ -91,17 +93,17 @@
           "map_points"
         ],
         "unit": "degree C",
-        "shape": [
-          2056,
-          5498
-        ],
         "attrs": {
           "units": "degree C",
           "standard_name": "surface_temperature_anomaly",
           "long_name": "Air Surface Temperature Anomaly",
           "valid_min": -17.44390106201172,
           "valid_max": 18.386690139770508
-        }
+        },
+        "shape": [
+          2056,
+          5498
+        ]
       },
       "climatology": {
         "type": "data",
@@ -111,50 +113,22 @@
           "map_points"
         ],
         "unit": "degree C",
-        "shape": [
-          12,
-          5498
-        ],
         "attrs": {
           "units": "degree C",
           "standard_name": "surface_temperature_climatology",
           "long_name": "Air Surface Temperature Climatology (Jan 1951 - Dec 1980)",
           "valid_min": -64.77362823486328,
           "valid_max": 45.035789489746094
-        }
+        },
+        "shape": [
+          12,
+          5498
+        ]
       }
     },
-    "start_datetime": "1850-01-01T00:00:00Z",
-    "end_datetime": "2021-04-01T00:00:00Z",
     "datetime": null
   },
-  "geometry": {
-    "type": "Polygon",
-    "coordinates": [
-      [
-        [
-          179.1627960205078,
-          -89.21502685546875
-        ],
-        [
-          179.1627960205078,
-          82.78807067871094
-        ],
-        [
-          -178.08511352539062,
-          82.78807067871094
-        ],
-        [
-          -178.08511352539062,
-          -89.21502685546875
-        ],
-        [
-          179.1627960205078,
-          -89.21502685546875
-        ]
-      ]
-    ]
-  },
+  "geometry": null,
   "links": [],
   "assets": {
     "data": {
@@ -165,12 +139,6 @@
       ]
     }
   },
-  "bbox": [
-    -178.08511352539062,
-    -89.21502685546875,
-    179.1627960205078,
-    82.78807067871094
-  ],
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
   ]

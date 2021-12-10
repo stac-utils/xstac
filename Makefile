@@ -12,3 +12,7 @@ run-examples:
 	# daymet
 	cd examples/daymet && \
 		python generate.py --region=all --frequency=all
+
+	# Berkeley Earth
+	cd examples/berkeley-earth && \
+		python generate.py

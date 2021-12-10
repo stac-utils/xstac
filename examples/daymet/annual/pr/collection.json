@@ -12,490 +12,6 @@
   "stac_extensions": [
     "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
   ],
-  "cube:dimensions": {
-    "time": {
-      "type": "temporal",
-      "description": "24-hour day based on local time",
-      "extent": [
-        "1980-07-01T12:00:00Z",
-        "2020-07-01T12:00:00Z"
-      ]
-    },
-    "x": {
-      "type": "spatial",
-      "axis": "x",
-      "description": "x coordinate of projection",
-      "extent": [
-        3445750.0,
-        3808750.0
-      ],
-      "step": 1000.0,
-      "reference_system": {
-        "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
-        "type": "ProjectedCRS",
-        "name": "undefined",
-        "base_crs": {
-          "name": "undefined",
-          "datum": {
-            "type": "GeodeticReferenceFrame",
-            "name": "undefined",
-            "ellipsoid": {
-              "name": "undefined",
-              "semi_major_axis": 6378137,
-              "inverse_flattening": 298.257223563
-            }
-          },
-          "coordinate_system": {
-            "subtype": "ellipsoidal",
-            "axis": [
-              {
-                "name": "Longitude",
-                "abbreviation": "lon",
-                "direction": "east",
-                "unit": "degree"
-              },
-              {
-                "name": "Latitude",
-                "abbreviation": "lat",
-                "direction": "north",
-                "unit": "degree"
-              }
-            ]
-          }
-        },
-        "conversion": {
-          "name": "unknown",
-          "method": {
-            "name": "Lambert Conic Conformal (2SP)",
-            "id": {
-              "authority": "EPSG",
-              "code": 9802
-            }
-          },
-          "parameters": [
-            {
-              "name": "Latitude of 1st standard parallel",
-              "value": 25,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8823
-              }
-            },
-            {
-              "name": "Latitude of 2nd standard parallel",
-              "value": 60,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8824
-              }
-            },
-            {
-              "name": "Latitude of false origin",
-              "value": 42.5,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8821
-              }
-            },
-            {
-              "name": "Longitude of false origin",
-              "value": -100,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8822
-              }
-            },
-            {
-              "name": "Easting at false origin",
-              "value": 0,
-              "unit": "metre",
-              "id": {
-                "authority": "EPSG",
-                "code": 8826
-              }
-            },
-            {
-              "name": "Northing at false origin",
-              "value": 0,
-              "unit": "metre",
-              "id": {
-                "authority": "EPSG",
-                "code": 8827
-              }
-            }
-          ]
-        },
-        "coordinate_system": {
-          "subtype": "Cartesian",
-          "axis": [
-            {
-              "name": "Easting",
-              "abbreviation": "E",
-              "direction": "east",
-              "unit": "metre"
-            },
-            {
-              "name": "Northing",
-              "abbreviation": "N",
-              "direction": "north",
-              "unit": "metre"
-            }
-          ]
-        }
-      }
-    },
-    "y": {
-      "type": "spatial",
-      "axis": "y",
-      "description": "y coordinate of projection",
-      "extent": [
-        -1995000.0,
-        -1765000.0
-      ],
-      "step": -1000.0,
-      "reference_system": {
-        "$schema": "https://proj.org/schemas/v0.2/projjson.schema.json",
-        "type": "ProjectedCRS",
-        "name": "undefined",
-        "base_crs": {
-          "name": "undefined",
-          "datum": {
-            "type": "GeodeticReferenceFrame",
-            "name": "undefined",
-            "ellipsoid": {
-              "name": "undefined",
-              "semi_major_axis": 6378137,
-              "inverse_flattening": 298.257223563
-            }
-          },
-          "coordinate_system": {
-            "subtype": "ellipsoidal",
-            "axis": [
-              {
-                "name": "Longitude",
-                "abbreviation": "lon",
-                "direction": "east",
-                "unit": "degree"
-              },
-              {
-                "name": "Latitude",
-                "abbreviation": "lat",
-                "direction": "north",
-                "unit": "degree"
-              }
-            ]
-          }
-        },
-        "conversion": {
-          "name": "unknown",
-          "method": {
-            "name": "Lambert Conic Conformal (2SP)",
-            "id": {
-              "authority": "EPSG",
-              "code": 9802
-            }
-          },
-          "parameters": [
-            {
-              "name": "Latitude of 1st standard parallel",
-              "value": 25,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8823
-              }
-            },
-            {
-              "name": "Latitude of 2nd standard parallel",
-              "value": 60,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8824
-              }
-            },
-            {
-              "name": "Latitude of false origin",
-              "value": 42.5,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8821
-              }
-            },
-            {
-              "name": "Longitude of false origin",
-              "value": -100,
-              "unit": "degree",
-              "id": {
-                "authority": "EPSG",
-                "code": 8822
-              }
-            },
-            {
-              "name": "Easting at false origin",
-              "value": 0,
-              "unit": "metre",
-              "id": {
-                "authority": "EPSG",
-                "code": 8826
-              }
-            },
-            {
-              "name": "Northing at false origin",
-              "value": 0,
-              "unit": "metre",
-              "id": {
-                "authority": "EPSG",
-                "code": 8827
-              }
-            }
-          ]
-        },
-        "coordinate_system": {
-          "subtype": "Cartesian",
-          "axis": [
-            {
-              "name": "Easting",
-              "abbreviation": "E",
-              "direction": "east",
-              "unit": "metre"
-            },
-            {
-              "name": "Northing",
-              "abbreviation": "N",
-              "direction": "north",
-              "unit": "metre"
-            }
-          ]
-        }
-      }
-    },
-    "nv": {
-      "type": "count",
-      "description": "Size of the 'time_bnds' variable.",
-      "values": [
-        0,
-        1
-      ]
-    }
-  },
-  "cube:variables": {
-    "lambert_conformal_conic": {
-      "type": "data",
-      "dimensions": [],
-      "shape": [],
-      "attrs": {
-        "false_easting": 0.0,
-        "false_northing": 0.0,
-        "grid_mapping_name": "lambert_conformal_conic",
-        "inverse_flattening": 298.257223563,
-        "latitude_of_projection_origin": 42.5,
-        "longitude_of_central_meridian": -100.0,
-        "semi_major_axis": 6378137.0,
-        "standard_parallel": [
-          25.0,
-          60.0
-        ]
-      }
-    },
-    "lat": {
-      "type": "auxiliary",
-      "description": "latitude coordinate",
-      "dimensions": [
-        "y",
-        "x"
-      ],
-      "unit": "degrees_north",
-      "shape": [
-        231,
-        364
-      ],
-      "chunks": [
-        231,
-        364
-      ],
-      "attrs": {
-        "long_name": "latitude coordinate",
-        "standard_name": "latitude",
-        "units": "degrees_north"
-      }
-    },
-    "lon": {
-      "type": "auxiliary",
-      "description": "longitude coordinate",
-      "dimensions": [
-        "y",
-        "x"
-      ],
-      "unit": "degrees_east",
-      "shape": [
-        231,
-        364
-      ],
-      "chunks": [
-        231,
-        364
-      ],
-      "attrs": {
-        "long_name": "longitude coordinate",
-        "standard_name": "longitude",
-        "units": "degrees_east"
-      }
-    },
-    "prcp": {
-      "type": "data",
-      "description": "annual total precipitation",
-      "dimensions": [
-        "time",
-        "y",
-        "x"
-      ],
-      "unit": "mm",
-      "shape": [
-        41,
-        231,
-        364
-      ],
-      "chunks": [
-        1,
-        231,
-        364
-      ],
-      "attrs": {
-        "cell_methods": "area: mean time: sum within days time: sum over days",
-        "grid_mapping": "lambert_conformal_conic",
-        "long_name": "annual total precipitation",
-        "units": "mm"
-      }
-    },
-    "swe": {
-      "type": "data",
-      "description": "annual average snow water equivalent",
-      "dimensions": [
-        "time",
-        "y",
-        "x"
-      ],
-      "unit": "kg/m2",
-      "shape": [
-        41,
-        231,
-        364
-      ],
-      "chunks": [
-        1,
-        231,
-        364
-      ],
-      "attrs": {
-        "cell_methods": "area: mean time: sum within days time: mean over days",
-        "grid_mapping": "lambert_conformal_conic",
-        "long_name": "annual average snow water equivalent",
-        "units": "kg/m2"
-      }
-    },
-    "time_bnds": {
-      "type": "data",
-      "dimensions": [
-        "time",
-        "nv"
-      ],
-      "shape": [
-        41,
-        2
-      ],
-      "chunks": [
-        1,
-        2
-      ],
-      "attrs": {
-        "time": "days since 1950-01-01 00:00:00"
-      }
-    },
-    "tmax": {
-      "type": "data",
-      "description": "annual average of daily maximum temperature",
-      "dimensions": [
-        "time",
-        "y",
-        "x"
-      ],
-      "unit": "degrees C",
-      "shape": [
-        41,
-        231,
-        364
-      ],
-      "chunks": [
-        1,
-        231,
-        364
-      ],
-      "attrs": {
-        "cell_methods": "area: mean time: maximum within days time: mean over days",
-        "grid_mapping": "lambert_conformal_conic",
-        "long_name": "annual average of daily maximum temperature",
-        "units": "degrees C"
-      }
-    },
-    "tmin": {
-      "type": "data",
-      "description": "annual average of daily minimum temperature",
-      "dimensions": [
-        "time",
-        "y",
-        "x"
-      ],
-      "unit": "degrees C",
-      "shape": [
-        41,
-        231,
-        364
-      ],
-      "chunks": [
-        1,
-        231,
-        364
-      ],
-      "attrs": {
-        "cell_methods": "area: mean time: minimum within days time: mean over days",
-        "grid_mapping": "lambert_conformal_conic",
-        "long_name": "annual average of daily minimum temperature",
-        "units": "degrees C"
-      }
-    },
-    "vp": {
-      "type": "data",
-      "description": "annual average of daily average vapor pressure",
-      "dimensions": [
-        "time",
-        "y",
-        "x"
-      ],
-      "unit": "Pa",
-      "shape": [
-        41,
-        231,
-        364
-      ],
-      "chunks": [
-        1,
-        231,
-        364
-      ],
-      "attrs": {
-        "cell_methods": "area: mean time: mean within days time: mean over days",
-        "grid_mapping": "lambert_conformal_conic",
-        "long_name": "annual average of daily average vapor pressure",
-        "units": "Pa"
-      }
-    }
-  },
   "title": "Daymet Annual Puerto Rico",
   "keywords": [
     "Daymet",
@@ -528,31 +44,31 @@
       "type": "application/vnd+zarr",
       "title": "Annual Puerto Rico Daymet HTTPS Zarr root",
       "description": "HTTPS URI of the annual Puerto Rico Daymet Zarr Group on Azure Blob Storage.",
-      "xarray:open_kwargs": {
-        "consolidated": true
-      },
       "roles": [
         "data",
         "zarr",
         "https"
-      ]
+      ],
+      "xarray:open_kwargs": {
+        "consolidated": true
+      }
     },
     "zarr-abfs": {
       "href": "abfs://daymet-zarr/annual/pr.zarr",
       "type": "application/vnd+zarr",
       "title": "Annual Puerto Rico Daymet Azure Blob File System Zarr root",
       "description": "Azure Blob File System of the annual Puerto Rico Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+      "roles": [
+        "data",
+        "zarr",
+        "abfs"
+      ],
       "xarray:storage_options": {
         "account_name": "daymeteuwest"
       },
       "xarray:open_kwargs": {
         "consolidated": true
-      },
-      "roles": [
-        "data",
-        "zarr",
-        "abfs"
-      ]
+      }
     },
     "thumbnail": {
       "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-annual-pr.png",
@@ -571,6 +87,490 @@
     "annual",
     "puerto rico"
   ],
+  "cube:dimensions": {
+    "time": {
+      "extent": [
+        "1980-07-01T12:00:00Z",
+        "2020-07-01T12:00:00Z"
+      ],
+      "description": "24-hour day based on local time",
+      "type": "temporal"
+    },
+    "x": {
+      "axis": "x",
+      "extent": [
+        3445750.0,
+        3808750.0
+      ],
+      "step": 1000.0,
+      "description": "x coordinate of projection",
+      "reference_system": {
+        "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
+        "type": "ProjectedCRS",
+        "name": "undefined",
+        "base_crs": {
+          "name": "undefined",
+          "datum": {
+            "type": "GeodeticReferenceFrame",
+            "name": "undefined",
+            "ellipsoid": {
+              "name": "undefined",
+              "semi_major_axis": 6378137,
+              "inverse_flattening": 298.257223563
+            }
+          },
+          "coordinate_system": {
+            "subtype": "ellipsoidal",
+            "axis": [
+              {
+                "name": "Longitude",
+                "abbreviation": "lon",
+                "direction": "east",
+                "unit": "degree"
+              },
+              {
+                "name": "Latitude",
+                "abbreviation": "lat",
+                "direction": "north",
+                "unit": "degree"
+              }
+            ]
+          }
+        },
+        "conversion": {
+          "name": "unknown",
+          "method": {
+            "name": "Lambert Conic Conformal (2SP)",
+            "id": {
+              "authority": "EPSG",
+              "code": 9802
+            }
+          },
+          "parameters": [
+            {
+              "name": "Latitude of 1st standard parallel",
+              "value": 25,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8823
+              }
+            },
+            {
+              "name": "Latitude of 2nd standard parallel",
+              "value": 60,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8824
+              }
+            },
+            {
+              "name": "Latitude of false origin",
+              "value": 42.5,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8821
+              }
+            },
+            {
+              "name": "Longitude of false origin",
+              "value": -100,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8822
+              }
+            },
+            {
+              "name": "Easting at false origin",
+              "value": 0,
+              "unit": "metre",
+              "id": {
+                "authority": "EPSG",
+                "code": 8826
+              }
+            },
+            {
+              "name": "Northing at false origin",
+              "value": 0,
+              "unit": "metre",
+              "id": {
+                "authority": "EPSG",
+                "code": 8827
+              }
+            }
+          ]
+        },
+        "coordinate_system": {
+          "subtype": "Cartesian",
+          "axis": [
+            {
+              "name": "Easting",
+              "abbreviation": "E",
+              "direction": "east",
+              "unit": "metre"
+            },
+            {
+              "name": "Northing",
+              "abbreviation": "N",
+              "direction": "north",
+              "unit": "metre"
+            }
+          ]
+        }
+      },
+      "type": "spatial"
+    },
+    "y": {
+      "axis": "y",
+      "extent": [
+        -1995000.0,
+        -1765000.0
+      ],
+      "step": -1000.0,
+      "description": "y coordinate of projection",
+      "reference_system": {
+        "$schema": "https://proj.org/schemas/v0.4/projjson.schema.json",
+        "type": "ProjectedCRS",
+        "name": "undefined",
+        "base_crs": {
+          "name": "undefined",
+          "datum": {
+            "type": "GeodeticReferenceFrame",
+            "name": "undefined",
+            "ellipsoid": {
+              "name": "undefined",
+              "semi_major_axis": 6378137,
+              "inverse_flattening": 298.257223563
+            }
+          },
+          "coordinate_system": {
+            "subtype": "ellipsoidal",
+            "axis": [
+              {
+                "name": "Longitude",
+                "abbreviation": "lon",
+                "direction": "east",
+                "unit": "degree"
+              },
+              {
+                "name": "Latitude",
+                "abbreviation": "lat",
+                "direction": "north",
+                "unit": "degree"
+              }
+            ]
+          }
+        },
+        "conversion": {
+          "name": "unknown",
+          "method": {
+            "name": "Lambert Conic Conformal (2SP)",
+            "id": {
+              "authority": "EPSG",
+              "code": 9802
+            }
+          },
+          "parameters": [
+            {
+              "name": "Latitude of 1st standard parallel",
+              "value": 25,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8823
+              }
+            },
+            {
+              "name": "Latitude of 2nd standard parallel",
+              "value": 60,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8824
+              }
+            },
+            {
+              "name": "Latitude of false origin",
+              "value": 42.5,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8821
+              }
+            },
+            {
+              "name": "Longitude of false origin",
+              "value": -100,
+              "unit": "degree",
+              "id": {
+                "authority": "EPSG",
+                "code": 8822
+              }
+            },
+            {
+              "name": "Easting at false origin",
+              "value": 0,
+              "unit": "metre",
+              "id": {
+                "authority": "EPSG",
+                "code": 8826
+              }
+            },
+            {
+              "name": "Northing at false origin",
+              "value": 0,
+              "unit": "metre",
+              "id": {
+                "authority": "EPSG",
+                "code": 8827
+              }
+            }
+          ]
+        },
+        "coordinate_system": {
+          "subtype": "Cartesian",
+          "axis": [
+            {
+              "name": "Easting",
+              "abbreviation": "E",
+              "direction": "east",
+              "unit": "metre"
+            },
+            {
+              "name": "Northing",
+              "abbreviation": "N",
+              "direction": "north",
+              "unit": "metre"
+            }
+          ]
+        }
+      },
+      "type": "spatial"
+    },
+    "nv": {
+      "type": "count",
+      "description": "Size of the 'time_bnds' variable.",
+      "values": [
+        0,
+        1
+      ]
+    }
+  },
+  "cube:variables": {
+    "lambert_conformal_conic": {
+      "type": "data",
+      "dimensions": [],
+      "attrs": {
+        "false_easting": 0.0,
+        "false_northing": 0.0,
+        "grid_mapping_name": "lambert_conformal_conic",
+        "inverse_flattening": 298.257223563,
+        "latitude_of_projection_origin": 42.5,
+        "longitude_of_central_meridian": -100.0,
+        "semi_major_axis": 6378137.0,
+        "standard_parallel": [
+          25.0,
+          60.0
+        ]
+      },
+      "shape": []
+    },
+    "lat": {
+      "type": "auxiliary",
+      "description": "latitude coordinate",
+      "dimensions": [
+        "y",
+        "x"
+      ],
+      "unit": "degrees_north",
+      "attrs": {
+        "long_name": "latitude coordinate",
+        "standard_name": "latitude",
+        "units": "degrees_north"
+      },
+      "shape": [
+        231,
+        364
+      ],
+      "chunks": [
+        231,
+        364
+      ]
+    },
+    "lon": {
+      "type": "auxiliary",
+      "description": "longitude coordinate",
+      "dimensions": [
+        "y",
+        "x"
+      ],
+      "unit": "degrees_east",
+      "attrs": {
+        "long_name": "longitude coordinate",
+        "standard_name": "longitude",
+        "units": "degrees_east"
+      },
+      "shape": [
+        231,
+        364
+      ],
+      "chunks": [
+        231,
+        364
+      ]
+    },
+    "prcp": {
+      "type": "data",
+      "description": "annual total precipitation",
+      "dimensions": [
+        "time",
+        "y",
+        "x"
+      ],
+      "unit": "mm",
+      "attrs": {
+        "cell_methods": "area: mean time: sum within days time: sum over days",
+        "grid_mapping": "lambert_conformal_conic",
+        "long_name": "annual total precipitation",
+        "units": "mm"
+      },
+      "shape": [
+        41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
+        231,
+        364
+      ]
+    },
+    "swe": {
+      "type": "data",
+      "description": "annual average snow water equivalent",
+      "dimensions": [
+        "time",
+        "y",
+        "x"
+      ],
+      "unit": "kg/m2",
+      "attrs": {
+        "cell_methods": "area: mean time: sum within days time: mean over days",
+        "grid_mapping": "lambert_conformal_conic",
+        "long_name": "annual average snow water equivalent",
+        "units": "kg/m2"
+      },
+      "shape": [
+        41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
+        231,
+        364
+      ]
+    },
+    "time_bnds": {
+      "type": "data",
+      "dimensions": [
+        "time",
+        "nv"
+      ],
+      "attrs": {
+        "time": "days since 1950-01-01 00:00:00"
+      },
+      "shape": [
+        41,
+        2
+      ],
+      "chunks": [
+        1,
+        2
+      ]
+    },
+    "tmax": {
+      "type": "data",
+      "description": "annual average of daily maximum temperature",
+      "dimensions": [
+        "time",
+        "y",
+        "x"
+      ],
+      "unit": "degrees C",
+      "attrs": {
+        "cell_methods": "area: mean time: maximum within days time: mean over days",
+        "grid_mapping": "lambert_conformal_conic",
+        "long_name": "annual average of daily maximum temperature",
+        "units": "degrees C"
+      },
+      "shape": [
+        41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
+        231,
+        364
+      ]
+    },
+    "tmin": {
+      "type": "data",
+      "description": "annual average of daily minimum temperature",
+      "dimensions": [
+        "time",
+        "y",
+        "x"
+      ],
+      "unit": "degrees C",
+      "attrs": {
+        "cell_methods": "area: mean time: minimum within days time: mean over days",
+        "grid_mapping": "lambert_conformal_conic",
+        "long_name": "annual average of daily minimum temperature",
+        "units": "degrees C"
+      },
+      "shape": [
+        41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
+        231,
+        364
+      ]
+    },
+    "vp": {
+      "type": "data",
+      "description": "annual average of daily average vapor pressure",
+      "dimensions": [
+        "time",
+        "y",
+        "x"
+      ],
+      "unit": "Pa",
+      "attrs": {
+        "cell_methods": "area: mean time: mean within days time: mean over days",
+        "grid_mapping": "lambert_conformal_conic",
+        "long_name": "annual average of daily average vapor pressure",
+        "units": "Pa"
+      },
+      "shape": [
+        41,
+        231,
+        364
+      ],
+      "chunks": [
+        1,
+        231,
+        364
+      ]
+    }
+  },
   "extent": {
     "spatial": {
       "bbox": [
