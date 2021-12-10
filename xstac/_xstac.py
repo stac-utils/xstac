@@ -369,7 +369,7 @@ def xarray_to_stac(
     ext.dimensions = dimensions
     # doesn't have a setter: https://github.com/stac-utils/pystac/issues/681
     # ext.variables = variables
-    ext.properties["cube:variables"] = {k: v.to_dict() for k, v in variables.items()}
+    ext.properties["cube:variables"] = {k: v.properties for k, v in variables.items()}
 
     if (
         is_collection
