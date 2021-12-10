@@ -3,7 +3,7 @@ xstac
 """
 import dateutil
 
-import cf_xarray  # noqa
+import cf_xarray  # noqa: F401
 import xarray as xr
 import numpy as np
 import pystac
@@ -289,10 +289,12 @@ def xarray_to_stac(
     temporal_extent, x_extent, y_extent:
         The lower and upper bounds of the (temporal, x, y vertical) dimension (inclusive).
     temporal_values, x_values, y_values, vertical_values:
-        The actual values / coordinates of the (temporal, x, y, vertical) dimension. Keep in mind the impact on the size of the STAC collection.
-        Should not be specified when `temporal_step` is specified. Prefer `temporal_step` when the temporal coordinates are regularly spaced.
+        The actual values / coordinates of the (temporal, x, y, vertical) dimension. Keep in mind the impact on
+        the size of the STAC collection. Should not be specified when `temporal_step` is specified. Prefer
+        `temporal_step` when the temporal coordinates are regularly spaced.
     temporal_step, x_step, y_step, vertical_step:
-        The difference between subsequent values in the (temporal, x, y vertical) dimension. Only specify when the values are regularly spaced.
+        The difference between subsequent values in the (temporal, x, y vertical) dimension. Only specify
+        when the values are regularly spaced.
     **additional_dimensions:
         A dictionary with keys ``extent``, ``values``, ``step``.
     """

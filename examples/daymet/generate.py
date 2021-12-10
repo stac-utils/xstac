@@ -17,7 +17,6 @@ import sys
 import argparse
 import json
 import fsspec
-from shapely.geometry.geo import shape
 import xarray as xr
 from pathlib import Path
 
@@ -32,9 +31,9 @@ BBOX = {
     "pr": [-67.9927, 16.8444, -64.1196, 19.9382],
 }
 DESC = {
-    "daily": "Gridded estimates of daily weather parameters. Daymet Version 4 variables include the following parameters: minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length.",
-    "monthly": "Monthly climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Monthly averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and monthly totals are provided for the precipitation variable.",
-    "annual": "Annual climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Annual averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and annual totals are provided for the precipitation variable.",
+    "daily": "Gridded estimates of daily weather parameters. Daymet Version 4 variables include the following parameters: minimum temperature, maximum temperature, precipitation, shortwave radiation, vapor pressure, snow water equivalent, and day length.",  # noqa: E501
+    "monthly": "Monthly climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Monthly averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and monthly totals are provided for the precipitation variable.",  # noqa: E501
+    "annual": "Annual climate summaries derived from Daymet Version 4 daily data at a 1 km x 1 km spatial resolution for five Daymet variables: minimum and maximum temperature, precipitation, vapor pressure, and snow water equivalent. Annual averages are provided for minimum and maximum temperature, vapor pressure, and snow water equivalent, and annual totals are provided for the precipitation variable.",  # noqa: E501
 }
 CITATION_URLS = {
     "daily": "https://doi.org/10.3334/ORNLDAAC/1840",
@@ -62,9 +61,6 @@ def parse_args(args=None):
 
 
 def generate(frequency, region):
-    other_regions = " and ".join(
-        [FULL_REGIONS[key] for key in FULL_REGIONS.keys() if key != region]
-    )
     short_desc_snippet = (
         "surface weather data" if frequency == "daily" else "climate summaries"
     )
@@ -109,7 +105,7 @@ def generate(frequency, region):
                 "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
-                "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
+                "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",  # noqa: E501
                 "roles": ["data", "zarr", "https"],
                 "xarray:open_kwargs": {"consolidated": True},
             },
@@ -117,13 +113,13 @@ def generate(frequency, region):
                 "href": f"abfs://daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
-                "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+                "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",  # noqa: E501
                 "roles": ["data", "zarr", "abfs"],
                 "xarray:storage_options": {"account_name": "daymeteuwest"},
                 "xarray:open_kwargs": {"consolidated": True},
             },
             "thumbnail": {
-                "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
+                "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",  # noqa: E501
                 "type": "image/png",
                 "title": f"Daymet {frequency} {FULL_REGIONS[region]} map thumbnail",
                 "roles": ["thumbnail"],
@@ -179,7 +175,7 @@ def generate(frequency, region):
                 "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
-                "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",
+                "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",  # noqa: E501
                 "roles": ["data", "zarr", "https"],
                 "xarray:open_kwargs": {"consolidated": True},
             },
@@ -187,13 +183,13 @@ def generate(frequency, region):
                 "href": f"abfs://daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
-                "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",
+                "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",  # noqa: E501
                 "roles": ["data", "zarr", "abfs"],
                 "xarray:storage_options": {"account_name": "daymeteuwest"},
                 "xarray:open_kwargs": {"consolidated": True},
             },
             "thumbnail": {
-                "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",
+                "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",  # noqa: E501
                 "type": "image/png",
                 "title": f"Daymet {frequency} {FULL_REGIONS[region]} map thumbnail",
             },

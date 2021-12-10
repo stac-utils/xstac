@@ -8,7 +8,7 @@ import sys
 import argparse
 import json
 import fsspec
-import cf_xarray
+import cf_xarray  # noqa: F401
 import xarray as xr
 
 import xstac
