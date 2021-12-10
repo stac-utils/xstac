@@ -1,12 +1,9 @@
 """
 xstac
 """
-import copy
-import json
 import dateutil
 
-from pystac import stac_object
-import cf_xarray
+import cf_xarray  # noqa
 import xarray as xr
 import numpy as np
 import pystac
