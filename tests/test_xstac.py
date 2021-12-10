@@ -1,10 +1,7 @@
 from xstac import xarray_to_stac
 from xstac._xstac import _bbox_to_geometry
-import xarray as xr
 import pytest
 import pystac
-
-import xstac
 
 
 # def test_no_time_dimension(ds, collection_template):

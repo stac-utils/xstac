@@ -1,18 +1,23 @@
 """
 xstac
 """
-import copy
-import json
-from pystac import stac_object
-import cf_xarray
+import dateutil
+
+import cf_xarray  # noqa: F401
 import xarray as xr
 import numpy as np
 import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
 from typing import Dict
-
-from ._types import TemporalDimension, HorizontalSpatialDimension, Datacube, Variable
+from pystac.extensions.datacube import (
+    TemporalDimension,
+    HorizontalSpatialDimension,
+    DatacubeExtension,
+    Variable,
+    VerticalSpatialDimension,
+    DimensionType,
+)
 
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
@@ -114,11 +119,13 @@ def build_temporal_dimension(ds, name, extent, values, step):
         step = None
 
     return TemporalDimension(
-        type="temporal",
-        extent=extent,
-        description=time.attrs.get("long_name"),
-        values=values,
-        step=step,
+        properties=dict(
+            extent=extent,
+            description=time.attrs.get("long_name"),
+            values=values,
+            step=step,
+            type=DimensionType.TEMPORAL.value,
+        )
     )
 
 
@@ -143,13 +150,15 @@ def build_horizontal_dimension(ds, name, axis, extent, values, step, reference_s
     reference_system = maybe_infer_reference_system(ds, reference_system)
 
     return HorizontalSpatialDimension(
-        type="spatial",
-        axis=axis,
-        extent=extent,
-        step=step,
-        values=values,
-        description=da.attrs.get("long_name"),
-        reference_system=reference_system,
+        properties=dict(
+            axis=axis,
+            extent=extent,
+            step=step,
+            values=values,
+            description=da.attrs.get("long_name"),
+            reference_system=reference_system,
+            type=DimensionType.SPATIAL.value,
+        )
     )
 
 
@@ -202,13 +211,15 @@ def build_variables(ds):
         # print("v", v.attrs)
         description = v.attrs.get("description", None) or v.attrs.get("long_name", None)
         var = Variable(
-            type=type_,
-            description=description,
-            dimensions=list(v.dims),
-            unit=v.attrs.get("units", None),
-            attrs=v.attrs,
-            shape=v.shape,
-            chunks=chunks,
+            dict(
+                type=type_,
+                description=description,
+                dimensions=list(v.dims),
+                unit=v.attrs.get("units", None),
+                attrs=v.attrs,
+                shape=list(v.shape),
+                chunks=chunks,
+            )
         )
         variables[k] = var
     return variables
@@ -236,6 +247,63 @@ def build_datacube(
     vertical_step=None,
     **additional_dimensions,
 ):
+    dimensions = {}
+
+    variables = build_variables(ds)
+    return dimensions, variables
+
+
+def xarray_to_stac(
+    ds: xr.Dataset,
+    template: Dict,
+    *,
+    temporal_dimension=None,
+    temporal_extent=None,
+    temporal_values=False,
+    temporal_step=None,
+    x_dimension=None,
+    x_extent=None,
+    x_values=False,
+    x_step=None,
+    y_dimension=None,
+    y_extent=None,
+    y_values=False,
+    y_step=None,
+    reference_system=None,
+    vertical_dimension=None,
+    vertical_extent=None,
+    vertical_values=None,
+    vertical_step=None,
+    validate: bool = True,
+    **additional_dimensions,
+) -> pystac.Collection:
+    """
+    Construct a STAC Collection from an xarray Dataset.
+
+    Parameters
+    ----------
+    template : dict
+        A template to use for creating the pystac Collection / Item.
+    temporal_dimension, x_dimension, y_dimension, vertical_dimension:
+        The name of the (temporal, x, y, vertical) dimension
+    temporal_extent, x_extent, y_extent:
+        The lower and upper bounds of the (temporal, x, y vertical) dimension (inclusive).
+    temporal_values, x_values, y_values, vertical_values:
+        The actual values / coordinates of the (temporal, x, y, vertical) dimension. Keep in mind the impact on
+        the size of the STAC collection. Should not be specified when `temporal_step` is specified. Prefer
+        `temporal_step` when the temporal coordinates are regularly spaced.
+    temporal_step, x_step, y_step, vertical_step:
+        The difference between subsequent values in the (temporal, x, y vertical) dimension. Only specify
+        when the values are regularly spaced.
+    **additional_dimensions:
+        A dictionary with keys ``extent``, ``values``, ``step``.
+    """
+    temporal_dimension = maybe_use_cf_standard_axis(
+        temporal_dimension, "temporal_dimension", ds
+    )
+    x_dimension = maybe_use_cf_standard_axis(x_dimension, "x_dimension", ds)
+    y_dimension = maybe_use_cf_standard_axis(y_dimension, "y_dimension", ds)
+
     dimensions = {}
 
     if temporal_dimension is not False:
@@ -280,109 +348,42 @@ def build_datacube(
 
     variables = build_variables(ds)
 
-    datacube = Datacube(**{"cube:dimensions": dimensions, "cube:variables": variables})
-    result = json.loads(datacube.json(by_alias=True))
-    return result
-
-
-def xarray_to_stac(
-    ds: xr.Dataset,
-    template: Dict,
-    *,
-    temporal_dimension=None,
-    temporal_extent=None,
-    temporal_values=False,
-    temporal_step=None,
-    x_dimension=None,
-    x_extent=None,
-    x_values=False,
-    x_step=None,
-    y_dimension=None,
-    y_extent=None,
-    y_values=False,
-    y_step=None,
-    reference_system=None,
-    vertical_dimension=None,
-    vertical_extent=None,
-    vertical_values=None,
-    vertical_step=None,
-    validate: bool = True,
-    **additional_dimensions,
-) -> pystac.Collection:
-    """
-    Construct a STAC Collection from an xarray Dataset.
-
-    Parameters
-    ----------
-    template : dict
-        A template to use for creating the pystac Collection / Item.
-    temporal_dimension, x_dimension, y_dimension, vertical_dimension:
-        The name of the (temporal, x, y, vertical) dimension
-    temporal_extent, x_extent, y_extent:
-        The lower and upper bounds of the (temporal, x, y vertical) dimension (inclusive).
-    temporal_values, x_values, y_values, vertical_values:
-        The actual values / coordinates of the (temporal, x, y, vertical) dimension. Keep in mind the impact on the size of the STAC collection.
-        Should not be specified when `temporal_step` is specified. Prefer `temporal_step` when the temporal coordinates are regularly spaced.
-    temporal_step, x_step, y_step, vertical_step:
-        The difference between subsequent values in the (temporal, x, y vertical) dimension. Only specify when the values are regularly spaced.
-    **additional_dimensions:
-        A dictionary with keys ``extent``, ``values``, ``step``.
-    """
-    temporal_dimension = maybe_use_cf_standard_axis(
-        temporal_dimension, "temporal_dimension", ds
-    )
-    x_dimension = maybe_use_cf_standard_axis(x_dimension, "x_dimension", ds)
-    y_dimension = maybe_use_cf_standard_axis(y_dimension, "y_dimension", ds)
-
-    datacube = build_datacube(
-        ds,
-        temporal_dimension=temporal_dimension,
-        temporal_extent=temporal_extent,
-        temporal_values=temporal_values,
-        temporal_step=temporal_step,
-        x_dimension=x_dimension,
-        x_extent=x_extent,
-        x_values=x_values,
-        x_step=x_step,
-        y_dimension=y_dimension,
-        y_extent=y_extent,
-        y_values=y_values,
-        y_step=y_step,
-        reference_system=reference_system,
-        vertical_dimension=vertical_dimension,
-        vertical_extent=vertical_extent,
-        vertical_values=vertical_values,
-        vertical_step=vertical_step,
-        **additional_dimensions,
-    )
-
     # Fixup to ensure that epsg codes remain as digits, rather than strings.
     # Currently they're being cast to string by the _types stuff.
     # TODO(pystac): check if this is unnecessary
-    for dimension in datacube["cube:dimensions"].values():
-        ref = dimension.get("reference_system")
-        if isinstance(ref, str) and ref.isdigit():
-            dimension["reference_system"] = int(ref)
+    for dimension in dimensions.values():
+        if isinstance(
+            dimension, (HorizontalSpatialDimension, VerticalSpatialDimension)
+        ):
+            ref = dimension.reference_system
+            if isinstance(ref, str) and ref.isdigit():
+                dimension.reference_system = int(ref)
 
-    is_item = template.get("type") == "Feature"
-    result = copy.deepcopy(template)
-    if is_item:
-        result["properties"] = {**datacube, **template["properties"]}
-    else:
-        result = {**datacube, **template}
+    template = pystac.read_dict(template)
+    is_item = isinstance(template, pystac.Item)
+    is_collection = not is_item
 
-    extent = result.get("extent", {})
-    extent.setdefault("spatial", {})
-    extent.setdefault("temporal", {})
+    result = template.clone()
+    ext = DatacubeExtension.ext(result, add_if_missing=True)
 
-    if x_dimension and y_dimension and not extent.get("spatial"):
-        ref = datacube["cube:dimensions"][x_dimension]["reference_system"]
+    ext.dimensions = dimensions
+    # doesn't have a setter: https://github.com/stac-utils/pystac/issues/681
+    # ext.variables = variables
+    ext.properties["cube:variables"] = {k: v.properties for k, v in variables.items()}
+
+    if (
+        is_collection
+        and x_dimension
+        and y_dimension
+        and not any(x for x in result.extent.spatial.bboxes)
+    ):
+        ref = ext.dimensions[x_dimension]["reference_system"]
         if isinstance(ref, int) or (isinstance(ref, str) and ref.isdigit()):
             src_crs = CRS.from_epsg(ref)
         else:
             src_crs = CRS.from_json_dict(ref)
-        left, right = datacube["cube:dimensions"][x_dimension]["extent"]
-        bottom, top = datacube["cube:dimensions"][y_dimension]["extent"]
+        left, right = ext.dimensions[x_dimension]["extent"]
+        bottom, top = ext.dimensions[y_dimension]["extent"]
         bbox = build_bbox(left, bottom, right, top, src_crs)
 
         if is_item:
@@ -390,56 +391,43 @@ def xarray_to_stac(
             # TODO: probably broken...
             result["geometry"] = _bbox_to_geometry(bbox)
         else:
-            extent["spatial"] = {"bbox": [bbox]}
+            result.extent.spatial.bboxes[0] = bbox
 
-    if temporal_dimension and not extent.get("temporal"):
-        start_datetime, end_datetime = (
-            datacube["cube:dimensions"][temporal_dimension]["extent"][0],
-            datacube["cube:dimensions"][temporal_dimension]["extent"][1],
+    infer_temporal_extent = (
+        temporal_dimension is not None
+        and (is_collection and not any(x for x in result.extent.temporal.intervals[0]))
+        or (
+            is_item
+            and not (
+                result.properties.get("start_datetime")
+                or result.properties.get("end_datetime")
+            )
         )
+    )
+
+    if infer_temporal_extent:
+        start_datetime, end_datetime = ext.dimensions[temporal_dimension].extent
         if is_item:
-            result["properties"]["start_datetime"] = start_datetime
-            result["properties"]["end_datetime"] = end_datetime
+            result.properties["start_datetime"] = start_datetime
+            result.properties["end_datetime"] = end_datetime
         else:
-            extent["temporal"]["interval"] = [[start_datetime, end_datetime]]
-
-    if not is_item:
-        result["extent"] = extent
-
-    result.setdefault("stac_extensions", [])
-    # TODO: get from pystac
-    if SCHEMA_URI not in result["stac_extensions"]:
-        result["stac_extensions"].append(SCHEMA_URI)
-
-    if temporal_dimension:
-        values = datacube["cube:dimensions"][temporal_dimension]["values"]
-        if values is None:
-            # For some reason, including None here causes validation to fail...
-            # https://github.com/TomAugspurger/xstac/issues/9
-            if is_item:
-                del result["properties"]["cube:dimensions"][temporal_dimension][
-                    "values"
-                ]
-            else:
-                del result["cube:dimensions"][temporal_dimension]["values"]
+            start_datetime, end_datetime = (
+                dateutil.parser.parse(start_datetime),
+                dateutil.parser.parse(end_datetime),
+            )
+            result.extent.temporal.intervals[0] = [start_datetime, end_datetime]
 
     # remove unset values, otherwise we might hit bizare jsonschema issues
     # when validating
     for obj in ["cube:variables", "cube:dimensions"]:
-        if is_item:
-            container = result["properties"]
-        else:
-            container = result
-        for var in list(container[obj]):
-            for k, v in list(container[obj][var].items()):
+        for var in ext.properties[obj]:
+            for k, v in list(ext.properties[obj][var].items()):
                 if v is None:
-                    del container[obj][var][k]
-
-    stac_obj = pystac.read_dict(result)
+                    del ext.properties[obj][var][k]
+    stac_obj = result
 
     if validate:
         if isinstance(stac_obj, pystac.Collection):
             stac_obj.normalize_hrefs("/")
-        else:
-            stac_obj.validate()
+        stac_obj.validate()
     return stac_obj

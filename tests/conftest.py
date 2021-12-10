@@ -136,6 +136,10 @@ def collection_template():
         "description": "description",
         "license": "license",
         "stac_version": "1.0.0",
+        "extent": {
+            "spatial": {"bbox": [[-180, -90, 180, 90]]},
+            "temporal": {"interval": [[None, None]]},
+        },
     }
     return template
 
