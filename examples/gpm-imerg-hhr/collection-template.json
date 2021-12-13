@@ -1,0 +1,99 @@
+{
+  "type": "Collection",
+  "id": "gpm-imerg-hhr",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [-180, -90, 180, 90]
+      ]
+    }
+  },
+  "links": [
+    {
+      "rel": "license",
+      "href": "https://lpdaac.usgs.gov/data/data-citation-and-policies/",
+      "title": "Public Domain"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/xarray-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+  ],
+  "title": "gpm-imerg-hhr",
+  "providers": [
+    {
+      "name": "Development Seed",
+      "roles": [
+        "processor"
+      ],
+      "url": "https://developmentseed.org/"
+    },
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host",
+        "processor"
+      ],
+      "url": "https://planetarycomputer.microsoft.com"
+    },
+    {
+      "name": "NASA",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://gpm.nasa.gov/data/directory"
+    }
+  ],
+  "assets": {
+    "zarr-https": {
+      "href": "https://ai4edataeuwest.blob.core.windows.net/imerg/gpm-imerg-hhr.zarr",
+      "title": "gpm-imerg-hhr HTTPS Zarr root",
+      "description": "HTTPS URI of the gpm-imerg-hhr Zarr Group on Azure Blob Storage.",
+      "roles": [
+        "data",
+        "zarr",
+        "https"
+      ],
+      "type": "application/vnd+zarr",
+      "xarray:open_kwargs": {
+        "consolidated": true
+      }
+    },
+    "zarr-abfs": {
+      "href": "abfs://imerg/gpm-imerg-hhr.zarr",
+      "type": "application/vnd+zarr",
+      "description": "Azure Blob File System URI of the gpm-imerg-hhr Zarr Group on Azure Blob Storage for use with adlfs.",
+      "roles": [
+        "data",
+        "zarr"
+      ],
+      "xarray:storage_options": {
+        "account_name": "ai4edataeuwest"
+      },
+      "xarray:open_kwargs": {
+        "consolidated": true
+      }
+    },
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gpm-imerg-hrr.png",
+      "type": "image/png",
+      "title": "gpm-imerg-hhr thumbnail",
+      "role": [
+        "thumbnail"
+      ]
+    }
+  },
+  "keywords": [
+    "imerg",
+    "GPM",
+    "Precipitation"
+  ],
+  "sci:doi": "10.5067/GPM/IMERG/3B-HH/06",
+  "sci:citation": "Huffman, G.J., E.F. Stocker, D.T. Bolvin, E.J. Nelkin, Jackson Tan (2019), GPM IMERG Final Precipitation L3 Half Hourly 0.1 degree x 0.1 degree V06, Greenbelt, MD, Goddard Earth Sciences Data and Information Services Center (GES DISC)",
+  "msft:short_description": "The Integrated Multi-satellitE Retrievals for GPM (IMERG) algorithm combines information from the GPM satellite constellation to estimate precipitation over the majority of the Earth's surface.",
+  "msft:storage_account": "ai4edataeuwest",
+  "msft:container": "imerg",
+  "license": "proprietary"
+}
