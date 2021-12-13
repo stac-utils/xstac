@@ -7,7 +7,7 @@ name = "xstac"
 author = "Tom Augspurger"
 author-email = "taugspurger@microsoft.com"
 classifiers = [ "License :: OSI Approved :: MIT License",]
-requires = [
+dependencies = [
     "cf_xarray",
     "xarray",
     "numpy",
