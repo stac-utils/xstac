@@ -1,7 +1,9 @@
 """
 xstac
 """
+import collections
 import dateutil
+from typing import Union
 
 import cf_xarray  # noqa: F401
 import xarray as xr
@@ -255,7 +257,7 @@ def build_datacube(
 
 def xarray_to_stac(
     ds: xr.Dataset,
-    template: Dict,
+    template: Union[Dict, pystac.Item, pystac.Collection],
     *,
     temporal_dimension=None,
     temporal_extent=None,
@@ -359,7 +361,9 @@ def xarray_to_stac(
             if isinstance(ref, str) and ref.isdigit():
                 dimension.reference_system = int(ref)
 
-    template = pystac.read_dict(template)
+    if isinstance(template, collections.abc.Mapping):
+        template = pystac.read_dict(template)
+
     is_item = isinstance(template, pystac.Item)
     is_collection = not is_item
 

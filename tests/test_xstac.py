@@ -90,3 +90,33 @@ def test_bbox_to_geometry():
 def test_missing_dims_error(ds_without_spatial_dims, collection_template):
     with pytest.raises(KeyError):
         _ = xarray_to_stac(ds_without_spatial_dims, collection_template)
+
+
+def test_from_pystac_object(ds_without_spatial_dims):
+    # https://github.com/TomAugspurger/xstac/issues/9
+    template = {
+        "type": "Collection",
+        "id": "cesm2-lens",
+        "stac_version": "1.0.0",
+        "description": "desc",
+        "stac_extensions": [
+            "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+        ],
+        "extent": {
+            "spatial": {"bbox": [[-180, -90, 180, 90]]},
+            "temporal": {
+                "interval": [["1851-01-01T00:00:00Z", "1851-01-01T00:00:00Z"]]
+            },
+        },
+        "providers": [],
+        "license": "CC0-1.0",
+        "links": [],
+    }
+    c = xarray_to_stac(
+        ds_without_spatial_dims,
+        pystac.read_dict(template),
+        x_dimension=False,
+        y_dimension=False,
+    )
+    c.normalize_hrefs("/")
+    c.validate()
