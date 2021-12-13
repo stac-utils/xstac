@@ -8,6 +8,9 @@
       "bbox": [
         [-180, -90, 180, 90]
       ]
+    },
+    "temporal": {
+      "interval": [[null, null]]
     }
   },
   "links": [
