@@ -2,8 +2,8 @@
 requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
-[tool.flit.metadata]
-module = "xstac"
+[project]
+name = "xstac"
 author = "Tom Augspurger"
 author-email = "taugspurger@microsoft.com"
 classifiers = [ "License :: OSI Approved :: MIT License",]
@@ -21,13 +21,15 @@ requires = [
     # these are just for generate
     "fsspec[http]",
 ]
+requires-python = ">=3.6"
+dynamic = ["version", "description"]
 
-[tool.flit.scripts]
-xstac = "xstac._generate:main"
-
-[tool.flit.metadata.requires-extra]
+[project.optional-dependencies]
 dev = [
   "pytest",
   "pre-commit",
   "shapely",
 ]
+
+[project.scripts]
+xstac = "xstac._generate:main"
