@@ -1,0 +1,304 @@
+{
+  "type": "Collection",
+  "id": "nasa-nex-gddp-cmip6",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "links": [
+    {
+      "rel": "root",
+      "href": "/collection.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "license",
+      "href": "https://pcmdi.llnl.gov/CMIP6/TermsOfUse/TermsOfUse6-1.html",
+      "type": "text/html"
+    },
+    {
+      "rel": "documentation",
+      "href": "https://www.nccs.nasa.gov/sites/default/files/NEX-GDDP-CMIP6-Tech_Note.pdf",
+      "type": "application/pdf"
+    },
+    {
+      "rel": "self",
+      "href": "/collection.json",
+      "type": "application/json"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+  ],
+  "cube:dimensions": {
+    "time": {
+      "extent": [
+        "1950-01-01T12:00:00Z",
+        "2100-12-31T00:00:00Z"
+      ],
+      "description": "time",
+      "step": "P1DT0H0M0S",
+      "type": "temporal"
+    },
+    "lon": {
+      "axis": "x",
+      "extent": [
+        0.125,
+        359.875
+      ],
+      "step": 0.25,
+      "description": "longitude",
+      "reference_system": 4326,
+      "type": "spatial"
+    },
+    "lat": {
+      "axis": "y",
+      "extent": [
+        -59.875,
+        89.875
+      ],
+      "step": 0.25,
+      "description": "latitude",
+      "reference_system": 4326,
+      "type": "spatial"
+    }
+  },
+  "cube:variables": {
+    "hurs": {
+      "type": "data",
+      "description": "Near-Surface Relative Humidity",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "%",
+      "attrs": {
+        "standard_name": "relative_humidity",
+        "long_name": "Near-Surface Relative Humidity",
+        "units": "%",
+        "comment": "The relative humidity with respect to liquid water for T> 0 C, and with respect to ice for T<0 C.",
+        "cell_methods": "area: time: mean",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "huss": {
+      "type": "data",
+      "description": "Near-Surface Specific Humidity",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "1",
+      "attrs": {
+        "standard_name": "specific_humidity",
+        "long_name": "Near-Surface Specific Humidity",
+        "units": "1",
+        "comment": "Near-surface (usually, 2 meter) specific humidity.",
+        "cell_methods": "area: time: mean",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "pr": {
+      "type": "data",
+      "description": "Precipitation",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "kg m-2 s-1",
+      "attrs": {
+        "standard_name": "precipitation_flux",
+        "long_name": "Precipitation",
+        "units": "kg m-2 s-1",
+        "comment": "includes both liquid and solid phases",
+        "cell_methods": "area: time: mean",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "rlds": {
+      "type": "data",
+      "description": "Surface Downwelling Longwave Radiation",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "W m-2",
+      "attrs": {
+        "standard_name": "surface_downwelling_longwave_flux_in_air",
+        "long_name": "Surface Downwelling Longwave Radiation",
+        "units": "W m-2",
+        "comment": "The surface called 'surface' means the lower boundary of the atmosphere. 'longwave' means longwave radiation. Downwelling radiation is radiation from above. It does not mean 'net downward'. When thought of as being incident on a surface, a radiative flux is sometimes called 'irradiance'. In addition, it is identical with the quantity measured by a cosine-collector light-meter and sometimes called 'vector irradiance'. In accordance with common usage in geophysical disciplines, 'flux' implies per unit area, called 'flux density' in physics.",
+        "cell_methods": "area: time: mean",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "rsds": {
+      "type": "data",
+      "description": "Surface Downwelling Shortwave Radiation",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "W m-2",
+      "attrs": {
+        "standard_name": "surface_downwelling_shortwave_flux_in_air",
+        "long_name": "Surface Downwelling Shortwave Radiation",
+        "units": "W m-2",
+        "comment": "Surface solar irradiance for UV calculations.",
+        "cell_methods": "area: time: mean",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "sfcWind": {
+      "type": "data",
+      "description": "Daily-Mean Near-Surface Wind Speed",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "m s-1",
+      "attrs": {
+        "standard_name": "wind_speed",
+        "long_name": "Daily-Mean Near-Surface Wind Speed",
+        "units": "m s-1",
+        "comment": "near-surface (usually, 10 meters) wind speed.",
+        "cell_methods": "area: time: mean",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "tas": {
+      "type": "data",
+      "description": "Daily Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "cell_measures": "area: areacella",
+        "cell_methods": "area: mean time: maximum",
+        "comment": "near-surface (usually, 2 meter) air temperature; derived from downscaled tasmax & tasmin",
+        "units": "K",
+        "long_name": "Daily Near-Surface Air Temperature",
+        "standard_name": "air_temperature"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "tasmax": {
+      "type": "data",
+      "description": "Daily Maximum Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "standard_name": "air_temperature",
+        "long_name": "Daily Maximum Near-Surface Air Temperature",
+        "units": "K",
+        "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: max')",
+        "cell_methods": "area: mean time: maximum",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    },
+    "tasmin": {
+      "type": "data",
+      "description": "Daily Minimum Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "standard_name": "air_temperature",
+        "long_name": "Daily Minimum Near-Surface Air Temperature",
+        "units": "K",
+        "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: min')",
+        "cell_methods": "area: mean time: minimum",
+        "cell_measures": "area: areacella"
+      },
+      "shape": [
+        365,
+        600,
+        1440
+      ]
+    }
+  },
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1950-01-01T00:00:00Z",
+          "2100-12-31T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary",
+  "assets": {
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/nasa-nex-gddp-thumbnail.png",
+      "type": "image/png",
+      "title": "thumbnail",
+      "roles": [
+        "thumbnail"
+      ]
+    }
+  }
+}

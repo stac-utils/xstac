@@ -1,0 +1,118 @@
+{
+  "type": "Feature",
+  "stac_version": "1.0.0",
+  "id": "ACCESS-CM2.historical.hurs.1950",
+  "properties": {
+    "start_datetime": "1950-01-01T12:00:00Z",
+    "end_datetime": "1950-12-31T12:00:00Z",
+    "cube:dimensions": {
+      "time": {
+        "extent": [
+          "1950-01-01T12:00:00Z",
+          "1950-12-31T12:00:00Z"
+        ],
+        "description": "time",
+        "step": "P1DT0H0M0S",
+        "type": "temporal"
+      },
+      "lon": {
+        "axis": "x",
+        "extent": [
+          0.125,
+          359.875
+        ],
+        "step": 0.25,
+        "description": "longitude",
+        "reference_system": 4326,
+        "type": "spatial"
+      },
+      "lat": {
+        "axis": "y",
+        "extent": [
+          -59.875,
+          89.875
+        ],
+        "step": 0.25,
+        "description": "latitude",
+        "reference_system": 4326,
+        "type": "spatial"
+      }
+    },
+    "cube:variables": {
+      "hurs": {
+        "type": "data",
+        "description": "Near-Surface Relative Humidity",
+        "dimensions": [
+          "time",
+          "lat",
+          "lon"
+        ],
+        "unit": "%",
+        "attrs": {
+          "standard_name": "relative_humidity",
+          "long_name": "Near-Surface Relative Humidity",
+          "units": "%",
+          "comment": "The relative humidity with respect to liquid water for T> 0 C, and with respect to ice for T<0 C.",
+          "cell_methods": "area: time: mean",
+          "cell_measures": "area: areacella"
+        },
+        "shape": [
+          365,
+          600,
+          1440
+        ]
+      }
+    },
+    "datetime": null
+  },
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          180.0,
+          -90.0
+        ],
+        [
+          180.0,
+          90.0
+        ],
+        [
+          -180.0,
+          90.0
+        ],
+        [
+          -180.0,
+          -90.0
+        ],
+        [
+          180.0,
+          -90.0
+        ]
+      ]
+    ]
+  },
+  "links": [],
+  "assets": {
+    "data": {
+      "href": "https://nasagddp.blob.core.windows.net/nex-gddp-cmip6/NEX/GDDP-CMIP6/ACCESS-CM2/historical/r1i1p1f1/hurs/hurs_day_ACCESS-CM2_historical_r1i1p1f1_gn_1950.nc",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "bbox": [
+    -180,
+    -90,
+    180,
+    90
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+  ],
+  "cmip6:model": "ACCESS-CM2",
+  "cmip6:scenario": "historical",
+  "cmip6:variable": "hurs",
+  "cmip6:year": 1950
+}
