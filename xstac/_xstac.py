@@ -100,13 +100,22 @@ def maybe_infer_step(da, step):
 
 def build_temporal_dimension(ds, name, extent, values, step):
     time = ds.coords[name]
-    extent = (
-        pd.to_datetime(
-            np.concatenate([time.min(keepdims=True), time.max(keepdims=True)])
+    start = time.min(keepdims=True)
+    end = time.max(keepdims=True)
+
+    if time.dtype == "object":
+        start = start.item().isoformat() + "Z"
+        end = end.item().isoformat() + "Z"
+        extent = [start, end]
+
+    else:
+        extent = (
+            pd.to_datetime(
+                np.concatenate([time.min(keepdims=True), time.max(keepdims=True)])
+            )
+            .strftime("%Y-%m-%dT%H:%M:%SZ")
+            .tolist()
         )
-        .strftime("%Y-%m-%dT%H:%M:%SZ")
-        .tolist()
-    )
     if values is True:
         values = np.asarray(time).tolist()
     elif values is False:

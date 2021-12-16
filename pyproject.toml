@@ -29,6 +29,7 @@ dev = [
   "pytest",
   "pre-commit",
   "shapely",
+  "cftime",
 ]
 
 [project.scripts]

@@ -4,6 +4,7 @@ import pandas as pd
 import xarray as xr
 from xstac import fix_attrs
 
+
 data = np.empty((40, 584, 284), dtype="float32")
 x = xr.DataArray(
     np.arange(-5802250.0, -5519250 + 1000, 1000),
@@ -35,6 +36,14 @@ time = xr.DataArray(
         "long_name": "24-hour day based on local time",
     },
 )
+ctime = xr.DataArray(
+    xr.cftime_range("2100-01-01", periods=40, calendar="360_day"),
+    name="time",
+    dims="time",
+    attrs={"standard_name": "time", "long_name": "time", "axis": "T"},
+)
+
+
 lat = xr.DataArray(
     np.empty((584, 284)),
     coords={"y": y, "x": x},
@@ -58,11 +67,14 @@ lon = xr.DataArray(
     },
 )
 
-coords = dict(time=time, y=y, x=x, lat=lat, lon=lon)
+
+@pytest.fixture(params=[time, ctime])
+def coords(request):
+    return dict(time=request.param, y=y, x=x, lat=lat, lon=lon)
 
 
 @pytest.fixture
-def ds():
+def ds(coords):
     ds = xr.Dataset(
         {
             "prcp": xr.DataArray(
@@ -80,7 +92,7 @@ def ds():
             "time_bnds": xr.DataArray(
                 np.empty((40, 2), dtype="datetime64[ns]"),
                 name="time_bnds",
-                coords={"time": time},
+                coords={"time": coords["time"]},
                 dims=("time", "nv"),
                 attrs={"time": "days since 1950-01-01 00:00:00"},
             ),
@@ -159,13 +171,22 @@ def item_template():
 
 
 @pytest.fixture
-def collection_expected_dims():
-    expected = {
-        "time": {
+def collection_expected_dims(coords):
+    if coords["time"].equals(time):
+        t = {
             "type": "temporal",
             "description": "24-hour day based on local time",
             "extent": ["1980-07-31T00:00:00Z", "2019-07-31T00:00:00Z"],
-        },
+        }
+    else:
+        t = {
+            "description": "time",
+            "extent": ["2100-01-01T00:00:00Z", "2100-02-10T00:00:00Z"],
+            "step": "P1DT0H0M0S",
+            "type": "temporal",
+        }
+    expected = {
+        "time": t,
         "x": {
             "type": "spatial",
             "axis": "x",
@@ -448,13 +469,22 @@ def collection_expected_vars():
 
 
 @pytest.fixture
-def item_expected_dims():
-    expected = {
-        "time": {
+def item_expected_dims(coords):
+    if coords["time"].equals(time):
+        t = {
             "type": "temporal",
             "description": "24-hour day based on local time",
             "extent": ["1980-07-31T00:00:00Z", "2019-07-31T00:00:00Z"],
-        },
+        }
+    else:
+        t = {
+            "description": "time",
+            "extent": ["2100-01-01T00:00:00Z", "2100-02-10T00:00:00Z"],
+            "step": "P1DT0H0M0S",
+            "type": "temporal",
+        }
+    expected = {
+        "time": t,
         "x": {
             "type": "spatial",
             "axis": "x",
