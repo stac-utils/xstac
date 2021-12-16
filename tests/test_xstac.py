@@ -69,8 +69,12 @@ def test_xarray_to_stac_item(ds, item_template, item_expected_dims, item_expecte
     assert dimensions == item_expected_dims
     assert result.properties["cube:variables"] == item_expected_vars
 
-    assert result.properties["start_datetime"] == "1980-07-31T00:00:00Z"
-    assert result.properties["end_datetime"] == "2019-07-31T00:00:00Z"
+    if ds.coords["time"].dtype == "object":
+        assert result.properties["start_datetime"] == "2100-01-01T00:00:00Z"
+        assert result.properties["end_datetime"] == "2100-02-10T00:00:00Z"
+    else:
+        assert result.properties["start_datetime"] == "1980-07-31T00:00:00Z"
+        assert result.properties["end_datetime"] == "2019-07-31T00:00:00Z"
 
 
 def test_bbox_to_geometry():
