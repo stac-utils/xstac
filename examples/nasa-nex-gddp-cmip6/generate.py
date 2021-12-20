@@ -148,6 +148,17 @@ def main():
         ),
     )
 
+    sci_ext = pystac.extensions.scientific.ScientificExtension.ext(
+        r, add_if_missing=True
+    )
+    sci_ext.citation = (
+        "Climate scenarios used were from the NEX-GDDP-CMIP6 dataset, prepared by the Climate "
+        "Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and "
+        "distributed by the NASA Center for Climate Simulation (NCCS)."
+    )
+
+    r.validate()
+
     # TODO: Add kerchunk assets.
 
     with open(HERE / "collection.json", "w") as f:

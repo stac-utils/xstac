@@ -26,7 +26,8 @@
     }
   ],
   "stac_extensions": [
-    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
   ],
   "cube:dimensions": {
     "time": {
@@ -270,6 +271,7 @@
       ]
     }
   },
+  "sci:citation": "Climate scenarios used were from the NEX-GDDP-CMIP6 dataset, prepared by the Climate Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and distributed by the NASA Center for Climate Simulation (NCCS).",
   "extent": {
     "spatial": {
       "bbox": [
