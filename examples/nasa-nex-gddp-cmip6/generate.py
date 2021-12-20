@@ -199,6 +199,8 @@ def main():
         "distributed by the NASA Center for Climate Simulation (NCCS)."
     )
 
+    # Summaries
+    r.summaries.maxcount = 50
     summaries = {
         "cmip6:model": models,
         "cmip6:variable": variables,
@@ -207,12 +209,22 @@ def main():
     for k, v in summaries.items():
         r.summaries.add(k, v)
 
+    # Item assets
+    item_assets = pystac.extensions.item_assets.ItemAssetsExtension.ext(
+        r, add_if_missing=True
+    )
+
+    definitions = {}
+    for k, v in ext.variables.items():
+        asset = pystac.extensions.item_assets.AssetDefinition({})
+        asset.description = v.description
+        asset.title = v.properties["attrs"]["long_name"]
+        asset.media_type = "application/netcdf"
+        asset.roles = ["data"]
+        definitions[k] = v
+
+    item_assets.item_assets = definitions
     r.validate()
-
-    # TODO: Add kerchunk assets.
-
-    with open(HERE / "collection.json", "w") as f:
-        json.dump(r.to_dict(), f, indent=2)
 
 
 if __name__ == "__main__":
