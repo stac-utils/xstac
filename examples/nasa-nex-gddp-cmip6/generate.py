@@ -30,6 +30,48 @@ import xstac
 HERE = pathlib.Path(__file__).parent
 Parts = namedtuple("Parts", "model scenario variable year")
 
+variables = ["hurs", "huss", "pr", "rlds", "rsds", "sfcWind", "tas", "tasmax", "tasmin"]
+historical_years = set(range(1950, 2015))
+ssp_years = list(range(2015, 2101))
+models = [
+    "ACCESS-CM2",
+    "ACCESS-ESM1-5",
+    "BCC-CSM2-MR",
+    "CESM2",
+    "CESM2-WACCM",
+    "CMCC-CM2-SR5",
+    "CMCC-ESM2",
+    "CNRM-CM6-1",
+    "CNRM-ESM2-1",
+    "CanESM5",
+    "EC-Earth3",
+    "EC-Earth3-Veg-LR",
+    "FGOALS-g3",
+    "GFDL-CM4",
+    "GFDL-CM4_gr2",
+    "GFDL-ESM4",
+    "GISS-E2-1-G",
+    "HadGEM3-GC31-LL",
+    "HadGEM3-GC31-MM",
+    "IITM-ESM",
+    "INM-CM4-8",
+    "INM-CM5-0",
+    "IPSL-CM6A-LR",
+    "KACE-1-0-G",
+    "KIOST-ESM",
+    "MIROC-ES2L",
+    "MIROC6",
+    "MPI-ESM1-2-HR",
+    "MPI-ESM1-2-LR",
+    "MRI-ESM2-0",
+    "NESM3",
+    "NorESM2-LM",
+    "NorESM2-MM",
+    "TaiESM1",
+    "UKESM1-0-LL",
+]
+scenarios = ["historical", "ssp245", "ssp585"]
+
 
 def split_path(path):
     _, _, _, model, scenario, _, variable, file = path.split("/")
@@ -156,6 +198,14 @@ def main():
         "Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and "
         "distributed by the NASA Center for Climate Simulation (NCCS)."
     )
+
+    summaries = {
+        "cmip6:model": models,
+        "cmip6:variable": variables,
+        "cmip6:scenario": scenarios,
+    }
+    for k, v in summaries.items():
+        r.summaries.add(k, v)
 
     r.validate()
 
