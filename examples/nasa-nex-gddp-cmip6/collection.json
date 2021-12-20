@@ -275,210 +275,75 @@
   "sci:citation": "Climate scenarios used were from the NEX-GDDP-CMIP6 dataset, prepared by the Climate Analytics Group and NASA Ames Research Center using the NASA Earth Exchange, and distributed by the NASA Center for Climate Simulation (NCCS).",
   "item_assets": {
     "hurs": {
-      "type": "data",
       "description": "Near-Surface Relative Humidity",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "%",
-      "attrs": {
-        "standard_name": "relative_humidity",
-        "long_name": "Near-Surface Relative Humidity",
-        "units": "%",
-        "comment": "The relative humidity with respect to liquid water for T> 0 C, and with respect to ice for T<0 C.",
-        "cell_methods": "area: time: mean",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Near-Surface Relative Humidity",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "huss": {
-      "type": "data",
       "description": "Near-Surface Specific Humidity",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "1",
-      "attrs": {
-        "standard_name": "specific_humidity",
-        "long_name": "Near-Surface Specific Humidity",
-        "units": "1",
-        "comment": "Near-surface (usually, 2 meter) specific humidity.",
-        "cell_methods": "area: time: mean",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Near-Surface Specific Humidity",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "pr": {
-      "type": "data",
       "description": "Precipitation",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "kg m-2 s-1",
-      "attrs": {
-        "standard_name": "precipitation_flux",
-        "long_name": "Precipitation",
-        "units": "kg m-2 s-1",
-        "comment": "includes both liquid and solid phases",
-        "cell_methods": "area: time: mean",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Precipitation",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "rlds": {
-      "type": "data",
       "description": "Surface Downwelling Longwave Radiation",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "W m-2",
-      "attrs": {
-        "standard_name": "surface_downwelling_longwave_flux_in_air",
-        "long_name": "Surface Downwelling Longwave Radiation",
-        "units": "W m-2",
-        "comment": "The surface called 'surface' means the lower boundary of the atmosphere. 'longwave' means longwave radiation. Downwelling radiation is radiation from above. It does not mean 'net downward'. When thought of as being incident on a surface, a radiative flux is sometimes called 'irradiance'. In addition, it is identical with the quantity measured by a cosine-collector light-meter and sometimes called 'vector irradiance'. In accordance with common usage in geophysical disciplines, 'flux' implies per unit area, called 'flux density' in physics.",
-        "cell_methods": "area: time: mean",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Surface Downwelling Longwave Radiation",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "rsds": {
-      "type": "data",
       "description": "Surface Downwelling Shortwave Radiation",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "W m-2",
-      "attrs": {
-        "standard_name": "surface_downwelling_shortwave_flux_in_air",
-        "long_name": "Surface Downwelling Shortwave Radiation",
-        "units": "W m-2",
-        "comment": "Surface solar irradiance for UV calculations.",
-        "cell_methods": "area: time: mean",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Surface Downwelling Shortwave Radiation",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "sfcWind": {
-      "type": "data",
       "description": "Daily-Mean Near-Surface Wind Speed",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "m s-1",
-      "attrs": {
-        "standard_name": "wind_speed",
-        "long_name": "Daily-Mean Near-Surface Wind Speed",
-        "units": "m s-1",
-        "comment": "near-surface (usually, 10 meters) wind speed.",
-        "cell_methods": "area: time: mean",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Daily-Mean Near-Surface Wind Speed",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "tas": {
-      "type": "data",
       "description": "Daily Near-Surface Air Temperature",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "K",
-      "attrs": {
-        "cell_measures": "area: areacella",
-        "cell_methods": "area: mean time: maximum",
-        "comment": "near-surface (usually, 2 meter) air temperature; derived from downscaled tasmax & tasmin",
-        "units": "K",
-        "long_name": "Daily Near-Surface Air Temperature",
-        "standard_name": "air_temperature"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Daily Near-Surface Air Temperature",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "tasmax": {
-      "type": "data",
       "description": "Daily Maximum Near-Surface Air Temperature",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "K",
-      "attrs": {
-        "standard_name": "air_temperature",
-        "long_name": "Daily Maximum Near-Surface Air Temperature",
-        "units": "K",
-        "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: max')",
-        "cell_methods": "area: mean time: maximum",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Daily Maximum Near-Surface Air Temperature",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     },
     "tasmin": {
-      "type": "data",
       "description": "Daily Minimum Near-Surface Air Temperature",
-      "dimensions": [
-        "time",
-        "lat",
-        "lon"
-      ],
-      "unit": "K",
-      "attrs": {
-        "standard_name": "air_temperature",
-        "long_name": "Daily Minimum Near-Surface Air Temperature",
-        "units": "K",
-        "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: min')",
-        "cell_methods": "area: mean time: minimum",
-        "cell_measures": "area: areacella"
-      },
-      "shape": [
-        365,
-        600,
-        1440
+      "title": "Daily Minimum Near-Surface Air Temperature",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
       ]
     }
   },

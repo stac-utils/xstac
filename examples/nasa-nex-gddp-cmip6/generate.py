@@ -221,7 +221,7 @@ def main():
         asset.title = v.properties["attrs"]["long_name"]
         asset.media_type = "application/netcdf"
         asset.roles = ["data"]
-        definitions[k] = v
+        definitions[k] = asset
 
     item_assets.item_assets = definitions
     r.validate()
