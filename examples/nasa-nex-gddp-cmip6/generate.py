@@ -155,8 +155,51 @@ def main():
             intervals=[datetime.datetime(1950, 1, 1), datetime.datetime(2100, 12, 31)]
         ),
     )
+    keywords = [
+        "CMIP6",
+        "GCM",
+        "NASA",
+        "GDDP",
+        "SSP",
+        "Climate",
+        "Climate Projection",
+        "Near-Surface Relative Humidity",
+        "Near-Surface Specific Humidity",
+        "Precipitation",
+        "Surface Downwelling Longwave Radiation",
+        "Surface Downwelling Shortwave Radiation",
+        "Near-Surface Wind Speed",
+        "Near-Surface Air Temperature",
+        "Maximum Near-Surface Air Temperature",
+        "Minimum Near-Surface Air Temperature",
+    ]
+    extra_fields = {
+        "msft:storage_account": "nasagddp",
+        "msft:container": "nex-gddp-cmip6",
+        "msft:short_description": (
+            "Global downscaled climate scenarios derived from the General Circulation Model "
+            "conducted under CMIP6.",
+        ),
+    }
+    providers = [
+        pystac.Provider(
+            "NASA NEX",
+            roles=[pystac.ProviderRole.PRODUCER],
+            url="https://www.nasa.gov/nex",
+        ),
+        pystac.Provider(
+            "microsoft",
+            roles=[pystac.ProviderRole.HOST],
+            url="https://planetarycomputer.microsoft.com/",
+        ),
+    ]
     template = pystac.Collection(
-        "nasa-nex-gddp-cmip6", description="{{ collection.description }}", extent=extent
+        "nasa-nex-gddp-cmip6",
+        description="{{ collection.description }}",
+        extent=extent,
+        keywords=keywords,
+        extra_fields=extra_fields,
+        providers=providers,
     )
 
     template.add_link(
@@ -225,6 +268,9 @@ def main():
 
     item_assets.item_assets = definitions
     r.validate()
+
+    with open(HERE / "collection.json", "w") as f:
+        json.dump(r.to_dict(), f, indent=2)
 
 
 if __name__ == "__main__":

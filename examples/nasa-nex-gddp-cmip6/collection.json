@@ -30,6 +30,9 @@
     "https://stac-extensions.github.io/scientific/v1.0.0/schema.json",
     "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
   ],
+  "msft:storage_account": "nasagddp",
+  "msft:container": "nex-gddp-cmip6",
+  "msft:short_description": "Global downscaled climate scenarios derived from the General Circulation Model conducted under CMIP6.",
   "cube:dimensions": {
     "time": {
       "extent": [
@@ -368,6 +371,40 @@
     }
   },
   "license": "proprietary",
+  "keywords": [
+    "CMIP6",
+    "GCM",
+    "NASA",
+    "GDDP",
+    "SSP",
+    "Climate",
+    "Climate Projection",
+    "Near-Surface Relative Humidity",
+    "Near-Surface Specific Humidity",
+    "Precipitation",
+    "Surface Downwelling Longwave Radiation",
+    "Surface Downwelling Shortwave Radiation",
+    "Near-Surface Wind Speed",
+    "Near-Surface Air Temperature",
+    "Maximum Near-Surface Air Temperature",
+    "Minimum Near-Surface Air Temperature"
+  ],
+  "providers": [
+    {
+      "name": "NASA NEX",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://www.nasa.gov/nex"
+    },
+    {
+      "name": "microsoft",
+      "roles": [
+        "host"
+      ],
+      "url": "https://planetarycomputer.microsoft.com/"
+    }
+  ],
   "summaries": {
     "cmip6:model": [
       "ACCESS-CM2",
