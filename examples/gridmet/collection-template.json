@@ -47,20 +47,6 @@
     }
   ],
   "assets": {
-    "zarr-https": {
-      "href": "https://ai4edataeuwest.blob.core.windows.net/gridmet/gridmet.zarr",
-      "title": "gridMET HTTPS Zarr root",
-      "description": "HTTPS URI of the gridMET Zarr Group on Azure Blob Storage.",
-      "roles": [
-        "data",
-        "zarr",
-        "https"
-      ],
-      "type": "application/vnd+zarr",
-      "xarray:open_kwargs": {
-        "consolidated": true
-      }
-    },
     "zarr-abfs": {
       "href": "abfs://gridmet/gridmet.zarr",
       "type": "application/vnd+zarr",
