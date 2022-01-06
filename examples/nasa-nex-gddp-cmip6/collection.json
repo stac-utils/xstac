@@ -373,21 +373,11 @@
   "license": "proprietary",
   "keywords": [
     "CMIP6",
-    "GCM",
     "NASA",
-    "GDDP",
-    "SSP",
     "Climate",
-    "Climate Projection",
-    "Near-Surface Relative Humidity",
-    "Near-Surface Specific Humidity",
+    "Humidity",
     "Precipitation",
-    "Surface Downwelling Longwave Radiation",
-    "Surface Downwelling Shortwave Radiation",
-    "Near-Surface Wind Speed",
-    "Near-Surface Air Temperature",
-    "Maximum Near-Surface Air Temperature",
-    "Minimum Near-Surface Air Temperature"
+    "Temperature"
   ],
   "providers": [
     {
@@ -398,7 +388,7 @@
       "url": "https://www.nasa.gov/nex"
     },
     {
-      "name": "microsoft",
+      "name": "Microsoft",
       "roles": [
         "host"
       ],

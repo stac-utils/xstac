@@ -155,24 +155,7 @@ def main():
             intervals=[datetime.datetime(1950, 1, 1), datetime.datetime(2100, 12, 31)]
         ),
     )
-    keywords = [
-        "CMIP6",
-        "GCM",
-        "NASA",
-        "GDDP",
-        "SSP",
-        "Climate",
-        "Climate Projection",
-        "Near-Surface Relative Humidity",
-        "Near-Surface Specific Humidity",
-        "Precipitation",
-        "Surface Downwelling Longwave Radiation",
-        "Surface Downwelling Shortwave Radiation",
-        "Near-Surface Wind Speed",
-        "Near-Surface Air Temperature",
-        "Maximum Near-Surface Air Temperature",
-        "Minimum Near-Surface Air Temperature",
-    ]
+    keywords = ["CMIP6", "NASA", "Climate", "Humidity", "Precipitation", "Temperature"]
     extra_fields = {
         "msft:storage_account": "nasagddp",
         "msft:container": "nex-gddp-cmip6",
@@ -188,7 +171,7 @@ def main():
             url="https://www.nasa.gov/nex",
         ),
         pystac.Provider(
-            "microsoft",
+            "Microsoft",
             roles=[pystac.ProviderRole.HOST],
             url="https://planetarycomputer.microsoft.com/",
         ),
