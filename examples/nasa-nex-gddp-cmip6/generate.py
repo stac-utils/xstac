@@ -250,6 +250,28 @@ def main():
         definitions[k] = asset
 
     item_assets.item_assets = definitions
+
+    # Public storage container with the reference files.
+    reference_fs = adlfs.AzureBlobFileSystem("nasagddp")
+    for reference_file in reference_fs.ls("/nex-gddp-cmip6-references"):
+        # TODO: Access from the collection
+        model, scenario = pathlib.Path(reference_file).stem.split("_")
+        asset = pystac.Asset(
+            f"https://nasagddp.blob.core.windows.net/{reference_file}",
+            title="ACCESS-CM2 Historical references",
+            media_type="application/json",
+            roles=["references"],
+            extra_fields={
+                "xarray:open_dataset_kwargs": {
+                    "engine": "zarr",
+                    "backend_kwargs": {"consolidated": False, "chunks": {"time": 365}},
+                },
+                "cmip6:model": model,
+                "cmip6:scenario": scenario,
+            },
+        )
+        r.add_asset(".".join([model, scenario]), asset)
+
     r.validate()
 
     with open(HERE / "collection.json", "w") as f:
