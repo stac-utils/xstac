@@ -1,7 +1,10 @@
-from xstac import xarray_to_stac
-from xstac._xstac import _bbox_to_geometry
+import pyproj
 import pytest
 import pystac
+import xarray as xr
+
+from xstac import xarray_to_stac
+from xstac._xstac import _bbox_to_geometry, maybe_infer_reference_system
 
 
 # def test_no_time_dimension(ds, collection_template):
@@ -124,3 +127,17 @@ def test_from_pystac_object(ds_without_spatial_dims):
     )
     c.normalize_hrefs("/")
     c.validate()
+
+
+@pytest.mark.parametrize(
+    "ds",
+    [
+        xr.Dataset(coords={"epsg": xr.DataArray(32633, name="epsg")}),
+        xr.Dataset(coords={"proj:epsg": xr.DataArray(32633, name="proj:epsg")}),
+        xr.Dataset(attrs={"crs": "epsg:32633"}),
+    ],
+)
+def test_maybe_infer_reference_system(ds):
+    result = maybe_infer_reference_system(ds, reference_system=None)
+    expected = pyproj.crs.CRS.from_epsg(32633).to_json_dict()
+    assert result == expected
