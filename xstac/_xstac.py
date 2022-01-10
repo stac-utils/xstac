@@ -6,6 +6,7 @@ import dateutil
 from typing import Union
 
 import cf_xarray  # noqa: F401
+import pyproj  # noqa: F401
 import xarray as xr
 import numpy as np
 import pystac
@@ -183,19 +184,39 @@ def maybe_infer_reference_system(ds, reference_system) -> dict:
 
     Notes
     -----
-    This looks through a dataset for an item with `grid_mapping_name` key in its attrs.
-    The value associated with that key is assumed to be a cf-compliant grid mapping.
+    This gets a reference system from a dataset using the following heuristics (in order):
+
+    * epsg from the coords
+    * proj:epsg from the coords
+    * crs from the attrs
+    * variables with grid_mapping_name in their attrs.
+
     """
     if reference_system is None:
-        # try to infer it
-        names = [k for k, v in ds.variables.items() if "grid_mapping_name" in v.attrs]
-        if not names:
-            raise ValueError("Couldn't find a reference system")
-        elif len(names) > 1:
-            raise ValueError("Too many reference systems: %s", names)
-        (name,) = names
-        crs = CRS.from_cf(ds[name].attrs)
-        reference_system = crs.to_json_dict()
+        if "epsg" in ds.coords:
+            reference_system = pyproj.CRS.from_epsg(
+                ds.coords["epsg"].item()
+            ).to_json_dict()
+        elif "proj:epsg" in ds.coords:
+            reference_system = pyproj.CRS.from_epsg(
+                ds.coords["proj:epsg"].item()
+            ).to_json_dict()
+        elif "crs" in ds.attrs:
+            reference_system = pyproj.CRS.from_user_input(
+                ds.attrs["crs"]
+            ).to_json_dict()
+        else:
+            # try to infer it
+            names = [
+                k for k, v in ds.variables.items() if "grid_mapping_name" in v.attrs
+            ]
+            if not names:
+                raise ValueError("Couldn't find a reference system")
+            elif len(names) > 1:
+                raise ValueError("Too many reference systems: %s", names)
+            (name,) = names
+            crs = CRS.from_cf(ds[name].attrs)
+            reference_system = crs.to_json_dict()
 
     elif reference_system is False:
         reference_system = None
