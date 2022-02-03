@@ -1,0 +1,680 @@
+{
+  "type": "Collection",
+  "id": "ukcp-18",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "links": [
+    {
+      "rel": "root",
+      "href": "/collection.json",
+      "type": "application/json",
+      "title": "UKCP18 Global Climate Model Projections for the entire globe"
+    },
+    {
+      "rel": "license",
+      "href": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+      "type": "text/html",
+      "title": "Open Government License"
+    },
+    {
+      "rel": "documentation",
+      "href": "https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/ukcp/ukcp18-guidance-data-availability-access-and-formats.pdf",
+      "type": "application/pdf",
+      "title": "UKCP18 Guidance: Data availability, access and formats"
+    },
+    {
+      "rel": "documentation",
+      "href": "https://www.metoffice.gov.uk/binaries/content/assets/metofficegovuk/pdf/research/ukcp/ukcp18-guidance---caveats-and-limitations.pdf",
+      "type": "application/pdf",
+      "title": "UKCP18 Guidance: Caveats and limitations"
+    },
+    {
+      "rel": "documentation",
+      "href": "https://www.metoffice.gov.uk/research/approach/collaboration/ukcp/guidance-science-reports",
+      "type": "text/html",
+      "title": "UKCP18 Science Reports"
+    },
+    {
+      "rel": "documentation",
+      "href": "https://catalogue.ceda.ac.uk/uuid/97bc0c622a24489aa105f5b8a8efa3f0",
+      "type": "text/html",
+      "title": "CEDA Archive dataset"
+    },
+    {
+      "rel": "self",
+      "href": "/collection.json",
+      "type": "application/json"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/datacube/v2.0.0/schema.json",
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+  ],
+  "msft:storage_account": "ukmeteuwest",
+  "msft:container": "ukcp18",
+  "msft:short_description": "Global climate model runs from 1900-2100 produced by the Met Office for UK Climate Projections 2018 (UKCP18) using the HadGEM3 climate model.",
+  "cube:dimensions": {
+    "time": {
+      "extent": [
+        "1899-12-01T12:00:00Z",
+        "2100-12-31T00:00:00Z"
+      ],
+      "step": "P1DT0H0M0S",
+      "type": "temporal"
+    },
+    "longitude": {
+      "axis": "x",
+      "extent": [
+        -179.5833282470703,
+        179.5833282470703
+      ],
+      "reference_system": 4326,
+      "type": "spatial"
+    },
+    "latitude": {
+      "axis": "y",
+      "extent": [
+        -89.72222137451172,
+        89.72223663330078
+      ],
+      "reference_system": 4326,
+      "type": "spatial"
+    }
+  },
+  "cube:variables": {
+    "clt": {
+      "type": "data",
+      "description": "Cloud area fraction",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "%",
+      "attrs": {
+        "standard_name": "cloud_area_fraction",
+        "long_name": "Cloud area fraction",
+        "units": "%",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "latitude_longitude": {
+      "type": "data",
+      "dimensions": [],
+      "attrs": {
+        "grid_mapping_name": "latitude_longitude",
+        "longitude_of_prime_meridian": [
+          0.0
+        ],
+        "earth_radius": [
+          6371229.0
+        ]
+      },
+      "shape": []
+    },
+    "time_bnds": {
+      "type": "data",
+      "dimensions": [
+        "time",
+        "bnds"
+      ],
+      "attrs": {},
+      "shape": [
+        3600,
+        2
+      ]
+    },
+    "latitude_bnds": {
+      "type": "data",
+      "dimensions": [
+        "latitude",
+        "bnds"
+      ],
+      "attrs": {},
+      "shape": [
+        324,
+        2
+      ]
+    },
+    "longitude_bnds": {
+      "type": "data",
+      "dimensions": [
+        "longitude",
+        "bnds"
+      ],
+      "attrs": {},
+      "shape": [
+        432,
+        2
+      ]
+    },
+    "ensemble_member_id": {
+      "type": "auxiliary",
+      "description": "ensemble_member_id",
+      "dimensions": [
+        "ensemble_member"
+      ],
+      "unit": "1",
+      "attrs": {
+        "units": "1",
+        "long_name": "ensemble_member_id"
+      },
+      "shape": [
+        1
+      ]
+    },
+    "month_number": {
+      "type": "auxiliary",
+      "description": "month_number",
+      "dimensions": [
+        "time"
+      ],
+      "unit": "1",
+      "attrs": {
+        "units": "1",
+        "long_name": "month_number"
+      },
+      "shape": [
+        3600
+      ]
+    },
+    "year": {
+      "type": "auxiliary",
+      "description": "year",
+      "dimensions": [
+        "time"
+      ],
+      "unit": "1",
+      "attrs": {
+        "units": "1",
+        "long_name": "year"
+      },
+      "shape": [
+        3600
+      ]
+    },
+    "yyyymmdd": {
+      "type": "auxiliary",
+      "description": "yyyymmdd",
+      "dimensions": [
+        "time"
+      ],
+      "unit": "1",
+      "attrs": {
+        "units": "1",
+        "long_name": "yyyymmdd"
+      },
+      "shape": [
+        3600
+      ]
+    },
+    "hurs": {
+      "type": "data",
+      "description": "Relative humidity",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "%",
+      "attrs": {
+        "standard_name": "relative_humidity",
+        "long_name": "Relative humidity",
+        "units": "%",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "height": {
+      "type": "auxiliary",
+      "dimensions": [],
+      "unit": "m",
+      "attrs": {
+        "units": "m",
+        "standard_name": "height",
+        "positive": "up"
+      },
+      "shape": []
+    },
+    "huss": {
+      "type": "data",
+      "description": "Specific humidity",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "1",
+      "attrs": {
+        "standard_name": "specific_humidity",
+        "long_name": "Specific humidity",
+        "units": "1",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "pr": {
+      "type": "data",
+      "description": "Precipitation rate",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "mm/day",
+      "attrs": {
+        "standard_name": "lwe_precipitation_rate",
+        "long_name": "Precipitation rate",
+        "units": "mm/day",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "psl": {
+      "type": "data",
+      "description": "Pressure at mean sea level",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "hPa",
+      "attrs": {
+        "standard_name": "air_pressure_at_sea_level",
+        "long_name": "Pressure at mean sea level",
+        "units": "hPa",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "rls": {
+      "type": "data",
+      "description": "Net Surface long wave flux",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "W m-2",
+      "attrs": {
+        "standard_name": "surface_net_downward_longwave_flux",
+        "long_name": "Net Surface long wave flux",
+        "units": "W m-2",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "rss": {
+      "type": "data",
+      "description": "Net Surface short wave flux",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "W m-2",
+      "attrs": {
+        "standard_name": "surface_net_downward_shortwave_flux",
+        "long_name": "Net Surface short wave flux",
+        "units": "W m-2",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "tas": {
+      "type": "data",
+      "description": "Mean air temperature",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "degC",
+      "attrs": {
+        "standard_name": "air_temperature",
+        "long_name": "Mean air temperature",
+        "units": "degC",
+        "cell_methods": "time: mean",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "tasmax": {
+      "type": "data",
+      "description": "Maximum air temperature",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "degC",
+      "attrs": {
+        "standard_name": "air_temperature",
+        "long_name": "Maximum air temperature",
+        "units": "degC",
+        "cell_methods": "time: maximum",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    },
+    "tasmin": {
+      "type": "data",
+      "description": "Minimum air temperature",
+      "dimensions": [
+        "ensemble_member",
+        "time",
+        "latitude",
+        "longitude"
+      ],
+      "unit": "degC",
+      "attrs": {
+        "standard_name": "air_temperature",
+        "long_name": "Minimum air temperature",
+        "units": "degC",
+        "cell_methods": "time: minimum",
+        "grid_mapping": "latitude_longitude"
+      },
+      "shape": [
+        1,
+        3600,
+        324,
+        432
+      ]
+    }
+  },
+  "item_assets": {
+    "clt": {
+      "description": "Cloud area fraction",
+      "title": "Cloud area fraction",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "latitude_longitude": {
+      "title": "latitude_longitude",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "time_bnds": {
+      "title": "time_bnds",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "latitude_bnds": {
+      "title": "latitude_bnds",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "longitude_bnds": {
+      "title": "longitude_bnds",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "ensemble_member_id": {
+      "description": "ensemble_member_id",
+      "title": "ensemble_member_id",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "month_number": {
+      "description": "month_number",
+      "title": "month_number",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "year": {
+      "description": "year",
+      "title": "year",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "yyyymmdd": {
+      "description": "yyyymmdd",
+      "title": "yyyymmdd",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "hurs": {
+      "description": "Relative humidity",
+      "title": "Relative humidity",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "height": {
+      "title": "height",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "huss": {
+      "description": "Specific humidity",
+      "title": "Specific humidity",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "pr": {
+      "description": "Precipitation rate",
+      "title": "Precipitation rate",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "psl": {
+      "description": "Pressure at mean sea level",
+      "title": "Pressure at mean sea level",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "rls": {
+      "description": "Net Surface long wave flux",
+      "title": "Net Surface long wave flux",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "rss": {
+      "description": "Net Surface short wave flux",
+      "title": "Net Surface short wave flux",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "tas": {
+      "description": "Mean air temperature",
+      "title": "Mean air temperature",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "tasmax": {
+      "description": "Maximum air temperature",
+      "title": "Maximum air temperature",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    },
+    "tasmin": {
+      "description": "Minimum air temperature",
+      "title": "Minimum air temperature",
+      "type": "application/netcdf",
+      "roles": [
+        "data"
+      ]
+    }
+  },
+  "sci:citation": "Met Office Hadley Centre (2018): UKCP18 Global Climate Model Projections for the entire globe. Centre for Environmental Data Analysis, date of citation. http://catalogue.ceda.ac.uk/uuid/f1a2fc3c120f400396a92f5de84d596a",
+  "title": "UKCP18 Global Climate Model Projections for the entire globe",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1899-12-01T00:00:00Z",
+          "2100-12-31T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary",
+  "keywords": [
+    "UKCP18",
+    "UK Met Office",
+    "Climate"
+  ],
+  "providers": [
+    {
+      "name": "Met Office Hadley Centre",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://www.metoffice.gov.uk/weather/climate/met-office-hadley-centre/index"
+    },
+    {
+      "name": "The CEDA Archive",
+      "roles": [
+        "host"
+      ],
+      "url": "https://archive.ceda.ac.uk/"
+    },
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host",
+        "processor"
+      ],
+      "url": "https://planetarycomputer.microsoft.com/"
+    }
+  ],
+  "summaries": {
+    "ukcp18:variable": [
+      "clt",
+      "hurs",
+      "huss",
+      "pr",
+      "psl",
+      "rls",
+      "rss",
+      "sfcWind",
+      "tas",
+      "tasmax",
+      "tasmin",
+      "uas",
+      "vas"
+    ],
+    "ukcp18:temporal_resolution": [
+      "day",
+      "mon"
+    ]
+  },
+  "assets": {
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/nasa-nex-gddp-thumbnail.png",
+      "type": "image/png",
+      "title": "thumbnail",
+      "roles": [
+        "thumbnail"
+      ]
+    }
+  }
+}
