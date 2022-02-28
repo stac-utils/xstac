@@ -40,6 +40,17 @@ CITATION_URLS = {
     "monthly": "https://doi.org/10.3334/ORNLDAAC/1855",
     "annual": "https://doi.org/10.3334/ORNLDAAC/1852",
 }
+DOI_NAMES = {
+    "daily": "10.3334/ORNLDAAC/1840",
+    "monthly": "10.3334/ORNLDAAC/1855",
+    "annual": "10.3334/ORNLDAAC/1852",
+}
+CITATIONS = {
+    "daily": "Thornton, M.M., R. Shrestha, P.E. Thornton, S. Kao, Y. Wei, and B.E. Wilson. 2021. Daymet Version 4 Monthly Latency: Daily Surface Weather Data. ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/1904",  # noqa: E501
+    "monthly": "Thornton, M.M., R. Shrestha, Y. Wei, P.E. Thornton, S. Kao, and B.E. Wilson. 2020. Daymet: Monthly Climate Summaries on a 1-km Grid for North America, Version 4. ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/1855",  # noqa: E501
+    "annual": "Thornton, M.M., R. Shrestha, Y. Wei, P.E. Thornton, S. Kao, and B.E. Wilson. 2020. Daymet: Annual Climate Summaries on a 1-km Grid for North America, Version 4. ORNL DAAC, Oak Ridge, Tennessee, USA. https://doi.org/10.3334/ORNLDAAC/1852",  # noqa: E501
+}
+
 
 FULL_REGIONS = {"hi": "Hawaii", "na": "North America", "pr": "Puerto Rico"}
 ZARR_MEDIA_TYPE = "application/vnd+zarr"
@@ -67,6 +78,9 @@ def generate(frequency, region):
 
     collection_template = {
         "id": f"daymet-{frequency}-{region}",
+        "stac_extensions": [
+            "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+        ],
         "description": "{{ collection.description }}",
         "type": "Collection",
         "title": f"Daymet {frequency.title()} {FULL_REGIONS[region]}",
@@ -81,11 +95,12 @@ def generate(frequency, region):
         ],
         "stac_version": "1.0.0",
         "links": [
-            # {"rel": "root", "href": "../catalog.json", "type": "application/json"},
             {
                 "rel": "license",
+                "title": "EOSDIS Data Use Policy",
                 "href": "https://science.nasa.gov/earth-science/earth-science-data/data-information-policy",
-            }
+            },
+            {"rel": "cite-as", "href": CITATION_URLS[frequency]},
         ],
         "extent": {
             "spatial": {"bbox": [BBOX[region]]},
@@ -133,6 +148,8 @@ def generate(frequency, region):
         "msft:container": "daymet-zarr",
         "msft:group_id": "daymet",
         "msft:group_keys": [frequency, FULL_REGIONS[region].lower()],
+        "sci:doi": DOI_NAMES[frequency],
+        "sci:citation": CITATIONS[frequency],
     }
 
     store = fsspec.get_mapper(
@@ -151,6 +168,7 @@ def generate(frequency, region):
         x_dimension="x",
         y_dimension="y",
     )
+
     collection.remove_links(pystac.RelType.SELF)
     collection.remove_links(pystac.RelType.ROOT)
 
