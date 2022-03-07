@@ -141,3 +141,10 @@ def test_maybe_infer_reference_system(ds):
     result = maybe_infer_reference_system(ds, reference_system=None)
     expected = pyproj.crs.CRS.from_epsg(32633).to_json_dict()
     assert result == expected
+
+
+def test_disable_infer_temporal_extent(ds, item_template):
+    # item_template = copy.deepcopy(item_template)
+    # del item_template["properties"]["datetime"]
+    result = xarray_to_stac(ds, item_template, temporal_dimension=False)
+    assert "start_datetime" not in result.properties

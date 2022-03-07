@@ -428,10 +428,11 @@ def xarray_to_stac(
             result.extent.spatial.bboxes[0] = bbox
 
     infer_temporal_extent = (
-        temporal_dimension is not None
+        temporal_dimension
         and (is_collection and not any(x for x in result.extent.temporal.intervals[0]))
         or (
-            is_item
+            temporal_dimension
+            and is_item
             and not (
                 result.properties.get("start_datetime")
                 or result.properties.get("end_datetime")
