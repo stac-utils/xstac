@@ -1,0 +1,229 @@
+{
+  "type": "Collection",
+  "id": "cil-gdpcir",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "links": [
+    {
+      "rel": "root",
+      "href": "/home/taugspurger/src/TomAugspurger/xstac/examples/cil-gdpcir/collection.json",
+      "type": "application/json",
+      "title": "..."
+    },
+    {
+      "rel": "license",
+      "href": "TODO",
+      "type": "text/html"
+    },
+    {
+      "rel": "self",
+      "href": "/home/taugspurger/src/TomAugspurger/xstac/examples/cil-gdpcir/collection.json",
+      "type": "application/json"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+  ],
+  "msft:storage_account": "rhgeuwest",
+  "msft:container": "cil-gdpcir",
+  "msft:short_description": [
+    "Global downscaled climate scenarios derived from the General Circulation Model conducted under CMIP6."
+  ],
+  "cube:dimensions": {
+    "time": {
+      "extent": [
+        "1950-01-01T12:00:00Z",
+        "2100-12-31T12:00:00Z"
+      ],
+      "description": "time",
+      "step": "P1DT0H0M0S",
+      "type": "temporal"
+    },
+    "lon": {
+      "axis": "y",
+      "extent": [
+        -179.875,
+        179.875
+      ],
+      "step": 0.25,
+      "reference_system": "epsg:4326",
+      "type": "spatial"
+    }
+  },
+  "cube:variables": {
+    "pr": {
+      "type": "data",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "mm day-1",
+      "attrs": {
+        "units": "mm day-1"
+      }
+    },
+    "tasmax": {
+      "type": "data",
+      "description": "Daily Maximum Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "cell_measures": "area: areacella",
+        "cell_methods": "area: mean time: maximum (interval: 5 minutes)",
+        "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: max')",
+        "coordinates": "height",
+        "long_name": "Daily Maximum Near-Surface Air Temperature",
+        "original_name": "TREFHTMX",
+        "standard_name": "air_temperature",
+        "units": "K"
+      }
+    },
+    "tasmin": {
+      "type": "data",
+      "description": "Daily Minimum Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "cell_measures": "area: areacella",
+        "cell_methods": "area: mean time: minimum (interval: 5 minutes)",
+        "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: min')",
+        "coordinates": "height",
+        "long_name": "Daily Minimum Near-Surface Air Temperature",
+        "original_name": "TREFHTMN",
+        "standard_name": "air_temperature",
+        "units": "K"
+      }
+    }
+  },
+  "item_assets": {
+    "pr": {
+      "type": "application/vnd+zarr",
+      "roles": [
+        "data"
+      ],
+      "title": "Precipitation",
+      "description": "Precipitation"
+    },
+    "tasmax": {
+      "type": "application/vnd+zarr",
+      "roles": [
+        "data"
+      ],
+      "title": "Daily Maximum Near-Surface Air Temperature",
+      "description": "Daily Maximum Near-Surface Air Temperature"
+    },
+    "tasmin": {
+      "type": "application/vnd+zarr",
+      "roles": [
+        "data"
+      ],
+      "title": "Daily Minimum Near-Surface Air Temperature",
+      "description": "Daily Minimum Near-Surface Air Temperature"
+    }
+  },
+  "title": "...",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1950-01-01T00:00:00Z",
+          "2011-12-31T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "proprietary",
+  "keywords": [
+    "CMIP6",
+    "Rhodium Group",
+    "Precipitation",
+    "Temperature"
+  ],
+  "providers": [
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host",
+        "processor"
+      ],
+      "url": "https://planetarycomputer.microsoft.com/"
+    }
+  ],
+  "summaries": {
+    "cmip6:group": [
+      "BCC",
+      "CAS",
+      "CCCma",
+      "CMCC",
+      "CSIRO",
+      "CSIRO-ARCCSS",
+      "DKRZ",
+      "EC-Earth-Consortium",
+      "INM",
+      "MIROC",
+      "MOHC",
+      "MPI-M",
+      "NCC",
+      "NOAA-GFDL",
+      "NUIST"
+    ],
+    "cmip6:model": [
+      "ACCESS-CM2",
+      "ACCESS-ESM1-5",
+      "BCC-CSM2-MR",
+      "CMCC-CM2-SR5",
+      "CMCC-ESM2",
+      "CanESM5",
+      "EC-Earth3",
+      "EC-Earth3-AerChem",
+      "EC-Earth3-CC",
+      "EC-Earth3-Veg",
+      "EC-Earth3-Veg-LR",
+      "FGOALS-g3",
+      "GFDL-CM4",
+      "GFDL-ESM4",
+      "HadGEM3-GC31-LL",
+      "INM-CM4-8",
+      "INM-CM5-0",
+      "MIROC-ES2L",
+      "MIROC6",
+      "MPI-ESM1-2-HR",
+      "MPI-ESM1-2-LR",
+      "NESM3",
+      "NorESM2-LM",
+      "NorESM2-MM",
+      "UKESM1-0-LL"
+    ],
+    "cmip6:variable": [
+      "pr",
+      "tasmax",
+      "tasmin"
+    ],
+    "cmip6:scenario": [
+      "historical",
+      "ssp126",
+      "ssp245",
+      "ssp370",
+      "ssp585"
+    ]
+  }
+}
