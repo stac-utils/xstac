@@ -5,20 +5,10 @@
   "description": "{{ collection.description }}",
   "links": [
     {
-      "rel": "root",
-      "href": "/home/taugspurger/src/TomAugspurger/xstac/examples/cil-gdpcir/collection.json",
-      "type": "application/json",
-      "title": "..."
-    },
-    {
       "rel": "license",
       "href": "TODO",
-      "type": "text/html"
-    },
-    {
-      "rel": "self",
-      "href": "/home/taugspurger/src/TomAugspurger/xstac/examples/cil-gdpcir/collection.json",
-      "type": "application/json"
+      "type": "text/html",
+      "title": "License"
     }
   ],
   "stac_extensions": [
@@ -225,5 +215,12 @@
       "ssp370",
       "ssp585"
     ]
+  },
+  "assets": {
+    "thumbnail": {
+      "href": "https://i0.wp.com/ukesm.ac.uk/wp-content/uploads/2018/07/cmip6_logo-01_W4EisQO.png",
+      "type": "image/png",
+      "title": "Thumbnail"
+    }
   }
 }

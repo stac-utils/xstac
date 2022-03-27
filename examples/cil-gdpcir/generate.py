@@ -245,7 +245,20 @@ def make_collection():
         title="...",  # TODO
     )
     r.add_link(
-        pystac.Link(rel=pystac.RelType.LICENSE, target="TODO", media_type="text/html")
+        pystac.Link(
+            rel=pystac.RelType.LICENSE,
+            target="TODO",
+            media_type="text/html",
+            title="License",
+        )
+    )
+    r.add_asset(
+        "thumbnail",
+        pystac.Asset(
+            "https://i0.wp.com/ukesm.ac.uk/wp-content/uploads/2018/07/cmip6_logo-01_W4EisQO.png",
+            title="Thumbnail",
+            media_type=pystac.MediaType.PNG,
+        ),
     )
     # r = xstac.xarray_to_stac(..., template)
     r.extra_fields.update(collection_datacube)
@@ -266,6 +279,9 @@ def make_collection():
     r.set_self_href("collection.json")
 
     r.validate()
+    r.remove_links(pystac.RelType.SELF)
+    r.remove_links(pystac.RelType.ROOT)
+
     pathlib.Path("collection.json").write_text(json.dumps(r.to_dict(), indent=2))
 
 
