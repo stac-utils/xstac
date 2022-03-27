@@ -1,0 +1,157 @@
+{
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "id": "cil-gdpcir-EC-Earth-Consortium-EC-Earth3-Veg-LR-ssp585-r1i1p1f1-day",
+    "properties": {
+        "start_datetime": "2015-01-01T12:00:00Z",
+        "end_datetime": "2100-12-31T12:00:00Z",
+        "cube:dimensions": {
+            "time": {
+                "extent": [
+                    "2015-01-01T12:00:00Z",
+                    "2100-12-31T12:00:00Z"
+                ],
+                "description": "time",
+                "step": "P1DT0H0M0S",
+                "type": "temporal"
+            },
+            "lon": {
+                "axis": "y",
+                "extent": [
+                    -179.875,
+                    179.875
+                ],
+                "step": 0.25,
+                "reference_system": "epsg:4326",
+                "type": "spatial"
+            }
+        },
+        "cube:variables": {
+            "pr": {
+                "type": "data",
+                "dimensions": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "unit": "mm day-1",
+                "attrs": {
+                    "units": "mm day-1"
+                },
+                "shape": [
+                    31390,
+                    720,
+                    1440
+                ]
+            },
+            "tasmax": {
+                "type": "data",
+                "description": "Daily Maximum Near-Surface Air Temperature",
+                "dimensions": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "unit": "K",
+                "attrs": {
+                    "cell_measures": "area: areacella",
+                    "cell_methods": "area: mean time: maximum",
+                    "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute \'time: max\')",
+                    "history": "2020-11-23T14:13:46Z altered by CMOR: Treated scalar dimension: \'height\'. 2020-11-23T14:13:46Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
+                    "long_name": "Daily Maximum Near-Surface Air Temperature",
+                    "standard_name": "air_temperature",
+                    "units": "K"
+                },
+                "shape": [
+                    31390,
+                    720,
+                    1440
+                ]
+            },
+            "tasmin": {
+                "type": "data",
+                "description": "Daily Minimum Near-Surface Air Temperature",
+                "dimensions": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "unit": "K",
+                "attrs": {
+                    "cell_measures": "area: areacella",
+                    "cell_methods": "area: mean time: minimum",
+                    "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute \'time: min\')",
+                    "history": "2020-11-23T14:13:44Z altered by CMOR: Treated scalar dimension: \'height\'. 2020-11-23T14:13:44Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
+                    "long_name": "Daily Minimum Near-Surface Air Temperature",
+                    "standard_name": "air_temperature",
+                    "units": "K"
+                },
+                "shape": [
+                    31390,
+                    720,
+                    1440
+                ]
+            }
+        },
+        "datetime": null,
+        "cmip6:group": "EC-Earth-Consortium",
+        "cmip6:model": "EC-Earth3-Veg-LR",
+        "cmip6:scenario": "ssp585",
+        "cmip6:temporal_frequency": "day"
+    },
+    "geometry": null,
+    "links": [
+        {
+            "rel": "self",
+            "href": "/home/jovyan/cil-gdpcir/items/cil-gdpcir-EC-Earth-Consortium-EC-Earth3-Veg-LR-ssp585-r1i1p1f1-day.json",
+            "type": "application/json"
+        }
+    ],
+    "assets": {
+        "pr": {
+            "href": "abfs://cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/pr/v1.1.zarr",
+            "type": "application/vnd+zarr",
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": true,
+                "chunks": {},
+                "storage_options": {
+                    "account_name": "rhgeuwest"
+                }
+            },
+            "msft:https-url": "https://rhgeuwest.blob.core.windows.net/cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/pr/v1.1.zarr",
+            "cmip6:variable": "pr"
+        },
+        "tasmax": {
+            "href": "abfs://cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmax/v1.1.zarr",
+            "type": "application/vnd+zarr",
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": true,
+                "chunks": {},
+                "storage_options": {
+                    "account_name": "rhgeuwest"
+                }
+            },
+            "msft:https-url": "https://rhgeuwest.blob.core.windows.net/cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmax/v1.1.zarr",
+            "cmip6:variable": "tasmax"
+        },
+        "tasmin": {
+            "href": "abfs://cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmin/v1.1.zarr",
+            "type": "application/vnd+zarr",
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": true,
+                "chunks": {},
+                "storage_options": {
+                    "account_name": "rhgeuwest"
+                }
+            },
+            "msft:https-url": "https://rhgeuwest.blob.core.windows.net/cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmin/v1.1.zarr",
+            "cmip6:variable": "tasmin"
+        }
+    },
+    "stac_extensions": [
+        "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+    ]
+}
