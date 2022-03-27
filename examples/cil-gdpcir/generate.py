@@ -311,11 +311,16 @@ def make_item(root, protocol, storage_options=None):
         parts = Parts.from_path(path)
         href = f"abfs://{path}"
         extra_fields = {
-            "xarray:storage_options": {"account_name": "rhgeuwest"},
-            "xarray:open_kwargs": {"engine": "zarr", "consolidated": True},
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": True,
+                "chunks": {},
+                "storage_options": {"account_name": "rhgeuwest"},
+            },
             "msft:https-url": f"https://rhgeuwest.blob.core.windows.net/{path}",
             "cmip6:variable": parts.variable,
         }
+
         item.add_asset(
             parts.variable,
             pystac.Asset(
