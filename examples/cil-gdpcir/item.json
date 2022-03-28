@@ -16,10 +16,20 @@
                 "type": "temporal"
             },
             "lon": {
-                "axis": "y",
+                "axis": "x",
                 "extent": [
                     -179.875,
                     179.875
+                ],
+                "step": 0.25,
+                "reference_system": "epsg:4326",
+                "type": "spatial"
+            },
+            "lat": {
+                "axis": "y",
+                "extent": [
+                    -89.875,
+                    89.875
                 ],
                 "step": 0.25,
                 "reference_system": "epsg:4326",
@@ -56,8 +66,8 @@
                 "attrs": {
                     "cell_measures": "area: areacella",
                     "cell_methods": "area: mean time: maximum",
-                    "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute \'time: max\')",
-                    "history": "2020-11-23T14:13:46Z altered by CMOR: Treated scalar dimension: \'height\'. 2020-11-23T14:13:46Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
+                    "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: max')",
+                    "history": "2020-11-23T14:13:46Z altered by CMOR: Treated scalar dimension: 'height'. 2020-11-23T14:13:46Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
                     "long_name": "Daily Maximum Near-Surface Air Temperature",
                     "standard_name": "air_temperature",
                     "units": "K"
@@ -80,8 +90,8 @@
                 "attrs": {
                     "cell_measures": "area: areacella",
                     "cell_methods": "area: mean time: minimum",
-                    "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute \'time: min\')",
-                    "history": "2020-11-23T14:13:44Z altered by CMOR: Treated scalar dimension: \'height\'. 2020-11-23T14:13:44Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
+                    "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: min')",
+                    "history": "2020-11-23T14:13:44Z altered by CMOR: Treated scalar dimension: 'height'. 2020-11-23T14:13:44Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
                     "long_name": "Daily Minimum Near-Surface Air Temperature",
                     "standard_name": "air_temperature",
                     "units": "K"
@@ -94,12 +104,38 @@
             }
         },
         "datetime": null,
-        "cmip6:group": "EC-Earth-Consortium",
-        "cmip6:model": "EC-Earth3-Veg-LR",
-        "cmip6:scenario": "ssp585",
-        "cmip6:temporal_frequency": "day"
+        "cmip6:institution_id": "EC-Earth-Consortium",
+        "cmip6:source_id": "EC-Earth3-Veg-LR",
+        "cmip6:experiment_id": "ssp585",
+        "cmip6:frequency": "day"
     },
-    "geometry": null,
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    180.0,
+                    -90.0
+                ],
+                [
+                    180.0,
+                    90.0
+                ],
+                [
+                    -180.0,
+                    90.0
+                ],
+                [
+                    -180.0,
+                    -90.0
+                ],
+                [
+                    180.0,
+                    -90.0
+                ]
+            ]
+        ]
+    },
     "links": [
         {
             "rel": "self",
@@ -151,6 +187,12 @@
             "cmip6:variable": "tasmin"
         }
     },
+    "bbox": [
+        -180,
+        -90,
+        180,
+        90
+    ],
     "stac_extensions": [
         "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
     ]

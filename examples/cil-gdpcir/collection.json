@@ -38,6 +38,16 @@
       "step": 0.25,
       "reference_system": "epsg:4326",
       "type": "spatial"
+    },
+    "lat": {
+      "axis": "y",
+      "extent": [
+        -89.875,
+        89.875
+      ],
+      "step": 0.25,
+      "reference_system": "epsg:4326",
+      "type": "spatial"
     }
   },
   "cube:variables": {
@@ -159,7 +169,7 @@
     }
   ],
   "summaries": {
-    "cmip6:group": [
+    "cmip6:institution_id": [
       "BCC",
       "CAS",
       "CCCma",
@@ -176,7 +186,7 @@
       "NOAA-GFDL",
       "NUIST"
     ],
-    "cmip6:model": [
+    "cmip6:source_id": [
       "ACCESS-CM2",
       "ACCESS-ESM1-5",
       "BCC-CSM2-MR",
@@ -208,7 +218,7 @@
       "tasmax",
       "tasmin"
     ],
-    "cmip6:scenario": [
+    "cmip6:experiment_id": [
       "historical",
       "ssp126",
       "ssp245",

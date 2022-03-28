@@ -273,10 +273,10 @@ def make_collection():
     # Summaries
     r.summaries.maxcount = 50
     summaries = {
-        "cmip6:group": GROUPS,
-        "cmip6:model": MODELS,
+        "cmip6:institution_id": GROUPS,
+        "cmip6:source_id": MODELS,
         "cmip6:variable": VARIABLES,
-        "cmip6:scenario": SCENARIOS,
+        "cmip6:experiment_id": SCENARIOS,
     }
     for k, v in summaries.items():
         r.summaries.add(k, v)
