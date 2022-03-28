@@ -76,6 +76,13 @@ collection_datacube = {
             "reference_system": "epsg:4326",
             "type": "spatial",
         },
+        "lat": {
+            "axis": "y",
+            "extent": [-89.875, 89.875],
+            "step": 0.25,
+            "reference_system": "epsg:4326",
+            "type": "spatial",
+        },
     },
     "cube:variables": {
         "pr": {
@@ -285,24 +292,42 @@ def make_collection():
     pathlib.Path("collection.json").write_text(json.dumps(r.to_dict(), indent=2))
 
 
-def make_item(root, protocol, storage_options=None):
+def create_item(root, protocol, storage_options=None):
     storage_options = storage_options or {}
     fs = fsspec.filesystem(protocol=protocol, **storage_options)
+
     paths = fs.glob(f"{root}/*/*")
     stores = [fs.get_mapper(v) for v in paths]
     dss = [xr.open_dataset(store, engine="zarr", consolidated=True) for store in stores]
-    ds = xr.combine_by_coords(dss, join="exact", combine_attrs="drop_conflicts")
 
+    ds = xr.combine_by_coords(dss, join="exact", combine_attrs="drop_conflicts")
     p0 = Parts.from_path(paths[0])
+    geometry = {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [180.0, -90.0],
+                [180.0, 90.0],
+                [-180.0, 90.0],
+                [-180.0, -90.0],
+                [180.0, -90.0],
+            ]
+        ],
+    }
+    bbox = [-180, -90, 180, 90]
 
     template = pystac.Item(
-        p0.item_id, None, None, None, {"start_datetime": None, "end_datetime": None}
+        p0.item_id,
+        geometry=geometry,
+        bbox=bbox,
+        datetime=None,
+        properties={"start_datetime": None, "end_datetime": None},
     )
     item = xstac.xarray_to_stac(
         ds,
         template,
         x_dimension="lon",
-        y_dimension="lon",
+        y_dimension="lat",
         temporal_dimension="time",
         reference_system="epsg:4326",
     )
@@ -320,7 +345,6 @@ def make_item(root, protocol, storage_options=None):
             "msft:https-url": f"https://rhgeuwest.blob.core.windows.net/{path}",
             "cmip6:variable": parts.variable,
         }
-
         item.add_asset(
             parts.variable,
             pystac.Asset(
