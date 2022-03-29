@@ -57,6 +57,42 @@ MODELS = [
 ]
 SCENARIOS = ["historical", "ssp126", "ssp245", "ssp370", "ssp585"]
 VARIABLES = ["pr", "tasmax", "tasmin"]
+cmip6_item_attrs = [
+    "Conventions",
+    "activity_id",
+    "data_specs_version",
+    "experiment",
+    "experiment_id",
+    "forcing_index",
+    "frequency",
+    "further_info_url",
+    "initialization_index",
+    "institution",
+    "institution_id",
+    "license",
+    "mip_era",
+    "nominal_resolution",
+    "physics_index",
+    "product",
+    "realization_index",
+    "realm",
+    "source",
+    "source_id",
+    "source_type",
+    "sub_experiment",
+    "sub_experiment_id",
+    "table_id",
+    "variant_label",
+]
+
+cmip6_asset_attrs = [
+    "creation_date",
+    "tracking_id",
+    "variable_id",
+    "grid",
+    "grid_label",
+]
+
 # TODO: note in the description
 # The shape can be either  {(23725, 720, 1440), (31390, 720, 1440)}
 # Not all files contain "pr"
@@ -160,7 +196,7 @@ class Parts:
     scenario: str
     rthing: str
     temporal_frequency: str
-    variable: str
+    variable_id: str
     filename: str
 
     @property
@@ -186,7 +222,7 @@ class Parts:
             scenario,
             rthing,
             temporal_frequency,
-            variable,
+            variable_id,
             store,
         ) = path.split("/")
         return cls(
@@ -195,24 +231,14 @@ class Parts:
             scenario=scenario,
             rthing=rthing,
             temporal_frequency=temporal_frequency,
-            variable=variable,
+            variable_id=variable_id,
             filename=path,
         )
-
-    @property
-    def item_properties(self):
-        return {
-            "cmip6:group": self.group,
-            "cmip6:model": self.model,
-            "cmip6:scenario": self.scenario,
-            "cmip6:temporal_frequency": self.temporal_frequency,
-        }
 
 
 def create_item(root, protocol, storage_options=None):
     storage_options = storage_options or {}
     fs = fsspec.filesystem(protocol=protocol, **storage_options)
-
     paths = fs.glob(f"{root}/*/*")
     stores = [fs.get_mapper(v) for v in paths]
     dss = [xr.open_dataset(store, engine="zarr", consolidated=True) for store in stores]
@@ -248,8 +274,10 @@ def create_item(root, protocol, storage_options=None):
         temporal_dimension="time",
         reference_system="epsg:4326",
     )
+    cmip6_properties = {f"cmip6:{k}": ds.attrs.get(k, None) for k in cmip6_item_attrs}
+    item.properties.update(cmip6_properties)
 
-    for path in paths:
+    for i, path in enumerate(paths):
         parts = Parts.from_path(path)
         href = f"abfs://{path}"
         extra_fields = {
@@ -260,16 +288,18 @@ def create_item(root, protocol, storage_options=None):
                 "storage_options": {"account_name": "rhgeuwest"},
             },
             "msft:https-url": f"https://rhgeuwest.blob.core.windows.net/{path}",
-            "cmip6:variable": parts.variable,
+            # "cmip6:variable_id": parts.variable_id,
         }
+        for k in cmip6_asset_attrs:
+            extra_fields[f"cmip6:{k}"] = dss[i].attrs[k]
+
         item.add_asset(
-            parts.variable,
+            parts.variable_id,
             pystac.Asset(
                 href, media_type="application/vnd+zarr", extra_fields=extra_fields
             ),
         )
 
-    item.properties.update(p0.item_properties)
     item.validate()
     return item
 
