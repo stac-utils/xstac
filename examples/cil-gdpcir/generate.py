@@ -350,19 +350,21 @@ def make_collection():
         providers=providers,
         title="CIL Global Downscaled Projections for Climate Impacts Research",
     )
-    r.add_link(
-        pystac.Link(
-            rel=pystac.RelType.LICENSE,
-            target="TODO",
-            media_type="text/html",
-            title="License",
-        ),
-        pystac.Link(
-            rel="describedby",
-            target="https://github.com/ClimateImpactLab/downscaleCMIP6/",
-            media_type="text/html",
-            title="Project homepage",
-        ),
+    r.add_links(
+        [
+            pystac.Link(
+                rel=pystac.RelType.LICENSE,
+                target="TODO",
+                media_type="text/html",
+                title="License",
+            ),
+            pystac.Link(
+                rel="describedby",
+                target="https://github.com/ClimateImpactLab/downscaleCMIP6/",
+                media_type="text/html",
+                title="Project homepage",
+            ),
+        ]
     )
     r.add_asset(
         "thumbnail",

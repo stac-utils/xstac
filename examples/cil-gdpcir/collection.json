@@ -9,6 +9,12 @@
       "href": "TODO",
       "type": "text/html",
       "title": "License"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://github.com/ClimateImpactLab/downscaleCMIP6/",
+      "type": "text/html",
+      "title": "Project homepage"
     }
   ],
   "stac_extensions": [
@@ -16,9 +22,7 @@
   ],
   "msft:storage_account": "rhgeuwest",
   "msft:container": "cil-gdpcir",
-  "msft:short_description": [
-    "Global downscaled climate scenarios derived from the General Circulation Model conducted under CMIP6."
-  ],
+  "msft:short_description": "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research",
   "cube:dimensions": {
     "time": {
       "extent": [
@@ -130,7 +134,7 @@
       "description": "Daily Minimum Near-Surface Air Temperature"
     }
   },
-  "title": "...",
+  "title": "CIL Global Downscaled Projections for Climate Impacts Research",
   "extent": {
     "spatial": {
       "bbox": [
@@ -154,11 +158,19 @@
   "license": "proprietary",
   "keywords": [
     "CMIP6",
+    "Climate Impact Lab",
     "Rhodium Group",
     "Precipitation",
     "Temperature"
   ],
   "providers": [
+    {
+      "name": "Climate Impact Lab",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://impactlab.org/"
+    },
     {
       "name": "Microsoft",
       "roles": [
@@ -228,7 +240,7 @@
   },
   "assets": {
     "thumbnail": {
-      "href": "https://i0.wp.com/ukesm.ac.uk/wp-content/uploads/2018/07/cmip6_logo-01_W4EisQO.png",
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gdpcir.png",
       "type": "image/png",
       "title": "Thumbnail"
     }
