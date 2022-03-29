@@ -306,10 +306,7 @@ def create_item(root, protocol, storage_options=None):
 
 def make_collection():
     # TODO: sci
-    # TODO: links
-    # TODO: providers
     # TODO: short description
-    # TODO: title
 
     extent = pystac.Extent(
         spatial=pystac.SpatialExtent(bboxes=[[-180, -90, 180, 90]]),
@@ -317,23 +314,30 @@ def make_collection():
             intervals=[datetime.datetime(1950, 1, 1), datetime.datetime(2011, 12, 31)]
         ),
     )
-    keywords = ["CMIP6", "Rhodium Group", "Precipitation", "Temperature"]
+    keywords = [
+        "CMIP6",
+        "Climate Impact Lab",
+        "Rhodium Group",
+        "Precipitation",
+        "Temperature",
+    ]
     providers = [
-        # pystac.Provider(
-        # ),
+        pystac.Provider(
+            "Climate Impact Lab",
+            roles=[pystac.ProviderRole.PRODUCER],
+            url="https://impactlab.org/",
+        ),
         pystac.Provider(
             "Microsoft",
             roles=[pystac.ProviderRole.HOST, pystac.ProviderRole.PROCESSOR],
             url="https://planetarycomputer.microsoft.com/",
-        )
+        ),
     ]
     extra_fields = {
         "msft:storage_account": "rhgeuwest",
         "msft:container": "cil-gdpcir",
         "msft:short_description": (
-            # TODO
-            "Global downscaled climate scenarios derived from the General Circulation Model "
-            "conducted under CMIP6.",
+            "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research"
         ),
     }
 
@@ -344,7 +348,7 @@ def make_collection():
         keywords=keywords,
         extra_fields=extra_fields,
         providers=providers,
-        title="...",  # TODO
+        title="CIL Global Downscaled Projections for Climate Impacts Research",
     )
     r.add_link(
         pystac.Link(
@@ -352,12 +356,18 @@ def make_collection():
             target="TODO",
             media_type="text/html",
             title="License",
-        )
+        ),
+        pystac.Link(
+            rel="describedby",
+            target="https://github.com/ClimateImpactLab/downscaleCMIP6/",
+            media_type="text/html",
+            title="Project homepage",
+        ),
     )
     r.add_asset(
         "thumbnail",
         pystac.Asset(
-            "https://i0.wp.com/ukesm.ac.uk/wp-content/uploads/2018/07/cmip6_logo-01_W4EisQO.png",
+            "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gdpcir.png",
             title="Thumbnail",
             media_type=pystac.MediaType.PNG,
         ),
