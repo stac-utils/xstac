@@ -209,6 +209,71 @@ class Parts:
         }
 
 
+def create_item(root, protocol, storage_options=None):
+    storage_options = storage_options or {}
+    fs = fsspec.filesystem(protocol=protocol, **storage_options)
+
+    paths = fs.glob(f"{root}/*/*")
+    stores = [fs.get_mapper(v) for v in paths]
+    dss = [xr.open_dataset(store, engine="zarr", consolidated=True) for store in stores]
+
+    ds = xr.combine_by_coords(dss, join="exact", combine_attrs="drop_conflicts")
+    p0 = Parts.from_path(paths[0])
+    geometry = {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [180.0, -90.0],
+                [180.0, 90.0],
+                [-180.0, 90.0],
+                [-180.0, -90.0],
+                [180.0, -90.0],
+            ]
+        ],
+    }
+    bbox = [-180, -90, 180, 90]
+
+    template = pystac.Item(
+        p0.item_id,
+        geometry=geometry,
+        bbox=bbox,
+        datetime=None,
+        properties={"start_datetime": None, "end_datetime": None},
+    )
+    item = xstac.xarray_to_stac(
+        ds,
+        template,
+        x_dimension="lon",
+        y_dimension="lat",
+        temporal_dimension="time",
+        reference_system="epsg:4326",
+    )
+
+    for path in paths:
+        parts = Parts.from_path(path)
+        href = f"abfs://{path}"
+        extra_fields = {
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": True,
+                "chunks": {},
+                "storage_options": {"account_name": "rhgeuwest"},
+            },
+            "msft:https-url": f"https://rhgeuwest.blob.core.windows.net/{path}",
+            "cmip6:variable": parts.variable,
+        }
+        item.add_asset(
+            parts.variable,
+            pystac.Asset(
+                href, media_type="application/vnd+zarr", extra_fields=extra_fields
+            ),
+        )
+
+    item.properties.update(p0.item_properties)
+    item.validate()
+    return item
+
+
 def make_collection():
     # TODO: sci
     # TODO: links
@@ -290,71 +355,6 @@ def make_collection():
     r.remove_links(pystac.RelType.ROOT)
 
     pathlib.Path("collection.json").write_text(json.dumps(r.to_dict(), indent=2))
-
-
-def create_item(root, protocol, storage_options=None):
-    storage_options = storage_options or {}
-    fs = fsspec.filesystem(protocol=protocol, **storage_options)
-
-    paths = fs.glob(f"{root}/*/*")
-    stores = [fs.get_mapper(v) for v in paths]
-    dss = [xr.open_dataset(store, engine="zarr", consolidated=True) for store in stores]
-
-    ds = xr.combine_by_coords(dss, join="exact", combine_attrs="drop_conflicts")
-    p0 = Parts.from_path(paths[0])
-    geometry = {
-        "type": "Polygon",
-        "coordinates": [
-            [
-                [180.0, -90.0],
-                [180.0, 90.0],
-                [-180.0, 90.0],
-                [-180.0, -90.0],
-                [180.0, -90.0],
-            ]
-        ],
-    }
-    bbox = [-180, -90, 180, 90]
-
-    template = pystac.Item(
-        p0.item_id,
-        geometry=geometry,
-        bbox=bbox,
-        datetime=None,
-        properties={"start_datetime": None, "end_datetime": None},
-    )
-    item = xstac.xarray_to_stac(
-        ds,
-        template,
-        x_dimension="lon",
-        y_dimension="lat",
-        temporal_dimension="time",
-        reference_system="epsg:4326",
-    )
-
-    for path in paths:
-        parts = Parts.from_path(path)
-        href = f"abfs://{path}"
-        extra_fields = {
-            "xarray:open_kwargs": {
-                "engine": "zarr",
-                "consolidated": True,
-                "chunks": {},
-                "storage_options": {"account_name": "rhgeuwest"},
-            },
-            "msft:https-url": f"https://rhgeuwest.blob.core.windows.net/{path}",
-            "cmip6:variable": parts.variable,
-        }
-        item.add_asset(
-            parts.variable,
-            pystac.Asset(
-                href, media_type="application/vnd+zarr", extra_fields=extra_fields
-            ),
-        )
-
-    item.properties.update(p0.item_properties)
-    item.validate()
-    return item
 
 
 def main():
