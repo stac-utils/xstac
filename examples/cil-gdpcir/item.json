@@ -1,0 +1,232 @@
+{
+    "type": "Feature",
+    "stac_version": "1.0.0",
+    "id": "cil-gdpcir-EC-Earth-Consortium-EC-Earth3-Veg-LR-ssp585-r1i1p1f1-day",
+    "properties": {
+        "start_datetime": "2015-01-01T12:00:00Z",
+        "end_datetime": "2100-12-31T12:00:00Z",
+        "cube:dimensions": {
+            "time": {
+                "extent": [
+                    "2015-01-01T12:00:00Z",
+                    "2100-12-31T12:00:00Z"
+                ],
+                "description": "time",
+                "step": "P1DT0H0M0S",
+                "type": "temporal"
+            },
+            "lon": {
+                "axis": "x",
+                "extent": [
+                    -179.875,
+                    179.875
+                ],
+                "step": 0.25,
+                "reference_system": "epsg:4326",
+                "type": "spatial"
+            },
+            "lat": {
+                "axis": "y",
+                "extent": [
+                    -89.875,
+                    89.875
+                ],
+                "step": 0.25,
+                "reference_system": "epsg:4326",
+                "type": "spatial"
+            }
+        },
+        "cube:variables": {
+            "pr": {
+                "type": "data",
+                "dimensions": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "unit": "mm day-1",
+                "attrs": {
+                    "units": "mm day-1"
+                },
+                "shape": [
+                    31390,
+                    720,
+                    1440
+                ]
+            },
+            "tasmax": {
+                "type": "data",
+                "description": "Daily Maximum Near-Surface Air Temperature",
+                "dimensions": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "unit": "K",
+                "attrs": {
+                    "cell_measures": "area: areacella",
+                    "cell_methods": "area: mean time: maximum",
+                    "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: max')",
+                    "history": "2020-11-23T14:13:46Z altered by CMOR: Treated scalar dimension: 'height'. 2020-11-23T14:13:46Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
+                    "long_name": "Daily Maximum Near-Surface Air Temperature",
+                    "standard_name": "air_temperature",
+                    "units": "K"
+                },
+                "shape": [
+                    31390,
+                    720,
+                    1440
+                ]
+            },
+            "tasmin": {
+                "type": "data",
+                "description": "Daily Minimum Near-Surface Air Temperature",
+                "dimensions": [
+                    "time",
+                    "lat",
+                    "lon"
+                ],
+                "unit": "K",
+                "attrs": {
+                    "cell_measures": "area: areacella",
+                    "cell_methods": "area: mean time: minimum",
+                    "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: min')",
+                    "history": "2020-11-23T14:13:44Z altered by CMOR: Treated scalar dimension: 'height'. 2020-11-23T14:13:44Z altered by CMOR: Reordered dimensions, original order: lat lon time.",
+                    "long_name": "Daily Minimum Near-Surface Air Temperature",
+                    "standard_name": "air_temperature",
+                    "units": "K"
+                },
+                "shape": [
+                    31390,
+                    720,
+                    1440
+                ]
+            }
+        },
+        "datetime": null,
+        "cmip6:Conventions": "CF-1.7 CMIP-6.2",
+        "cmip6:activity_id": "ScenarioMIP",
+        "cmip6:data_specs_version": "01.00.32",
+        "cmip6:experiment": "update of RCP8.5 based on SSP5",
+        "cmip6:experiment_id": "ssp585",
+        "cmip6:forcing_index": 1,
+        "cmip6:frequency": "day",
+        "cmip6:further_info_url": "https://furtherinfo.es-doc.org/CMIP6.EC-Earth-Consortium.EC-Earth3-Veg-LR.ssp585.none.r1i1p1f1",
+        "cmip6:initialization_index": 1,
+        "cmip6:institution": "AEMET, Spain; BSC, Spain; CNR-ISAC, Italy; DMI, Denmark; ENEA, Italy; FMI, Finland; Geomar, Germany; ICHEC, Ireland; ICTP, Italy; IDL, Portugal; IMAU, The Netherlands; IPMA, Portugal; KIT, Karlsruhe, Germany; KNMI, The Netherlands; Lund University, Sweden; Met Eireann, Ireland; NLeSC, The Netherlands; NTNU, Norway; Oxford University, UK; surfSARA, The Netherlands; SMHI, Sweden; Stockholm University, Sweden; Unite ASTR, Belgium; University College Dublin, Ireland; University of Bergen, Norway; University of Copenhagen, Denmark; University of Helsinki, Finland; University of Santiago de Compostela, Spain; Uppsala University, Sweden; Utrecht University, The Netherlands; Vrije Universiteit Amsterdam, the Netherlands; Wageningen University, The Netherlands. Mailing address: EC-Earth consortium, Rossby Center, Swedish Meteorological and Hydrological Institute/SMHI, SE-601 76 Norrkoping, Sweden",
+        "cmip6:institution_id": "EC-Earth-Consortium",
+        "cmip6:license": "https://github.com/ClimateImpactLab/downscaleCMIP6/tree/master/data_licenses/EC-Earth3-Veg-LR.txt",
+        "cmip6:mip_era": "CMIP6",
+        "cmip6:nominal_resolution": "100 km",
+        "cmip6:physics_index": 1,
+        "cmip6:product": "model-output",
+        "cmip6:realization_index": 1,
+        "cmip6:realm": "atmos",
+        "cmip6:source": "EC-Earth3-Veg-LR (2019): \naerosol: none\natmos: IFS cy36r4 (TL159, linearly reduced Gaussian grid equivalent to 320 x 160 longitude/latitude; 62 levels; top level 5 hPa)\natmosChem: none\nland: HTESSEL (land surface scheme built in IFS) and LPJ-GUESS v4\nlandIce: none\nocean: NEMO3.6 (ORCA1 tripolar primarily 1 degree with meridional refinement down to 1/3 degree in the tropics; 362 x 292 longitude/latitude; 75 levels; top grid cell 0-1 m)\nocnBgchem: none\nseaIce: LIM3",
+        "cmip6:source_id": "EC-Earth3-Veg-LR",
+        "cmip6:source_type": "AOGCM",
+        "cmip6:sub_experiment": "none",
+        "cmip6:sub_experiment_id": "none",
+        "cmip6:table_id": "day",
+        "cmip6:variant_label": "r1i1p1f1"
+    },
+    "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+            [
+                [
+                    180.0,
+                    -90.0
+                ],
+                [
+                    180.0,
+                    90.0
+                ],
+                [
+                    -180.0,
+                    90.0
+                ],
+                [
+                    -180.0,
+                    -90.0
+                ],
+                [
+                    180.0,
+                    -90.0
+                ]
+            ]
+        ]
+    },
+    "links": [
+        {
+            "rel": "self",
+            "href": "/home/jovyan/cil-gdpcir/items/cil-gdpcir-EC-Earth-Consortium-EC-Earth3-Veg-LR-ssp585-r1i1p1f1-day.json",
+            "type": "application/json"
+        }
+    ],
+    "assets": {
+        "pr": {
+            "href": "abfs://cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/pr/v1.1.zarr",
+            "type": "application/vnd+zarr",
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": true,
+                "chunks": {},
+                "storage_options": {
+                    "account_name": "rhgeuwest"
+                }
+            },
+            "msft:https-url": "https://rhgeuwest.blob.core.windows.net/cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/pr/v1.1.zarr",
+            "cmip6:creation_date": "2020-11-23T14:13:41Z",
+            "cmip6:tracking_id": "hdl:21.14100/5396e43d-94dc-4201-9e2a-c315092f08df\nhdl:21.14100/347d4c10-565d-44be-b9f9-3a77be5db5fd\nhdl:21.14100/fb937d7a-158f-40ae-9ac8-831edba6eeb1\nhdl:21.14100/4cd7650f-ac44-4c03-803d-3e0819a31d2e\nhdl:21.14100/32c21faf-c4ca-4923-860c-4d60513894ab\nhdl:21.14100/c34f7d97-565c-4064-b25a-ccc9bf052616\nhdl:21.14100/0bff30c7-417e-420e-afb5-c9525ef8f74c\nhdl:21.14100/d828bbb9-37f5-4fef-aee9-51053687f28d\nhdl:21.14100/8ff8dd27-d80a-481c-b0ec-6d976ccd2eac\nhdl:21.14100/66dc9063-4639-4126-865f-87009970f9d5\nhdl:21.14100/2f1c1b03-d8db-4378-ae02-fd6a93a04e45\nhdl:21.14100/556f2304-76cd-40ef-8eae-3685fd89a6af\nhdl:21.14100/ba022846-18e4-4554-95de-cb4ecc4ad978\nhdl:21.14100/593ae611-9fc6-4d6e-b41f-1f5594e4a8d7\nhdl:21.14100/ebf45f2c-6cc8-4060-a241-f07914670607\nhdl:21.14100/88133ed1-613a-4478-8389-a8dc95d174ba\nhdl:21.14100/0a022b97-b26c-45ae-b974-2c9207ec8631\nhdl:21.14100/28eda2a2-4b25-430e-86f0-a21b2bf9765f\nhdl:21.14100/1f05a8a0-274b-4a14-8066-1465ca0d631e\nhdl:21.14100/de621ef2-9890-4874-83ba-575f00d8b164\nhdl:21.14100/40e878ad-0bc9-42b1-907e-e14bc50a325d\nhdl:21.14100/ae0080f2-568b-46db-9d7d-0d4facb913e4\nhdl:21.14100/faf6aeb0-9b65-45f2-b36a-c659e8ec3624\nhdl:21.14100/e428ad9a-b469-4a10-82f8-1d1354cab496\nhdl:21.14100/57f89b3b-dc13-44c3-8f01-44a22b054ee1\nhdl:21.14100/13d60d00-a410-4c54-bdda-7151ce1ca2a7\nhdl:21.14100/5155fe64-2599-4405-9d49-d1088b5cf0bd\nhdl:21.14100/1351ee65-b2a1-4231-9005-96493740c051\nhdl:21.14100/ee1c7af1-e586-4f2d-b430-1108f5d50f6e\nhdl:21.14100/e171212c-5e29-45bd-ad9e-1d43ff38bcf3\nhdl:21.14100/460ccd3a-62d2-4ad3-8a78-cf0888b74b7a\nhdl:21.14100/f8578264-5aee-4782-a904-8c91b323f58c\nhdl:21.14100/7c8fb6cc-6f8e-4aa0-af14-9ebd43f9880c\nhdl:21.14100/462b1e5d-6dfe-4d51-ab2f-38d92f87b8d1\nhdl:21.14100/3f966091-918f-41ae-ac07-308bd38de7cd\nhdl:21.14100/38b0b7da-c7f9-47f7-bcbb-be1ff124a4a3\nhdl:21.14100/e2671154-2d68-4956-8edd-972c1747d2e9\nhdl:21.14100/19f43a77-c20a-424b-8d62-2c7d47086f91\nhdl:21.14100/58535153-75aa-4f88-8ff4-a477a821a17a\nhdl:21.14100/203bc558-082c-45fa-94a9-c62cad08b315\nhdl:21.14100/e486c919-8909-405f-98b0-0266ba46a757\nhdl:21.14100/de6dfd5a-7756-408b-a1dd-0d3ac45ea845\nhdl:21.14100/b4c3adc6-8dbc-426d-ae92-f995a6350e12\nhdl:21.14100/2ebd959d-8531-4bb6-86c4-0a007c942121\nhdl:21.14100/73893ad0-955e-40a2-82ba-ea7db13f948c\nhdl:21.14100/f90b97ee-d0a2-40c4-a75f-f250b36a4359\nhdl:21.14100/7fe666d5-a5dc-4b88-b5b3-ef4d40d286bd\nhdl:21.14100/8a536ec6-5e1a-46b0-9f72-1cb22faaaf31\nhdl:21.14100/3995b0f5-9b34-4401-b11b-949625cefc21\nhdl:21.14100/e759b85d-1b87-4339-b0f5-0596285c1be5\nhdl:21.14100/5fa82240-713e-47bf-8936-3c08ff619b9e\nhdl:21.14100/e4b62eb0-1f8c-42e9-a8ff-a19f1d129fda\nhdl:21.14100/87dac32e-365b-4e1d-8d33-c66cc69f0953\nhdl:21.14100/4d285d68-1378-43ce-bcbf-76650de69b04\nhdl:21.14100/d34c0bd7-6be8-4e1b-9a75-5ac98cc415ff\nhdl:21.14100/8943789d-af3a-4e85-a66d-528fd14147f3\nhdl:21.14100/d7d8982f-1558-465e-805c-2736fd0b145a\nhdl:21.14100/e66a8eac-8c82-426b-bd83-d8573a83f012\nhdl:21.14100/b18ace68-7422-4780-b8f7-77a9681566b3\nhdl:21.14100/b17391a3-299a-4ae5-898d-06f8ff1693be\nhdl:21.14100/89d37601-55c0-4f60-a956-796a8ad4a6a1\nhdl:21.14100/fd448fa0-6347-40ce-bcf9-008d2810de3a\nhdl:21.14100/9dfa673e-d5ae-4f0b-8b94-4d464a4ed2a4\nhdl:21.14100/fc0b1861-2f3a-4183-898d-5261053bb563\nhdl:21.14100/4052c76d-51a0-4367-b65e-5491ec9fc54a\nhdl:21.14100/8d3538e4-2d52-40d2-a69b-326744342ca2\nhdl:21.14100/a9220acb-2249-4f66-9f04-7b73aa96349d\nhdl:21.14100/d12f07ee-d9da-4968-a98d-0fc8e02e777c\nhdl:21.14100/56c4819b-cb95-453b-b8f2-0f2c3a2c2296\nhdl:21.14100/5208dca5-e3c9-42f8-b73d-850a69103c9d\nhdl:21.14100/b6e1cf5b-2899-4693-9d4e-c7bf670828a4\nhdl:21.14100/83d20200-deef-42db-b916-500e44fb4297\nhdl:21.14100/233753e2-53f4-4078-97e6-402108da410f\nhdl:21.14100/500c278e-0dab-4c05-bcbf-cef3b7ae91da\nhdl:21.14100/0df899e0-9170-4e50-885f-33d525094e1b\nhdl:21.14100/1611259c-c046-4f56-989a-af7edfeaa4c0\nhdl:21.14100/bb2459f1-b281-4379-b3fb-107354d462de\nhdl:21.14100/ee99a378-ad8a-444b-a078-982859050614\nhdl:21.14100/bd49db6d-baa5-4b0f-b7e8-a86d4cb03117\nhdl:21.14100/576b5848-b911-4693-8590-f3446cef29c4\nhdl:21.14100/07fd2859-52be-499d-8d86-0f6b23395a41\nhdl:21.14100/68d6db7d-689d-4638-b4c6-53078c215902\nhdl:21.14100/33b5925b-607c-4cd0-85f4-4473380d08f6\nhdl:21.14100/0490ed23-1bf4-4ea4-acea-fba177b23bb8\nhdl:21.14100/2099d017-86b7-42cc-869b-daa937a1e801\nhdl:21.14100/e3e64860-d267-4813-bd46-f4fbf13ae242",
+            "cmip6:variable_id": "pr",
+            "cmip6:grid": "T159L62",
+            "cmip6:grid_label": "gr"
+        },
+        "tasmax": {
+            "href": "abfs://cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmax/v1.1.zarr",
+            "type": "application/vnd+zarr",
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": true,
+                "chunks": {},
+                "storage_options": {
+                    "account_name": "rhgeuwest"
+                }
+            },
+            "msft:https-url": "https://rhgeuwest.blob.core.windows.net/cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmax/v1.1.zarr",
+            "cmip6:creation_date": "2020-11-23T14:13:46Z",
+            "cmip6:tracking_id": "hdl:21.14100/de1b5ea8-92d7-480f-b20f-098db73ae437\nhdl:21.14100/0b76fe9c-75b6-4fc9-8a72-3cbbe740055c\nhdl:21.14100/15c74727-c81d-4cf7-acf6-58cbbf18294e\nhdl:21.14100/5baec807-d28c-459b-995f-4c9461a0abc3\nhdl:21.14100/f3f73751-d985-4460-af0a-f4a5c8cb69ae\nhdl:21.14100/a6539f60-4378-4cae-b547-a54b0ffef67e\nhdl:21.14100/8a886850-cf5b-431a-ae6d-baa033fcda2a\nhdl:21.14100/477d22e4-0114-4854-89bb-bda5f8def3aa\nhdl:21.14100/fbf76ec5-4df1-4da0-8f90-2aedc9327cd9\nhdl:21.14100/5faed701-9625-443a-85f6-4e3f0a1d02dc\nhdl:21.14100/18c3bd0d-a1f2-4955-a757-aaae6a38d07a\nhdl:21.14100/8b6c2d94-fd43-4084-a40b-1a2c5b91835d\nhdl:21.14100/8a324227-6088-4ac7-bdfc-832784fede13\nhdl:21.14100/114f5f5d-75e7-4d5c-9b84-d32a22950b0f\nhdl:21.14100/2f558a9c-2838-477f-b265-c916195f3f43\nhdl:21.14100/cc5c1a8c-eb1d-49ef-bc6e-314c4dd021bd\nhdl:21.14100/62acfbde-ac9e-4385-b2f0-15e31c17f6ce\nhdl:21.14100/97cc12eb-4a30-46b6-b336-bee04ab62a29\nhdl:21.14100/fa88defd-2f90-4c79-a1f1-aee0a4bb35ab\nhdl:21.14100/7a8ec120-4369-4276-aec2-2396a2f001ff\nhdl:21.14100/28679c5b-8898-40c1-99ac-338b80580dbc\nhdl:21.14100/af889bfe-07c1-4294-96e9-10bf40a0d311\nhdl:21.14100/2b13c315-8c67-418c-a78a-ec238f061a79\nhdl:21.14100/9332c63d-8556-4f05-ae31-166f0090bc4b\nhdl:21.14100/a59f2d50-0026-4d8b-8194-da0b0c4d18fd\nhdl:21.14100/56c4002a-1645-48b2-8590-4bba4044806d\nhdl:21.14100/c543a76b-cd83-4024-89b3-637018be8842\nhdl:21.14100/2a052199-07e7-4113-bb16-c119d1addbbe\nhdl:21.14100/41681b1b-362e-412b-8e1a-d3b5c54cd2c1\nhdl:21.14100/5c2d12d1-b2e7-43ee-a421-d99af58d3162\nhdl:21.14100/f4d07f23-1c24-46db-8f7e-aa2b025a9d77\nhdl:21.14100/452d9f05-7555-4450-a5e8-07e587cb40d8\nhdl:21.14100/d654eeba-3cab-4f74-bbef-e6c1e8ebaf7a\nhdl:21.14100/5080fb88-28c7-4568-a680-6c6cd7a845de\nhdl:21.14100/929488ba-fa12-4502-9f77-f08329ebd9f6\nhdl:21.14100/19ad39f1-a9a0-488f-ba14-fa8191f5c8ae\nhdl:21.14100/f2c7b247-93ed-4f77-a8b9-27c1943f310d\nhdl:21.14100/1c0bc7b7-78e7-4a90-91c0-fdae29fd95b6\nhdl:21.14100/dcaf4fb7-d6cf-4f61-8678-e6786f4ef70d\nhdl:21.14100/8d11f990-1566-403a-839d-1da5baa68ae2\nhdl:21.14100/9a0aa6f9-fc52-454f-9bf8-6584b5ceab5e\nhdl:21.14100/3c79aac4-43f2-4e7b-b587-f84d9047c45e\nhdl:21.14100/57a18c68-f4c0-4053-a2d1-f23f714ed54f\nhdl:21.14100/df334684-a20d-44b5-8b04-79bf2b513077\nhdl:21.14100/b42114d0-7d2a-4d64-b636-8ae5650fff06\nhdl:21.14100/6e200589-f108-4c64-b7d4-3ed9caf4906a\nhdl:21.14100/4f561a34-15c1-4de7-9131-54348dec4242\nhdl:21.14100/f8cbdbb3-4d12-45a1-b403-cb3e92593468\nhdl:21.14100/4cdf678a-3f96-4038-a7c9-7ecb435fa93f\nhdl:21.14100/0cb5b262-8ef3-4f3e-8131-954815d1b43a\nhdl:21.14100/6607f5aa-2019-411b-8ce4-b870e2220b1d\nhdl:21.14100/523f93b0-b070-4fd7-8128-280a1d40f9ca\nhdl:21.14100/e9c65f89-b416-4151-a0d9-6fff7b37100c\nhdl:21.14100/556188b3-f387-4dc4-922f-e704aec0e0e3\nhdl:21.14100/0760e567-0256-4fdf-b4b9-8fd13cbeb490\nhdl:21.14100/8aebdf6f-c024-4580-8002-b44e04dfe442\nhdl:21.14100/336d3980-2968-427a-ba5c-e6df531ad020\nhdl:21.14100/d2875d47-db16-405b-bb76-29f2c3cd68d0\nhdl:21.14100/7ccf4a0d-1daf-4b65-99c3-455284be600e\nhdl:21.14100/d221100f-b3f2-479a-895e-94a862f9a6a7\nhdl:21.14100/4fe13943-92ff-4d53-bd6c-b27f570b37a5\nhdl:21.14100/0fa9939f-14f6-444c-a488-cb15fc33bfd2\nhdl:21.14100/bc704fac-1f29-4c87-8cf8-dd39eecbc4cc\nhdl:21.14100/1d6030a8-b103-4dff-a219-e28c45df3bb5\nhdl:21.14100/92f98fac-b9c7-468b-899f-a85401e1c9f9\nhdl:21.14100/63784fbd-1c6f-46a4-ad84-fbdf814efacf\nhdl:21.14100/777e6e46-d639-4984-86a7-5c16bf7aebdc\nhdl:21.14100/a1963299-a060-4911-8943-2db4e2cc359a\nhdl:21.14100/fb718391-baf0-41f6-909f-387f21ad6be8\nhdl:21.14100/edccb5a2-a17a-4d86-8257-eecd16148aa7\nhdl:21.14100/fe81e31c-f2ec-4fb4-9c50-d2b9263db3e1\nhdl:21.14100/1cd98ac3-831c-4cf9-8991-a598f8ef7970\nhdl:21.14100/a0ba6cc0-2b38-4470-9569-eba9e2da58fa\nhdl:21.14100/522f0faa-6499-4115-a7e8-a4e839c31b1d\nhdl:21.14100/b984941a-9278-4d02-be07-a6728159299d\nhdl:21.14100/666f5544-5f9c-48ca-9a50-e274d73d1ce1\nhdl:21.14100/308959c9-64c1-44dc-9a51-6606c5cc43af\nhdl:21.14100/cb15e253-e8f1-4f47-9e56-badf9bcbcf39\nhdl:21.14100/31e218e6-96eb-464c-a499-f688acf9e819\nhdl:21.14100/e95e06e0-8256-48af-a209-3dcf180ccfac\nhdl:21.14100/119011b0-baa3-431e-8ba7-8ca3214f259d\nhdl:21.14100/86fd0950-d02b-4ca1-b36e-2feefc7d930c\nhdl:21.14100/71a534c9-766c-4380-8ba7-20305382b0e4\nhdl:21.14100/7769fed8-05f6-4903-a45c-8cabddea178f\nhdl:21.14100/cd8cb2c9-bb81-441b-b039-f0a8981a3145\nhdl:21.14100/cc9330dc-1589-4e5f-9bc4-f9935f8f3d2b",
+            "cmip6:variable_id": "tasmax",
+            "cmip6:grid": "T159L62",
+            "cmip6:grid_label": "gr"
+        },
+        "tasmin": {
+            "href": "abfs://cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmin/v1.1.zarr",
+            "type": "application/vnd+zarr",
+            "xarray:open_kwargs": {
+                "engine": "zarr",
+                "consolidated": true,
+                "chunks": {},
+                "storage_options": {
+                    "account_name": "rhgeuwest"
+                }
+            },
+            "msft:https-url": "https://rhgeuwest.blob.core.windows.net/cil-gdpcir/ScenarioMIP/EC-Earth-Consortium/EC-Earth3-Veg-LR/ssp585/r1i1p1f1/day/tasmin/v1.1.zarr",
+            "cmip6:creation_date": "2020-11-23T14:13:44Z",
+            "cmip6:tracking_id": "hdl:21.14100/9af0eeb7-5a1c-43c9-a893-af569f07b6ab\nhdl:21.14100/04caf17c-dabc-48bf-9a22-a4799c3acec5\nhdl:21.14100/d4a000b5-e704-4caa-812d-630d359c9348\nhdl:21.14100/02da6a60-323c-4a0c-b18c-375c67cf97b6\nhdl:21.14100/49523c68-359a-4943-a697-d473d52dbbd4\nhdl:21.14100/580068b9-48d1-4e76-862e-7037a239d95e\nhdl:21.14100/7dd39ee8-baf4-427e-9f86-63e67957aaf8\nhdl:21.14100/2788fd21-c3d6-4ed6-bd58-b42520aab1f8\nhdl:21.14100/a7fe8fa8-1821-484e-aec1-2352661fe842\nhdl:21.14100/d473a562-6fdc-42c3-9c3e-f5cf19c1365f\nhdl:21.14100/b374ca5d-c330-4e02-aa22-66270f757c06\nhdl:21.14100/6f4ff115-313a-402b-aaa1-67708f6b6f97\nhdl:21.14100/bf13eb83-9172-4dc6-920c-57ced4e456ef\nhdl:21.14100/5d47b01b-84b6-461c-b199-5d6b9cfc9f91\nhdl:21.14100/7b9c4795-45ee-493e-a959-f8debbf21974\nhdl:21.14100/eda07b06-da09-426d-9e1b-8ee5a6589d9b\nhdl:21.14100/4f8d833d-c8c3-44de-a851-cd6157d07c94\nhdl:21.14100/17de6508-fb51-49e5-8d5e-278cbdbb4f8e\nhdl:21.14100/b1ca5bb6-c9e1-4c4a-9722-9b608853bbc1\nhdl:21.14100/173a8b12-aaff-463f-98c5-11ce0df964b7\nhdl:21.14100/9ec40466-3fd1-442c-be66-89c4aa2272f2\nhdl:21.14100/200cd38b-0efe-4e21-8581-abf21722c4a4\nhdl:21.14100/9b9778ac-4344-4c35-a51a-8d81369e670f\nhdl:21.14100/772de7f2-8825-42ea-92ae-53fac67a86f1\nhdl:21.14100/10648eec-5a1c-48bd-9b57-21a81a0372d9\nhdl:21.14100/23a9878e-6802-44b7-a7fb-cbd749828ec9\nhdl:21.14100/bc7ef659-6213-410b-ab2e-60d06fcea297\nhdl:21.14100/759ba4f5-f65f-42ae-9ef0-09d0a35af132\nhdl:21.14100/bd4c5265-6110-4c6b-860c-5358bdd0b307\nhdl:21.14100/47532553-35f8-4070-a194-918579eb2774\nhdl:21.14100/d6e54611-0082-43d3-af68-7580395cead1\nhdl:21.14100/e07ab136-f689-4a18-ad83-45aeeb9c2365\nhdl:21.14100/ac2c5a86-a7dc-4c48-995e-63b7fb35c7f5\nhdl:21.14100/f986fd8f-f2fc-4717-98ca-77b66e825b72\nhdl:21.14100/950b74aa-b033-4309-bffa-93360d0da246\nhdl:21.14100/965652de-198c-4ace-80c7-c1ebebd6ccc6\nhdl:21.14100/ae46d5f2-eab4-4d62-b6e3-24a65d4aac86\nhdl:21.14100/9a77f98d-3cd4-430a-921d-445dfabe4026\nhdl:21.14100/7cd307b2-fc94-44d6-9c1c-692438c34495\nhdl:21.14100/53f9049a-5363-4293-885c-c151ab34e8e5\nhdl:21.14100/4c07e67e-2dcf-4fda-b8b5-fbf9a73c135f\nhdl:21.14100/5cb16829-09e9-4118-8174-b3a96ab93eab\nhdl:21.14100/7650aebd-b4d8-47a9-8b0f-8d63d24c9159\nhdl:21.14100/d0eb127e-d496-4563-8ffe-4e8a39824be5\nhdl:21.14100/a5a49155-4e4b-4f34-a71a-42391dc1b4c5\nhdl:21.14100/8b452b19-ea16-44a9-a5a7-958a60570771\nhdl:21.14100/a889a129-76fb-4b77-b9d6-1853f51b0f17\nhdl:21.14100/f55fddc6-825c-485d-b425-0983328db97a\nhdl:21.14100/34e2fc81-9dde-4493-9512-1cca882c78c8\nhdl:21.14100/f42ed3f6-1096-4502-9529-a49c68706878\nhdl:21.14100/22926a3a-ffb3-4738-9ce1-aad0bc38d020\nhdl:21.14100/38232458-3d8c-4186-a91f-68dc56711211\nhdl:21.14100/7333a0a2-5551-47b0-ac83-53ef5f2b6407\nhdl:21.14100/a3a7d71e-e8ba-472f-bd34-78b6aa4cbafb\nhdl:21.14100/ccb9a559-c4b1-48d2-97f1-d0e932a9f8e4\nhdl:21.14100/e7382de5-7a0a-4fc4-b548-2734d6356f15\nhdl:21.14100/65ba3ba9-5b53-4da2-826a-0c2ad91dad37\nhdl:21.14100/7a4fac6d-8aa7-4376-822a-2e3a7e75ca65\nhdl:21.14100/24f2a5d2-297a-458f-8c97-00f4221aa446\nhdl:21.14100/74eaa314-fa59-4363-9c3b-15c72b6ccab7\nhdl:21.14100/b035ec24-49d1-404e-84ad-7d8ffb44da9b\nhdl:21.14100/1dab33b7-6299-4289-902f-de2196d938a0\nhdl:21.14100/267ecc17-0529-4d0a-87f5-7322bcae9ac8\nhdl:21.14100/b6f060ef-b06b-4209-be88-b74f305efee6\nhdl:21.14100/e1f45ac1-f302-463b-9bb9-6f358693b4c1\nhdl:21.14100/1740c490-a3c4-437f-b077-29a8184427bd\nhdl:21.14100/c133c57a-b43b-4685-8cc3-ec6bd85499b6\nhdl:21.14100/d8690fb5-4f89-48da-9ec7-d96f0fc879a1\nhdl:21.14100/47c2e9ab-a912-4ac7-90b8-70b9eea621dc\nhdl:21.14100/f63d62d9-3b1c-490d-aaca-8b38b1d4d034\nhdl:21.14100/1b9dc302-6fc9-45cd-b3bd-e16472935746\nhdl:21.14100/89349a9f-ea42-4a32-8397-f53b281a0f94\nhdl:21.14100/86b6faad-619a-4e81-b0bc-79e0cde28366\nhdl:21.14100/125a0013-9a07-49fd-8a3d-f6c6276f6971\nhdl:21.14100/e56b9ece-b47d-4ddc-a3aa-d90182f45455\nhdl:21.14100/999c9ce9-3186-40c1-9261-f60043933eca\nhdl:21.14100/d46575e4-0c0c-416d-be7d-3819e078c382\nhdl:21.14100/38a31a4e-7226-431a-87ae-3685979710d0\nhdl:21.14100/379762f8-b349-42a6-9abd-7eb063430024\nhdl:21.14100/c3ace0d9-7190-42de-acfc-0ee76dc7ef8f\nhdl:21.14100/c594ae98-52b3-4503-a86c-bb49d27f887b\nhdl:21.14100/de9a9626-e1af-4d0e-ace7-356ef19a22ab\nhdl:21.14100/5d9c9e26-1ddf-4c69-9a55-4cd5454aaefd\nhdl:21.14100/75ddf422-a10b-47f1-9630-fc9f0ff495fb\nhdl:21.14100/085ee66a-f895-4ade-846e-b1ea17c49bd6\nhdl:21.14100/f74de059-c25c-4531-b5c2-3f0b5bbbffce",
+            "cmip6:variable_id": "tasmin",
+            "cmip6:grid": "T159L62",
+            "cmip6:grid_label": "gr"
+        }
+    },
+    "bbox": [
+        -180,
+        -90,
+        180,
+        90
+    ],
+    "stac_extensions": [
+        "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
+    ]
+}
