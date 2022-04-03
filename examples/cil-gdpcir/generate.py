@@ -93,6 +93,67 @@ cmip6_asset_attrs = [
     "grid_label",
 ]
 
+LICENSE_TO_MODELS = {
+    "CC0-1.0": ["FGOALS-g3", "INM-CM4-8", "INM-CM5-0"],
+    "CC-BY-4.0": [
+        "BCC-CSM2-MR",
+        "ACCESS-ESM1-5",
+        "ACCESS-CM2",
+        "MIROC-ES2L",
+        "MIROC6",
+        "NorESM2-LM",
+        "NorESM2-MM",
+        "GFDL-CM4",
+        "GFDL-ESM4",
+        "NESM3",
+        "MPI-ESM1-2-HR",
+        "HadGEM3-GC31-LL",
+        "UKESM1-0-LL",
+        "MPI-ESM1-2-LR",
+        "EC-Earth3",
+        "EC-Earth3-AerChem",
+        "EC-Earth3-CC",
+        "EC-Earth3-Veg",
+        "EC-Earth3-Veg-LR",
+        "CMCC-CM2-SR5",
+        "CMCC-ESM2",
+    ],
+    "CC-BY-SA-4.0": [
+        "CanESM5",
+    ],
+}
+MODELS_TO_LICENSE = {}
+for license, models in LICENSE_TO_MODELS.items():
+    for model in models:
+        MODELS_TO_LICENSE[model] = license
+
+LICENSE_TO_LINK = {
+    "CC0-1.0": pystac.Link(
+        rel=pystac.RelType.LICENSE,
+        target="https://spdx.org/licenses/CC0-1.0.html",
+        media_type="text/html",
+        title="Creative Commons Zero v1.0 Universal",
+    ),
+    "CC-BY-4.0": pystac.Link(
+        rel=pystac.RelType.LICENSE,
+        target="https://spdx.org/licenses/CC-BY-4.0.html",
+        media_type="text/html",
+        title="Creative Commons Attribution 4.0 International",
+    ),
+    "CC-BY-SA-4.0": pystac.Link(
+        rel=pystac.RelType.LICENSE,
+        target="https://spdx.org/licenses/CC-BY-SA-4.0.html",
+        media_type="text/html",
+        title="Creative Commons Attribution Share Alike 4.0 International",
+    ),
+}
+LICENSE_TO_COLLECTION = {
+    "CC0-1.0": "cil-gdpcir-cc0",
+    "CC-BY-4.0": "cil-gdpcir-cc-by",
+    "CC-BY-SA-4.0": "cil-gdpcir-cc-by-sa",
+}
+
+
 # TODO: note in the description
 # The shape can be either  {(23725, 720, 1440), (31390, 720, 1440)}
 # Not all files contain "pr"
@@ -245,6 +306,7 @@ def create_item(root, protocol, storage_options=None):
 
     ds = xr.combine_by_coords(dss, join="exact", combine_attrs="drop_conflicts")
     p0 = Parts.from_path(paths[0])
+
     geometry = {
         "type": "Polygon",
         "coordinates": [
@@ -304,111 +366,104 @@ def create_item(root, protocol, storage_options=None):
     return item
 
 
-def make_collection():
+def make_collections():
     # TODO: sci
     # TODO: short description
-
-    extent = pystac.Extent(
-        spatial=pystac.SpatialExtent(bboxes=[[-180, -90, 180, 90]]),
-        temporal=pystac.TemporalExtent(
-            intervals=[datetime.datetime(1950, 1, 1), datetime.datetime(2011, 12, 31)]
-        ),
-    )
-    keywords = [
-        "CMIP6",
-        "Climate Impact Lab",
-        "Rhodium Group",
-        "Precipitation",
-        "Temperature",
-    ]
-    providers = [
-        pystac.Provider(
-            "Climate Impact Lab",
-            roles=[pystac.ProviderRole.PRODUCER],
-            url="https://impactlab.org/",
-        ),
-        pystac.Provider(
-            "Microsoft",
-            roles=[pystac.ProviderRole.HOST, pystac.ProviderRole.PROCESSOR],
-            url="https://planetarycomputer.microsoft.com/",
-        ),
-    ]
-    extra_fields = {
-        "msft:storage_account": "rhgeuwest",
-        "msft:container": "cil-gdpcir",
-        "msft:short_description": (
-            "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research"
-        ),
-    }
-
-    r = pystac.Collection(
-        "cil-gdpcir",
-        description="{{ collection.description }}",
-        extent=extent,
-        keywords=keywords,
-        extra_fields=extra_fields,
-        providers=providers,
-        title="CIL Global Downscaled Projections for Climate Impacts Research",
-    )
-    r.add_links(
-        [
-            pystac.Link(
-                rel=pystac.RelType.LICENSE,
-                target="TODO",
-                media_type="text/html",
-                title="License",
+    for license in LICENSE_TO_MODELS:
+        extent = pystac.Extent(
+            spatial=pystac.SpatialExtent(bboxes=[[-180, -90, 180, 90]]),
+            temporal=pystac.TemporalExtent(
+                intervals=[
+                    datetime.datetime(1950, 1, 1),
+                    datetime.datetime(2100, 12, 31),
+                ]
             ),
-            pystac.Link(
-                rel="describedby",
-                target="https://github.com/ClimateImpactLab/downscaleCMIP6/",
-                media_type="text/html",
-                title="Project homepage",
+        )
+        keywords = [
+            "CMIP6",
+            "Climate Impact Lab",
+            "Rhodium Group",
+            "Precipitation",
+            "Temperature",
+        ]
+        providers = [
+            pystac.Provider(
+                "Climate Impact Lab",
+                roles=[pystac.ProviderRole.PRODUCER],
+                url="https://impactlab.org/",
+            ),
+            pystac.Provider(
+                "Microsoft",
+                roles=[pystac.ProviderRole.HOST],
+                url="https://planetarycomputer.microsoft.com/",
             ),
         ]
-    )
-    r.add_asset(
-        "thumbnail",
-        pystac.Asset(
-            "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gdpcir.png",
-            title="Thumbnail",
-            media_type=pystac.MediaType.PNG,
-        ),
-    )
-    # r = xstac.xarray_to_stac(..., template)
-    r.extra_fields.update(collection_datacube)
+        extra_fields = {
+            "msft:storage_account": "rhgeuwest",
+            "msft:container": "cil-gdpcir",
+            "msft:short_description": (
+                f"Climate Impact Lab Global Downscaled Projections for Climate Impacts Research ({license})"
+            ),
+            "msft:group_id": "cil-gdpcir",
+        }
+        collection_id = LICENSE_TO_COLLECTION[license]
 
-    # Summaries
-    r.summaries.maxcount = 50
-    summaries = {
-        "cmip6:institution_id": GROUPS,
-        "cmip6:source_id": MODELS,
-        "cmip6:variable": VARIABLES,
-        "cmip6:experiment_id": SCENARIOS,
-    }
-    for k, v in summaries.items():
-        r.summaries.add(k, v)
+        r = pystac.Collection(
+            collection_id,
+            description="{{ collection.description }}",
+            extent=extent,
+            keywords=keywords,
+            extra_fields=extra_fields,
+            providers=providers,
+            title=f"CIL Global Downscaled Projections for Climate Impacts Research ({license})",
+            license=license,
+        )
+        r.add_links(
+            [
+                LICENSE_TO_LINK[license],
+                pystac.Link(
+                    rel="describedby",
+                    target="https://github.com/ClimateImpactLab/downscaleCMIP6/",
+                    media_type="text/html",
+                    title="Project homepage",
+                ),
+            ]
+        )
+        r.add_asset(
+            "thumbnail",
+            pystac.Asset(
+                "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gdpcir.png",
+                title="Thumbnail",
+                media_type=pystac.MediaType.PNG,
+            ),
+        )
+        # r = xstac.xarray_to_stac(..., template)
+        r.extra_fields.update(collection_datacube)
 
-    pystac.extensions.item_assets.ItemAssetsExtension.ext(r, add_if_missing=True)
-    r.extra_fields["item_assets"] = item_assets
-    r.set_self_href("collection.json")
+        # Summaries
+        r.summaries.maxcount = 50
+        summaries = {
+            "cmip6:institution_id": GROUPS,
+            "cmip6:source_id": LICENSE_TO_MODELS[license],
+            "cmip6:variable": VARIABLES,
+            "cmip6:experiment_id": SCENARIOS,
+        }
+        for k, v in summaries.items():
+            r.summaries.add(k, v)
 
-    r.validate()
-    r.remove_links(pystac.RelType.SELF)
-    r.remove_links(pystac.RelType.ROOT)
+        pystac.extensions.item_assets.ItemAssetsExtension.ext(r, add_if_missing=True)
+        r.extra_fields["item_assets"] = item_assets
+        r.set_self_href("collection.json")
 
-    pathlib.Path("collection.json").write_text(json.dumps(r.to_dict(), indent=2))
+        r.validate()
+        r.remove_links(pystac.RelType.SELF)
+        r.remove_links(pystac.RelType.ROOT)
+
+        pathlib.Path(f"{r.id}.json").write_text(json.dumps(r.to_dict(), indent=2))
 
 
 def main():
-    # credential = requests.get(
-    #     "https://planetarycomputer-staging.microsoft.com/api/sas/v1/token/rhgeuwest/cil-gdpcir"
-    # ).json()["token"]
-    # fs = adlfs.AzureBlobFileSystem("rhgeuwest", credential=credential)
-    # storage_options = {
-    #     "account_name": "rhgeuwest",
-    #     "credential": credential,
-    # }
-    make_collection()
+    make_collections()
 
 
 if __name__ == "__main__":

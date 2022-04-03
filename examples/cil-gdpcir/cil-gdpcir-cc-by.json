@@ -1,0 +1,244 @@
+{
+  "type": "Collection",
+  "id": "cil-gdpcir-cc-by",
+  "stac_version": "1.0.0",
+  "description": "{{ collection.description }}",
+  "links": [
+    {
+      "rel": "license",
+      "href": "https://spdx.org/licenses/CC-BY-4.0.html",
+      "type": "text/html",
+      "title": "Creative Commons Attribution 4.0 International"
+    },
+    {
+      "rel": "describedby",
+      "href": "https://github.com/ClimateImpactLab/downscaleCMIP6/",
+      "type": "text/html",
+      "title": "Project homepage"
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+  ],
+  "msft:storage_account": "rhgeuwest",
+  "msft:container": "cil-gdpcir",
+  "msft:short_description": "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research (CC-BY-4.0)",
+  "msft:group_id": "cil-gdpcir",
+  "cube:dimensions": {
+    "time": {
+      "extent": [
+        "1950-01-01T12:00:00Z",
+        "2100-12-31T12:00:00Z"
+      ],
+      "description": "time",
+      "step": "P1DT0H0M0S",
+      "type": "temporal"
+    },
+    "lon": {
+      "axis": "y",
+      "extent": [
+        -179.875,
+        179.875
+      ],
+      "step": 0.25,
+      "reference_system": "epsg:4326",
+      "type": "spatial"
+    },
+    "lat": {
+      "axis": "y",
+      "extent": [
+        -89.875,
+        89.875
+      ],
+      "step": 0.25,
+      "reference_system": "epsg:4326",
+      "type": "spatial"
+    }
+  },
+  "cube:variables": {
+    "pr": {
+      "type": "data",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "mm day-1",
+      "attrs": {
+        "units": "mm day-1"
+      }
+    },
+    "tasmax": {
+      "type": "data",
+      "description": "Daily Maximum Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "cell_measures": "area: areacella",
+        "cell_methods": "area: mean time: maximum (interval: 5 minutes)",
+        "comment": "maximum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: max')",
+        "coordinates": "height",
+        "long_name": "Daily Maximum Near-Surface Air Temperature",
+        "original_name": "TREFHTMX",
+        "standard_name": "air_temperature",
+        "units": "K"
+      }
+    },
+    "tasmin": {
+      "type": "data",
+      "description": "Daily Minimum Near-Surface Air Temperature",
+      "dimensions": [
+        "time",
+        "lat",
+        "lon"
+      ],
+      "unit": "K",
+      "attrs": {
+        "cell_measures": "area: areacella",
+        "cell_methods": "area: mean time: minimum (interval: 5 minutes)",
+        "comment": "minimum near-surface (usually, 2 meter) air temperature (add cell_method attribute 'time: min')",
+        "coordinates": "height",
+        "long_name": "Daily Minimum Near-Surface Air Temperature",
+        "original_name": "TREFHTMN",
+        "standard_name": "air_temperature",
+        "units": "K"
+      }
+    }
+  },
+  "item_assets": {
+    "pr": {
+      "type": "application/vnd+zarr",
+      "roles": [
+        "data"
+      ],
+      "title": "Precipitation",
+      "description": "Precipitation"
+    },
+    "tasmax": {
+      "type": "application/vnd+zarr",
+      "roles": [
+        "data"
+      ],
+      "title": "Daily Maximum Near-Surface Air Temperature",
+      "description": "Daily Maximum Near-Surface Air Temperature"
+    },
+    "tasmin": {
+      "type": "application/vnd+zarr",
+      "roles": [
+        "data"
+      ],
+      "title": "Daily Minimum Near-Surface Air Temperature",
+      "description": "Daily Minimum Near-Surface Air Temperature"
+    }
+  },
+  "title": "CIL Global Downscaled Projections for Climate Impacts Research (CC-BY-4.0)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180,
+          -90,
+          180,
+          90
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          "1950-01-01T00:00:00Z",
+          "2100-12-31T00:00:00Z"
+        ]
+      ]
+    }
+  },
+  "license": "CC-BY-4.0",
+  "keywords": [
+    "CMIP6",
+    "Climate Impact Lab",
+    "Rhodium Group",
+    "Precipitation",
+    "Temperature"
+  ],
+  "providers": [
+    {
+      "name": "Climate Impact Lab",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://impactlab.org/"
+    },
+    {
+      "name": "Microsoft",
+      "roles": [
+        "host"
+      ],
+      "url": "https://planetarycomputer.microsoft.com/"
+    }
+  ],
+  "summaries": {
+    "cmip6:institution_id": [
+      "BCC",
+      "CAS",
+      "CCCma",
+      "CMCC",
+      "CSIRO",
+      "CSIRO-ARCCSS",
+      "DKRZ",
+      "EC-Earth-Consortium",
+      "INM",
+      "MIROC",
+      "MOHC",
+      "MPI-M",
+      "NCC",
+      "NOAA-GFDL",
+      "NUIST"
+    ],
+    "cmip6:source_id": [
+      "BCC-CSM2-MR",
+      "ACCESS-ESM1-5",
+      "ACCESS-CM2",
+      "MIROC-ES2L",
+      "MIROC6",
+      "NorESM2-LM",
+      "NorESM2-MM",
+      "GFDL-CM4",
+      "GFDL-ESM4",
+      "NESM3",
+      "MPI-ESM1-2-HR",
+      "HadGEM3-GC31-LL",
+      "UKESM1-0-LL",
+      "MPI-ESM1-2-LR",
+      "EC-Earth3",
+      "EC-Earth3-AerChem",
+      "EC-Earth3-CC",
+      "EC-Earth3-Veg",
+      "EC-Earth3-Veg-LR",
+      "CMCC-CM2-SR5",
+      "CMCC-ESM2"
+    ],
+    "cmip6:variable": [
+      "pr",
+      "tasmax",
+      "tasmin"
+    ],
+    "cmip6:experiment_id": [
+      "historical",
+      "ssp126",
+      "ssp245",
+      "ssp370",
+      "ssp585"
+    ]
+  },
+  "assets": {
+    "thumbnail": {
+      "href": "https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/gdpcir.png",
+      "type": "image/png",
+      "title": "Thumbnail"
+    }
+  }
+}

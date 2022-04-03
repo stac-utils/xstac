@@ -1,14 +1,14 @@
 {
   "type": "Collection",
-  "id": "cil-gdpcir",
+  "id": "cil-gdpcir-cc0",
   "stac_version": "1.0.0",
   "description": "{{ collection.description }}",
   "links": [
     {
       "rel": "license",
-      "href": "TODO",
+      "href": "https://spdx.org/licenses/CC0-1.0.html",
       "type": "text/html",
-      "title": "License"
+      "title": "Creative Commons Zero v1.0 Universal"
     },
     {
       "rel": "describedby",
@@ -22,7 +22,8 @@
   ],
   "msft:storage_account": "rhgeuwest",
   "msft:container": "cil-gdpcir",
-  "msft:short_description": "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research",
+  "msft:short_description": "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research (CC0-1.0)",
+  "msft:group_id": "cil-gdpcir",
   "cube:dimensions": {
     "time": {
       "extent": [
@@ -134,7 +135,7 @@
       "description": "Daily Minimum Near-Surface Air Temperature"
     }
   },
-  "title": "CIL Global Downscaled Projections for Climate Impacts Research",
+  "title": "CIL Global Downscaled Projections for Climate Impacts Research (CC0-1.0)",
   "extent": {
     "spatial": {
       "bbox": [
@@ -150,12 +151,12 @@
       "interval": [
         [
           "1950-01-01T00:00:00Z",
-          "2011-12-31T00:00:00Z"
+          "2100-12-31T00:00:00Z"
         ]
       ]
     }
   },
-  "license": "proprietary",
+  "license": "CC0-1.0",
   "keywords": [
     "CMIP6",
     "Climate Impact Lab",
@@ -174,8 +175,7 @@
     {
       "name": "Microsoft",
       "roles": [
-        "host",
-        "processor"
+        "host"
       ],
       "url": "https://planetarycomputer.microsoft.com/"
     }
@@ -199,31 +199,9 @@
       "NUIST"
     ],
     "cmip6:source_id": [
-      "ACCESS-CM2",
-      "ACCESS-ESM1-5",
-      "BCC-CSM2-MR",
-      "CMCC-CM2-SR5",
-      "CMCC-ESM2",
-      "CanESM5",
-      "EC-Earth3",
-      "EC-Earth3-AerChem",
-      "EC-Earth3-CC",
-      "EC-Earth3-Veg",
-      "EC-Earth3-Veg-LR",
       "FGOALS-g3",
-      "GFDL-CM4",
-      "GFDL-ESM4",
-      "HadGEM3-GC31-LL",
       "INM-CM4-8",
-      "INM-CM5-0",
-      "MIROC-ES2L",
-      "MIROC6",
-      "MPI-ESM1-2-HR",
-      "MPI-ESM1-2-LR",
-      "NESM3",
-      "NorESM2-LM",
-      "NorESM2-MM",
-      "UKESM1-0-LL"
+      "INM-CM5-0"
     ],
     "cmip6:variable": [
       "pr",
