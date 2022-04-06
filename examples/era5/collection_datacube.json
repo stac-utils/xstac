@@ -1,0 +1,360 @@
+{
+    "cube:variables": {
+        "air_pressure_at_mean_sea_level": {
+            "type": "data",
+            "description": "Mean sea level pressure",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "Pa",
+            "attrs": {
+                "long_name": "Mean sea level pressure",
+                "nameCDM": "Mean_sea_level_pressure_surface",
+                "nameECMWF": "Mean sea level pressure",
+                "product_type": "analysis",
+                "shortNameECMWF": "msl",
+                "standard_name": "air_pressure_at_mean_sea_level",
+                "units": "Pa"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "air_temperature_at_2_metres": {
+            "type": "data",
+            "description": "2 metre temperature",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "K",
+            "attrs": {
+                "long_name": "2 metre temperature",
+                "nameCDM": "2_metre_temperature_surface",
+                "nameECMWF": "2 metre temperature",
+                "product_type": "analysis",
+                "shortNameECMWF": "2t",
+                "standard_name": "air_temperature",
+                "units": "K"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "dew_point_temperature_at_2_metres": {
+            "type": "data",
+            "description": "2 metre dewpoint temperature",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "K",
+            "attrs": {
+                "long_name": "2 metre dewpoint temperature",
+                "nameCDM": "2_metre_dewpoint_temperature_surface",
+                "nameECMWF": "2 metre dewpoint temperature",
+                "product_type": "analysis",
+                "shortNameECMWF": "2d",
+                "standard_name": "dew_point_temperature",
+                "units": "K"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "eastward_wind_at_100_metres": {
+            "type": "data",
+            "description": "100 metre U wind component",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "m s**-1",
+            "attrs": {
+                "long_name": "100 metre U wind component",
+                "nameCDM": "100_metre_U_wind_component_surface",
+                "nameECMWF": "100 metre U wind component",
+                "product_type": "analysis",
+                "shortNameECMWF": "100u",
+                "standard_name": "eastward_wind",
+                "units": "m s**-1"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "eastward_wind_at_10_metres": {
+            "type": "data",
+            "description": "10 metre U wind component",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "m s**-1",
+            "attrs": {
+                "long_name": "10 metre U wind component",
+                "nameCDM": "10_metre_U_wind_component_surface",
+                "nameECMWF": "10 metre U wind component",
+                "product_type": "analysis",
+                "shortNameECMWF": "10u",
+                "standard_name": "eastward_wind",
+                "units": "m s**-1"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "northward_wind_at_100_metres": {
+            "type": "data",
+            "description": "100 metre V wind component",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "m s**-1",
+            "attrs": {
+                "long_name": "100 metre V wind component",
+                "nameCDM": "100_metre_V_wind_component_surface",
+                "nameECMWF": "100 metre V wind component",
+                "product_type": "analysis",
+                "shortNameECMWF": "100v",
+                "standard_name": "northward_wind",
+                "units": "m s**-1"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "northward_wind_at_10_metres": {
+            "type": "data",
+            "description": "10 metre V wind component",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "m s**-1",
+            "attrs": {
+                "long_name": "10 metre V wind component",
+                "nameCDM": "10_metre_V_wind_component_surface",
+                "nameECMWF": "10 metre V wind component",
+                "product_type": "analysis",
+                "shortNameECMWF": "10v",
+                "standard_name": "northward_wind",
+                "units": "m s**-1"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "sea_surface_temperature": {
+            "type": "data",
+            "description": "Sea surface temperature",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "K",
+            "attrs": {
+                "long_name": "Sea surface temperature",
+                "nameCDM": "Sea_surface_temperature_surface",
+                "nameECMWF": "Sea surface temperature",
+                "product_type": "analysis",
+                "shortNameECMWF": "sst",
+                "standard_name": "sea_surface_temperature",
+                "units": "K"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "surface_air_pressure": {
+            "type": "data",
+            "description": "Surface pressure",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "Pa",
+            "attrs": {
+                "long_name": "Surface pressure",
+                "nameCDM": "Surface_pressure_surface",
+                "nameECMWF": "Surface pressure",
+                "product_type": "analysis",
+                "shortNameECMWF": "sp",
+                "standard_name": "surface_air_pressure",
+                "units": "Pa"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "air_temperature_at_2_metres_1hour_Maximum": {
+            "type": "data",
+            "description": "Maximum temperature at 2 metres since previous post-processing",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "K",
+            "attrs": {
+                "long_name": "Maximum temperature at 2 metres since previous post-processing",
+                "nameCDM": "Maximum_temperature_at_2_metres_since_previous_post-processing_surface_1_Hour_2",
+                "nameECMWF": "Maximum temperature at 2 metres since previous post-processing",
+                "product_type": "forecast",
+                "shortNameECMWF": "mx2t",
+                "standard_name": "air_temperature",
+                "units": "K"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "time1_bounds": {
+            "type": "data",
+            "dimensions": [
+                "time",
+                "nv"
+            ],
+            "attrs": {},
+            "shape": [
+                null,
+                2
+            ]
+        },
+        "air_temperature_at_2_metres_1hour_Minimum": {
+            "type": "data",
+            "description": "Minimum temperature at 2 metres since previous post-processing",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "K",
+            "attrs": {
+                "long_name": "Minimum temperature at 2 metres since previous post-processing",
+                "nameCDM": "Minimum_temperature_at_2_metres_since_previous_post-processing_surface_1_Hour_2",
+                "nameECMWF": "Minimum temperature at 2 metres since previous post-processing",
+                "product_type": "forecast",
+                "shortNameECMWF": "mn2t",
+                "standard_name": "air_temperature",
+                "units": "K"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "integral_wrt_time_of_surface_direct_downwelling_shortwave_flux_in_air_1hour_Accumulation": {
+            "type": "data",
+            "description": "Surface solar radiation downwards",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "J m**-2",
+            "attrs": {
+                "long_name": "Surface solar radiation downwards",
+                "nameCDM": "Surface_solar_radiation_downwards_surface_1_Hour_Accumulation",
+                "nameECMWF": "Surface solar radiation downwards",
+                "product_type": "forecast",
+                "shortNameECMWF": "ssrd",
+                "standard_name": "integral_wrt_time_of_surface_direct_downwelling_shortwave_flux_in_air",
+                "units": "J m**-2"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        },
+        "precipitation_amount_1hour_Accumulation": {
+            "type": "data",
+            "description": "Total precipitation",
+            "dimensions": [
+                "time",
+                "lat",
+                "lon"
+            ],
+            "unit": "m",
+            "attrs": {
+                "long_name": "Total precipitation",
+                "nameCDM": "Total_precipitation_1hour_Accumulation",
+                "nameECMWF": "Total precipitation",
+                "product_type": "forecast",
+                "shortNameECMWF": "tp",
+                "standard_name": "precipitation_amount",
+                "units": "m"
+            },
+            "shape": [
+                null,
+                721,
+                1440
+            ]
+        }
+    },
+    "cube:dimensions": {
+        "time": {
+            "extent": [
+                "1970-01-01T00:00:00Z",
+                null
+            ],
+            "step": "P0DT1H0M0S",
+            "type": "temporal"
+        },
+        "lon": {
+            "axis": "x",
+            "extent": [
+                0.0,
+                359.75
+            ],
+            "step": 0.25,
+            "description": "longitude",
+            "reference_system": "epsg:4326",
+            "type": "spatial"
+        },
+        "lat": {
+            "axis": "y",
+            "extent": [
+                -90.0,
+                90.0
+            ],
+            "step": -0.25,
+            "description": "latitude",
+            "reference_system": "epsg:4326",
+            "type": "spatial"
+        }
+    }
+}
