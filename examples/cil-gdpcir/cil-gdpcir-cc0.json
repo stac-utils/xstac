@@ -11,6 +11,11 @@
       "title": "Creative Commons Zero v1.0 Universal"
     },
     {
+      "rel": "cite-as",
+      "href": "https://zenodo.org/record/6403794",
+      "type": "text/html"
+    },
+    {
       "rel": "describedby",
       "href": "https://github.com/ClimateImpactLab/downscaleCMIP6/",
       "type": "text/html",
@@ -18,12 +23,14 @@
     }
   ],
   "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
   ],
   "msft:storage_account": "rhgeuwest",
   "msft:container": "cil-gdpcir",
   "msft:short_description": "Climate Impact Lab Global Downscaled Projections for Climate Impacts Research (CC0-1.0)",
   "msft:group_id": "cil-gdpcir",
+  "sci:doi": "10.5281/zenodo.6403793",
   "cube:dimensions": {
     "time": {
       "extent": [
@@ -35,7 +42,7 @@
       "type": "temporal"
     },
     "lon": {
-      "axis": "y",
+      "axis": "x",
       "extent": [
         -179.875,
         179.875

@@ -167,7 +167,7 @@ collection_datacube = {
             "type": "temporal",
         },
         "lon": {
-            "axis": "y",
+            "axis": "x",
             "extent": [-179.875, 179.875],
             "step": 0.25,
             "reference_system": "epsg:4326",
@@ -374,8 +374,10 @@ def make_collections():
             spatial=pystac.SpatialExtent(bboxes=[[-180, -90, 180, 90]]),
             temporal=pystac.TemporalExtent(
                 intervals=[
-                    datetime.datetime(1950, 1, 1),
-                    datetime.datetime(2100, 12, 31),
+                    [
+                        datetime.datetime(1950, 1, 1),
+                        datetime.datetime(2100, 12, 31),
+                    ]
                 ]
             ),
         )
@@ -405,6 +407,7 @@ def make_collections():
                 f"Climate Impact Lab Global Downscaled Projections for Climate Impacts Research ({license})"
             ),
             "msft:group_id": "cil-gdpcir",
+            "sci:doi": "10.5281/zenodo.6403793",
         }
         collection_id = LICENSE_TO_COLLECTION[license]
 
@@ -421,6 +424,12 @@ def make_collections():
         r.add_links(
             [
                 LICENSE_TO_LINK[license],
+                # {"rel": "cite-as", "href": CITATION_URLS[frequency]},
+                pystac.Link(
+                    rel="cite-as",
+                    target="https://zenodo.org/record/6403794",
+                    media_type="text/html",
+                ),
                 pystac.Link(
                     rel="describedby",
                     target="https://github.com/ClimateImpactLab/downscaleCMIP6/",
@@ -453,6 +462,9 @@ def make_collections():
 
         pystac.extensions.item_assets.ItemAssetsExtension.ext(r, add_if_missing=True)
         r.extra_fields["item_assets"] = item_assets
+        r.stac_extensions.append(
+            "https://stac-extensions.github.io/scientific/v1.0.0/schema.json"
+        )
         r.set_self_href("collection.json")
 
         r.validate()
