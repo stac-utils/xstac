@@ -62,7 +62,7 @@ def fix_attrs(ds):
     def fix_dict(attrs):
         return {
             attr_name: (
-                list(attr_value)
+                attr_value.tolist()
                 if isinstance(attr_value, np.ndarray)
                 else attr_value
             )
