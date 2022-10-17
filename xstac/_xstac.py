@@ -59,12 +59,22 @@ def _bbox_to_geometry(bbox):
 
 
 def fix_attrs(ds):
+    def fix_dict(attrs):
+        return {
+            attr_name: (
+                list(attr_value)
+                if isinstance(attr_value, np.ndarray)
+                else attr_value
+            )
+            for attr_name, attr_value in attrs.items()
+        }
+
     ds = type(ds)(ds)
 
-    for k, v in ds.items():
-        for attr_name, attr_value in v.attrs.items():
-            if isinstance(attr_value, np.ndarray):
-                ds[k].attrs[attr_name] = list(attr_value)
+    for k, v in ds.variables.items():
+        v.attrs = fix_dict(v.attrs)
+    ds.attrs = fix_dict(ds.attrs)
+
     return ds
 
 
