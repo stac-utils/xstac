@@ -68,10 +68,20 @@ def parse_args(args=None):
         choices=["all", "daily", "monthly", "annual"],
         default="all",
     )
+    parser.add_argument(
+        "--asset-href",
+        type=str,
+    )
+    parser.add_argument("--storage-options", default=None)
     return parser.parse_args(args)
 
 
-def generate(frequency, region):
+def generate(frequency, region, storage_options=None, asset_href=None):
+    storage_options = storage_options or {}
+    account_name = storage_options.get("account_name", "daymeteuwest")
+    if asset_href is None:
+        asset_href = f"az://daymet-zarr/{frequency}/{region}.zarr"
+
     short_desc_snippet = (
         "surface weather data" if frequency == "daily" else "climate summaries"
     )
@@ -120,7 +130,7 @@ def generate(frequency, region):
         ],
         "assets": {
             "zarr-https": {
-                "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
+                "href": f"https://{account_name}.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
                 "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",  # noqa: E501
@@ -133,8 +143,7 @@ def generate(frequency, region):
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
                 "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",  # noqa: E501
                 "roles": ["data", "zarr", "abfs"],
-                "xarray:storage_options": {"account_name": "daymeteuwest"},
-                "xarray:open_kwargs": {"consolidated": True},
+                "xarray:open_kwargs": {"engine": "zarr", "chunks": {}, "consolidated": True, "storage_options": {"account_name": f"{account_name}"}},
             },
             "thumbnail": {
                 "href": f"https://ai4edatasetspublicassets.blob.core.windows.net/assets/pc_thumbnails/daymet-{frequency}-{region}.png",  # noqa: E501
@@ -144,7 +153,7 @@ def generate(frequency, region):
             },
         },
         "msft:short_description": f"{frequency.title()} {short_desc_snippet} on a 1-km grid for {FULL_REGIONS[region]}",
-        "msft:storage_account": "daymeteuwest",
+        "msft:storage_account": f"{account_name}",
         "msft:container": "daymet-zarr",
         "msft:group_id": "daymet",
         "msft:group_keys": [frequency, FULL_REGIONS[region].lower()],
@@ -153,7 +162,7 @@ def generate(frequency, region):
     }
 
     store = fsspec.get_mapper(
-        f"az://daymet-zarr/{frequency}/{region}.zarr", account_name="daymeteuwest"
+        asset_href, **storage_options
     )
     ds = xr.open_zarr(store, consolidated=True)
     if "yearday" in ds:
@@ -191,7 +200,7 @@ def generate(frequency, region):
         "properties": {"start_datetime": None, "end_datetime": None},
         "assets": {
             "zarr-https": {
-                "href": f"https://daymeteuwest.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
+                "href": f"https://{account_name}.blob.core.windows.net/daymet-zarr/{frequency}/{region}.zarr",
                 "type": "application/vnd+zarr",
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet HTTPS Zarr root",
                 "description": f"HTTPS URI of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage.",  # noqa: E501
@@ -204,7 +213,7 @@ def generate(frequency, region):
                 "title": f"{frequency.title()} {FULL_REGIONS[region]} Daymet Azure Blob File System Zarr root",
                 "description": f"Azure Blob File System of the {frequency} {FULL_REGIONS[region]} Daymet Zarr Group on Azure Blob Storage for use with adlfs.",  # noqa: E501
                 "roles": ["data", "zarr", "abfs"],
-                "xarray:storage_options": {"account_name": "daymeteuwest"},
+                "xarray:storage_options": {"account_name": f"{account_name}"},
                 "xarray:open_kwargs": {"consolidated": True},
             },
             "thumbnail": {
@@ -241,6 +250,9 @@ def main(args=None):
     args = parse_args(args)
     region = args.region
     frequency = args.frequency
+    storage_options = args.storage_options
+    if storage_options:
+        storage_options = json.loads(storage_options)
 
     if region == "all":
         regions = list(FULL_REGIONS)
@@ -254,7 +266,7 @@ def main(args=None):
 
     for region in regions:
         for frequency in frequencies:
-            collection, item = generate(frequency, region)
+            collection, item = generate(frequency, region, storage_options=storage_options, asset_href=args.asset_href)
 
             outfile = Path(__file__).parent / f"{frequency}/{region}/collection.json"
             outfile.parent.mkdir(exist_ok=True, parents=True)
