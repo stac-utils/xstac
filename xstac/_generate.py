@@ -7,6 +7,7 @@ import copy
 import sys
 import argparse
 import json
+import warnings
 import fsspec
 import cf_xarray  # noqa: F401
 import xarray as xr
@@ -70,7 +71,17 @@ def generate(
     asset = template["assets"][asset_key]
 
     store = fsspec.get_mapper(asset["href"], **asset.get("xarray:storage_options", {}))
-    ds = xr.open_dataset(store, **asset.get("xarray:open_kwargs", {}))
+    open_kwargs = asset.get("xarray:open_kwargs", {})
+    if "engine" not in open_kwargs:
+        warnings.warn(
+            (
+                "No engine specified in asset's 'xarray:open_kwargs'. Defaulting to "
+                "zarr. In the future this will default to xarray's default behavior.",
+            FutureWarning,
+        )
+        open_kwargs = {**open_kwargs, "engine": "zarr"}
+
+    ds = xr.open_dataset(store, **open_kwargs)
 
     collection = xstac.xarray_to_stac(
         ds,
