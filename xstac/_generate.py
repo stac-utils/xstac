@@ -75,8 +75,9 @@ def generate(
     if "engine" not in open_kwargs:
         warnings.warn(
             (
-                "No engine specified in asset's 'xarray:open_kwargs'. Defaulting to "
-                "zarr. In the future this will default to xarray's default behavior.",
+                "No engine specified in asset's 'xarray:open_kwargs'. Defaulting to zarr. "
+                "In the future this will default to xarray's default behavior.",
+            ),
             FutureWarning,
         )
         open_kwargs = {**open_kwargs, "engine": "zarr"}
