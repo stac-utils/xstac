@@ -16,12 +16,12 @@ def test_fix_attrs():
     attrs = {"array": np.array([0, 1]), "scalar": np.int8(12)}
     fixed_attrs = {"array": [0, 1], "scalar": 12}
 
-    ds = xr.Dataset({"a": ((), [], attrs)}, coords={"x": ((), [], attrs)}, attrs=attrs)
+    ds = xr.Dataset({"a": ((), 0, attrs)}, coords={"x": ((), 0, attrs)}, attrs=attrs)
     actual = fix_attrs(ds)
 
     expected = xr.Dataset(
-        {"a": ((), [], fixed_attrs)},
-        coords={"x": ((), [], fixed_attrs)},
+        {"a": ((), 0, fixed_attrs)},
+        coords={"x": ((), 0, fixed_attrs)},
         attrs=fixed_attrs,
     )
     xr.testing.assert_identical(actual, expected)
