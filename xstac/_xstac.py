@@ -68,7 +68,7 @@ def fix_attrs(ds):
     def fix_dict(attrs):
         return {name: fix_value(value) for name, value in attrs.items()}
 
-    ds = type(ds)(ds)
+    ds = ds.copy()
 
     for k, v in ds.variables.items():
         v.attrs = fix_dict(v.attrs)
