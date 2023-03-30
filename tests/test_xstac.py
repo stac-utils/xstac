@@ -1,14 +1,30 @@
 import pyproj
 import pytest
 import pystac
+import numpy as np
 import xarray as xr
 
-from xstac import xarray_to_stac
+from xstac import xarray_to_stac, fix_attrs
 from xstac._xstac import _bbox_to_geometry, maybe_infer_reference_system
 
 
 # def test_no_time_dimension(ds, collection_template):
 #    _ = xarray_to_stac(ds, template=collection_template, temporal_dimension=False)
+
+
+def test_fix_attrs():
+    attrs = {"array": np.array([0, 1]), "scalar": np.int8(12)}
+    fixed_attrs = {"array": [0, 1], "scalar": 12}
+
+    ds = xr.Dataset({"a": ((), 0, attrs)}, coords={"x": ((), 0, attrs)}, attrs=attrs)
+    actual = fix_attrs(ds)
+
+    expected = xr.Dataset(
+        {"a": ((), 0, fixed_attrs)},
+        coords={"x": ((), 0, fixed_attrs)},
+        attrs=fixed_attrs,
+    )
+    xr.testing.assert_identical(actual, expected)
 
 
 @pytest.mark.parametrize("explicit_dims", [False, True])
