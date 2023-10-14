@@ -1,5 +1,4 @@
 import pystac
-import pytest
 
 import xarray as xr
 import kerchunk.hdf
