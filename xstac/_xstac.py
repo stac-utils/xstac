@@ -473,7 +473,6 @@ def xarray_to_stac(
                     del ext.properties[obj][var][k]
     stac_obj = result
 
-
     if kerchunk_indices:
         stac_obj = add_kerchunk_indices(kerchunk_indices, stac_obj)
 
