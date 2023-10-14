@@ -3,34 +3,32 @@ requires = ["flit_core >=2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "xstac"
-author = "Tom Augspurger"
-author-email = "taugspurger@microsoft.com"
-classifiers = [ "License :: OSI Approved :: MIT License",]
-dependencies = [
-    "cf_xarray",
-    "xarray",
-    "numpy",
-    "pystac>=1.0.0b3",
-    "pandas",
-    "pyproj",
-    "pydantic",
-    "zarr",
-    "jsonschema",
-    "dask[array]",  # for chunking
-    # these are just for generate
-    "fsspec[http]",
+authors = [
+  { email = "tom.w.augspurger@gmail.com" },
+  { name = "Tom Augspurger" },
 ]
-requires-python = ">=3.6"
+name = "xstac"
+# author-email = "taugspurger@microsoft.com"
+classifiers = ["License :: OSI Approved :: MIT License"]
+dependencies = [
+  "cf_xarray",
+  "xarray",
+  "numpy",
+  "pystac>=1.0.0b3",
+  "pandas",
+  "pyproj",
+  "pydantic",
+  "zarr",
+  "jsonschema",
+  "dask[array]",     # for chunking
+  # these are just for generate
+  "fsspec[http]",
+]
+requires-python = ">=3.10"
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
-dev = [
-  "pytest",
-  "pre-commit",
-  "shapely",
-  "cftime",
-]
+dev = ["pytest", "pre-commit", "shapely", "cftime", "kerchunk", "h5netcdf", "fsspec"]
 
 [project.scripts]
 xstac = "xstac._generate:main"

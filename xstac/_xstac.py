@@ -3,7 +3,7 @@ xstac
 """
 import collections
 import dateutil
-from typing import Union
+from typing import Any, Union
 
 import cf_xarray  # noqa: F401
 import pyproj  # noqa: F401
@@ -21,6 +21,8 @@ from pystac.extensions.datacube import (
     VerticalSpatialDimension,
     DimensionType,
 )
+
+from ._kerchunk import add_kerchunk_indices
 
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
@@ -316,8 +318,9 @@ def xarray_to_stac(
     vertical_values=None,
     vertical_step=None,
     validate: bool = True,
+    kerchunk_indices: dict[str, Any] | None = None,
     **additional_dimensions,
-) -> pystac.Collection:
+) -> pystac.Collection | pystac.Item:
     """
     Construct a STAC Collection from an xarray Dataset.
 
@@ -384,9 +387,6 @@ def xarray_to_stac(
     #         vertical_step,
     #         reference_system=reference_system,
     #     )
-    if additional_dimensions:
-        raise NotImplementedError
-
     variables = build_variables(ds)
 
     # Fixup to ensure that epsg codes remain as digits, rather than strings.
@@ -461,6 +461,12 @@ def xarray_to_stac(
             )
             result.extent.temporal.intervals[0] = [start_datetime, end_datetime]
 
+    if additional_dimensions:
+        if is_item:
+            result.properties["cube:dimensions"].update(additional_dimensions)
+        else:
+            result.extra_fields["cube:dimensions"].update(additional_dimensions)
+
     # remove unset values, otherwise we might hit bizare jsonschema issues
     # when validating
     for obj in ["cube:variables", "cube:dimensions"]:
@@ -469,6 +475,10 @@ def xarray_to_stac(
                 if v is None:
                     del ext.properties[obj][var][k]
     stac_obj = result
+
+
+    if kerchunk_indices:
+        stac_obj = add_kerchunk_indices(kerchunk_indices, stac_obj)
 
     if validate:
         if isinstance(stac_obj, pystac.Collection):
