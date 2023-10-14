@@ -3,7 +3,7 @@ xstac
 """
 import collections
 import dateutil
-from typing import Any, Union
+from typing import Any, TypeVar
 
 import cf_xarray  # noqa: F401
 import pyproj  # noqa: F401
@@ -12,7 +12,6 @@ import numpy as np
 import pystac
 import pandas as pd
 from pyproj import CRS, Transformer
-from typing import Dict
 from pystac.extensions.datacube import (
     TemporalDimension,
     HorizontalSpatialDimension,
@@ -293,9 +292,12 @@ def build_datacube(
     return dimensions, variables
 
 
+T = TypeVar("T", dict, pystac.Item, pystac.Collection)
+
+
 def xarray_to_stac(
     ds: xr.Dataset,
-    template: Union[Dict, pystac.Item, pystac.Collection],
+    template: T,
     *,
     temporal_dimension=None,
     temporal_extent=None,
@@ -317,7 +319,7 @@ def xarray_to_stac(
     validate: bool = True,
     kerchunk_indices: dict[str, Any] | None = None,
     **additional_dimensions,
-) -> pystac.Collection | pystac.Item:
+) -> T:
     """
     Construct a STAC Collection from an xarray Dataset.
 
@@ -398,7 +400,10 @@ def xarray_to_stac(
                 dimension.reference_system = int(ref)
 
     if isinstance(template, collections.abc.Mapping):
+        is_dict = True
         template = pystac.read_dict(template)
+    else:
+        is_dict = False
 
     is_item = isinstance(template, pystac.Item)
     is_collection = not is_item
@@ -480,4 +485,10 @@ def xarray_to_stac(
         if isinstance(stac_obj, pystac.Collection):
             stac_obj.normalize_hrefs("/")
         stac_obj.validate()
-    return stac_obj
+
+    if is_dict:
+        result = stac_obj.to_dict()
+    else:
+        result = stac_obj
+
+    return result
