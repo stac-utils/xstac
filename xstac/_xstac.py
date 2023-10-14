@@ -62,10 +62,7 @@ def _bbox_to_geometry(bbox):
 
 def fix_attrs(ds):
     def fix_value(value):
-        if isinstance(value, (np.ndarray, np.number)):
-            return value.tolist()
-
-        return value
+        return xr.backends.zarr.encode_zarr_attr_value(value)
 
     def fix_dict(attrs):
         return {name: fix_value(value) for name, value in attrs.items()}
