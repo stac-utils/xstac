@@ -49,3 +49,22 @@ This generates the [TerraClimate STAC item](examples/terraclimate/item.json).
 
 See [examples/daymet/generate.py](examples/daymet/generate.py) for an example using the Python API.
 
+
+## Kerchunk support
+
+[Kerchunk](https://fsspec.github.io/kerchunk/) is a project and specification
+for representing chunked, compressed data where only the metadata and
+*references* to chunks of remote data are stored. You might want to include the
+Kerchunk metadata in a STAC item.
+
+To do this, generate the Kerchunk indices and provide them as the
+`kerchunk_indices` argument to `xarray_to_stac`.
+
+```python
+>>> from stactools.noaa_nwm import stac
+>>> import kerchunk.hdf
+
+>>> href = "https://noaanwm.blob.core.windows.net/nwm/nwm.20231010/short_range/nwm.t00z.short_range.channel_rt.f001.conus.nc"
+>>> indices = kerchunk.hdf.SingleHdf5ToZarr(href).translate()
+>>> item = stac.create_item(href, kerchunk_indices=indices)
+```
