@@ -339,6 +339,8 @@ def xarray_to_stac(
     **additional_dimensions:
         A dictionary with keys ``extent``, ``values``, ``step``.
     """
+    ds = fix_attrs(ds)
+
     temporal_dimension = maybe_use_cf_standard_axis(
         temporal_dimension, "temporal_dimension", ds
     )
