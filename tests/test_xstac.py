@@ -1,3 +1,4 @@
+import json
 import pyproj
 import pytest
 import pystac
@@ -164,3 +165,10 @@ def test_disable_infer_temporal_extent(ds, item_template):
     # del item_template["properties"]["datetime"]
     result = xarray_to_stac(ds, item_template, temporal_dimension=False)
     assert "start_datetime" not in result.properties
+
+
+def test_fixup_numpy_attrs_by_default(ds, item_template):
+    ds.prcp.attrs["values"] = np.zeros(2)
+    result = xarray_to_stac(ds, item_template, temporal_dimension=False)
+    assert result.properties["cube:variables"]["prcp"]["attrs"]["values"] == [0.0, 0.0]
+    json.dumps(result.to_dict())
