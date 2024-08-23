@@ -1,3 +1,4 @@
+import json
 import pyproj
 import pytest
 import pystac
@@ -169,8 +170,4 @@ def test_fixup_numpy_attrs_by_default(ds, item_template):
     ds.prcp.attrs["values"] = np.zeros(2)
     result = xarray_to_stac(ds, item_template, temporal_dimension=False)
     assert result.properties["cube:variables"]["prcp"]["attrs"]["values"] == [0.0, 0.0]
-    try:
-        import json
-        json.dumps(result.to_dict())
-    except Exception:
-        pytest.fail("Failed to serialize to JSON")
+    json.dumps(result.to_dict())
