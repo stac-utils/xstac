@@ -6,7 +6,11 @@ import numpy as np
 import xarray as xr
 
 from xstac import xarray_to_stac, fix_attrs
-from xstac._xstac import _bbox_to_geometry, maybe_infer_reference_system, maybe_use_cf_standard_axis
+from xstac._xstac import (
+    _bbox_to_geometry,
+    maybe_infer_reference_system,
+    maybe_use_cf_standard_axis,
+)
 
 
 # def test_no_time_dimension(ds, collection_template):
@@ -51,11 +55,20 @@ def test_xarray_to_stac(
     assert dimensions == collection_expected_dims
     assert result.extra_fields["cube:variables"] == collection_expected_vars
 
+
 @pytest.mark.parametrize(
-    ("dimension_key", "expected_value"), 
-    [("x_dimension", "x"), ("y_dimension", "y"), ("temporal_dimension", "time"), ("longitude", "lon"), ("latitude", "lat")])
+    ("dimension_key", "expected_value"),
+    [
+        ("x_dimension", "x"),
+        ("y_dimension", "y"),
+        ("temporal_dimension", "time"),
+        ("longitude", "lon"),
+        ("latitude", "lat"),
+    ],
+)
 def test_maybe_use_cf_standard_axis(ds, dimension_key, expected_value):
     assert maybe_use_cf_standard_axis(None, dimension_key, ds) == expected_value
+
 
 def test_validation_with_none(ds_without_spatial_dims):
     # https://github.com/TomAugspurger/xstac/issues/9
