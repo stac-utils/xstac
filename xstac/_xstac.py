@@ -26,7 +26,7 @@ from ._kerchunk import add_kerchunk_indices
 
 SCHEMA_URI = "https://stac-extensions.github.io/datacube/v2.0.0/schema.json"
 
-CF_STANDARD_AXES = dict(temporal_dimension="T", x_dimension="X", y_dimension="Y")
+CF_STANDARD_AXES = dict(temporal_dimension="T", x_dimension="X", y_dimension="Y", latitude="latitude", longitude="longitude")
 
 
 def maybe_use_cf_standard_axis(kw, kw_name, ds):
