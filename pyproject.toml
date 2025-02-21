@@ -28,7 +28,7 @@ requires-python = ">=3.10"
 dynamic = ["version", "description"]
 
 [project.optional-dependencies]
-dev = ["pytest", "pre-commit", "shapely", "cftime", "kerchunk", "h5netcdf", "fsspec"]
+dev = ["pytest", "pre-commit", "shapely", "cftime", "kerchunk", "h5netcdf", "fsspec", "pooch"]
 
 [project.scripts]
 xstac = "xstac._generate:main"
