@@ -204,6 +204,7 @@ def maybe_infer_reference_system(ds, reference_system) -> dict:
     * proj:epsg from the coords
     * crs from the attrs
     * variables with grid_mapping_name in their attrs.
+    * CF convention detection through cf_xarray
 
     """
     if reference_system is None:
@@ -220,17 +221,22 @@ def maybe_infer_reference_system(ds, reference_system) -> dict:
                 ds.attrs["crs"]
             ).to_json_dict()
         else:
-            # try to infer it
+            # try to infer it from variables
             names = [
                 k for k, v in ds.variables.items() if "grid_mapping_name" in v.attrs
             ]
-            if not names:
-                raise ValueError("Couldn't find a reference system")
-            elif len(names) > 1:
+            if len(names) > 1:
                 raise ValueError("Too many reference systems: %s", names)
-            (name,) = names
-            crs = CRS.from_cf(ds[name].attrs)
-            reference_system = crs.to_json_dict()
+            elif len(names) == 1:
+                (name,) = names
+                crs = CRS.from_cf(ds[name].attrs)
+                reference_system = crs.to_json_dict()
+
+            if {"latitude", "longitude"} <= ds.cf.coordinates.keys():
+                reference_system = pyproj.CRS.from_epsg(4326).to_json_dict()
+
+            if not reference_system:
+                raise ValueError("Couldn't find a reference system")
 
     elif reference_system is False:
         reference_system = None
