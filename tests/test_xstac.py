@@ -182,6 +182,9 @@ def test_maybe_infer_reference_system(ds, expected):
 
 
 def test_maybe_infer_reference_system_from_cf_coordinates(ds):
+    for n, variable in ds.variables.items():
+        if "grid_mapping_name" in variable.attrs:
+            ds[n].attrs.pop("grid_mapping_name")
     result = maybe_infer_reference_system(ds, reference_system=None)
     expected = pyproj.crs.CRS.from_epsg(4326).to_json_dict()
     assert result == expected
