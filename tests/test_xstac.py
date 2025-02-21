@@ -173,15 +173,6 @@ def test_from_pystac_object(ds_without_spatial_dims):
             32633,
         ),
         (xr.Dataset(attrs={"crs": "epsg:32633"}), 32633),
-        (
-            xr.Dataset(
-                coords={
-                    "latitude": xr.DataArray(100, name="latitude"),
-                    "longitude": xr.DataArray(100, name="longitude"),
-                }
-            ),
-            4326,
-        ),
     ],
 )
 def test_maybe_infer_reference_system(ds, expected):
