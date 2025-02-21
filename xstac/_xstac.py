@@ -231,8 +231,7 @@ def maybe_infer_reference_system(ds, reference_system) -> dict:
                 (name,) = names
                 crs = CRS.from_cf(ds[name].attrs)
                 reference_system = crs.to_json_dict()
-
-            if {"latitude", "longitude"} <= ds.cf.coordinates.keys():
+            elif {"latitude", "longitude"} <= ds.cf.coordinates.keys():
                 reference_system = pyproj.CRS.from_epsg(4326).to_json_dict()
 
             if not reference_system:
