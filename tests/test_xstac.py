@@ -165,16 +165,28 @@ def test_from_pystac_object(ds_without_spatial_dims):
 
 
 @pytest.mark.parametrize(
-    "ds",
+    ("ds", "expected"),
     [
-        xr.Dataset(coords={"epsg": xr.DataArray(32633, name="epsg")}),
-        xr.Dataset(coords={"proj:epsg": xr.DataArray(32633, name="proj:epsg")}),
-        xr.Dataset(attrs={"crs": "epsg:32633"}),
+        (xr.Dataset(coords={"epsg": xr.DataArray(32633, name="epsg")}), 32633),
+        (
+            xr.Dataset(coords={"proj:epsg": xr.DataArray(32633, name="proj:epsg")}),
+            32633,
+        ),
+        (xr.Dataset(attrs={"crs": "epsg:32633"}), 32633),
     ],
 )
-def test_maybe_infer_reference_system(ds):
+def test_maybe_infer_reference_system(ds, expected):
     result = maybe_infer_reference_system(ds, reference_system=None)
-    expected = pyproj.crs.CRS.from_epsg(32633).to_json_dict()
+    expected = pyproj.crs.CRS.from_epsg(expected).to_json_dict()
+    assert result == expected
+
+
+def test_maybe_infer_reference_system_from_cf_coordinates(ds):
+    for n, variable in ds.variables.items():
+        if "grid_mapping_name" in variable.attrs:
+            ds[n].attrs.pop("grid_mapping_name")
+    result = maybe_infer_reference_system(ds, reference_system=None)
+    expected = pyproj.crs.CRS.from_epsg(4326).to_json_dict()
     assert result == expected
 
 
